@@ -22,10 +22,10 @@
                 <a href="">Make Quotation</a>
             </li>
             <li>
-                <a href="/customer/create">Add Customer</a>
+                <a href="/customers/create">Add Customer</a>
             </li>
             <li>
-                <a href="">Add Product</a>
+                <a href="/products/create">Add Product</a>
             </li>
         </ul>
     </div>

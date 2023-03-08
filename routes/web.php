@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PagesController::class, 'home'])->name('home');
 
 //Customers
-Route::get('/customer/create', [CustomerController::class, 'create'])->name('create.customers');
-Route::post('/customer/create/store', [CustomerController::class, 'store'])->name('store.customers');
+Route::get('/customers/create', [CustomerController::class, 'create'])->name('create.customers');
+Route::post('/customers/create/store', [CustomerController::class, 'store'])->name('store.customers');
+
+//Products
+Route::get('/products/create', [ProductController::class, 'create'])->name('create.products');
+Route::post('/products/create/store', [ProductController::class, 'store'])->name('store.products');
