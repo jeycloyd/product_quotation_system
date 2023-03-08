@@ -17,7 +17,9 @@ use App\Http\Controllers\QuotationController;
 |
 */
 
+//Pages
 Route::get('/', [PagesController::class, 'home'])->name('home');
+Route::get('/quotations/select-customer', [PagesController::class, 'selectCustomer'])->name('select_customers');
 
 //Customers
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('create.customers');
@@ -28,4 +30,5 @@ Route::get('/products/create', [ProductController::class, 'create'])->name('crea
 Route::post('/products/create/store', [ProductController::class, 'store'])->name('store.products');
 
 //Quotations
-Route::get('/quotations/create', [QuotationController::class, 'create'])->name('create.quotations');
+Route::get('/quotations/select-customer', [QuotationController::class, 'showSelectCustomer'])->name('select.customers');
+Route::post('/quotations/create', [QuotationController::class, 'create'])->name('create.quotations');

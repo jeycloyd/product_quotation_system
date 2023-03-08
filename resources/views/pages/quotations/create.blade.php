@@ -6,14 +6,6 @@
         <form action="" method="POST">
             @csrf
             <div>
-                <label for="customer_name">Customer Name:</label>
-                <select name="customer_name" id="customer_name">
-                    @foreach ($customers as $customer)
-                        <option value="{{$customer->id}}">{{$customer->customer_name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div>
                 <label for="product_name">Product:</label>
                 <select name="product_name" id="product_name">
                     @foreach ($products as $product)
@@ -32,8 +24,8 @@
     </div>
 
     <hr>
-    
-    <label for="customer_name">Customer Name:</label>
+
+    <label for="customer_name">Quotation for: {{$selected_customer}}</label>
     <form action="" method="POST">
         <div>
             <table>

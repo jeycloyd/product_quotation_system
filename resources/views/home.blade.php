@@ -19,7 +19,7 @@
         <h1>Product Quotation Manager</h1>
         <ul>
             <li>
-                <a href="/quotations/create">Make Quotation</a>
+                <a href="/quotations/select-customer">Make Quotation</a>
             </li>
             <li>
                 <a href="/customers/create">Add Customer</a>
