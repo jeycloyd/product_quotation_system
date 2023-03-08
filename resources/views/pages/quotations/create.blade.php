@@ -25,7 +25,9 @@
 
     <hr>
 
-    <label for="customer_name">Quotation for: {{$selected_customer}}</label>
+    <div>Date: {{  now()->toDateString('Y-m-d') }}</div>
+    <div>Quotation ID:{{$generated_id}}</div>
+    <label for="customer_name">Quotation for: {{ $selected_customer}}</label>
     <form action="" method="POST">
         <div>
             <table>
@@ -47,6 +49,7 @@
                 </tbody>
               </table>
         </div>
+        <h3>Grand Total: P500.00</h3>
         <div>
             <button type="submit">Make Quotation</button>
         </div>
