@@ -11,6 +11,6 @@ class Product extends Model
     use HasFactory;
     //relationship to quotation
     public function quotations(){
-        return $this->belongsToMany(Quotation::class);
+        return $this->belongsToMany(Quotation::class,'product_quotation');
     }
 }

@@ -16,7 +16,18 @@
             <div>
                 <label for="quantity">Qty:</label>
                 <input type="number" name="quantity" value="1" min="1" >
-            </div>   
+            </div>
+            {{-- HIDDEN INPUTS FOR RETAINING DURING REFRESH --}}
+            <div>
+                <label for="">Date</label>
+                <input type="text"  name="date" value="{{now()->toDateString('Y-m-d')}}">
+                <label for="">Quotation ID:</label>
+                <input type="text"  name="quotation_id" value="{{$generated_id}}">
+                <label for="">User ID</label>
+                <input type="text"  name="customer_id" value="{{$selected_customer}}">
+                <label for="">Name</label>
+                <input type="text"  name="customer_name" value="{{$customer_name}}">
+            </div>  
             <div>
                 <button type="submit">Add</button>
             </div>
@@ -31,10 +42,10 @@
     <label for="customer_name">Quotation for: {{ isset($customer_name) ? $customer_name: '' }}</label>
     <form action="{{route('store.quotations')}}" method="POST">
         @csrf
+        {{-- HIDDEN INPUTS FOR QUOTATION --}}
         <input type="text" hidden name="date" value="{{now()->toDateString('Y-m-d')}}">
         <input type="text" hidden name="quotation_id" value="{{$generated_id}}">
         <input type="text" hidden name="customer_id" value="{{$selected_customer}}">
-        
         <div>
             <table>
                 <thead>
@@ -47,10 +58,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Sample</td>
-                        <td>5</td>
-                        <td>100</td>
-                        <td>500</td>
                     </tr>
                 </tbody>
               </table>

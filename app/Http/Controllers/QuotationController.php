@@ -71,15 +71,31 @@ class QuotationController extends Controller
     }
     //add items to the quotation_product table
     public function addProducts(Request $request){
+
+        //FOR PRODUCT DETAILS EXTRACTION
         //extract the name, id, and price of the item by using explode method with a delimiter
-        $products = explode('|', $request->product_name);
-        $product_id = $products[0];
-        $product_price = $products[1];
-        $product_name = $products[2];
+        $product = explode('|', $request->product_name);
+        $product_id = $product[0];
+        $product_price = $product[1];
+        $product_name = $product[2];
         //get qty value
         $quantity = $request->quantity;
         //get price from multiplying quantity and product price
         $total = $quantity * floatval($product_price);
+       
+
+        //FOR RETAINING THE DETAILS AFTER CLICKING ADD TO PREVENT DATA LOSS
+        //get quotation ID
+        $quotation_id = $request->quotation_id;
+        //get the products data 
+        $products = Product::all();
+        //call a function to generate quotation id
+        $generated_id = $request->quotation_id;
+        //get customer id 
+        $selected_customer = $request->customer_id;
+        //get the customer name
+        $customer_name = $request->customer_name;
+        return view('pages.quotations.create', compact('products','generated_id','selected_customer','customer_name'));
     }
-    
+
 }

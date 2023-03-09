@@ -13,4 +13,8 @@ class Quotation extends Model
     public function customers(){
         return $this->belongsTo(Customer::class);
     }
+    //relationship to product
+    public function products(){
+        return $this->belongsToMany(Product::class, 'product_quotation');
+    }
 }
