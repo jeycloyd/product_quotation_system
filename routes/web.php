@@ -32,7 +32,8 @@ Route::post('/products/create/store', [ProductController::class, 'store'])->name
 //Quotations
 Route::get('/quotations/select-customer', [QuotationController::class, 'showSelectCustomer'])->name('select.customers');
 Route::get('/quotations/view', [QuotationController::class, 'viewQuotations'])->name('view.quotations');
-Route::post('/quotations/create', [QuotationController::class, 'create'])->name('create.quotations');
+Route::get('/quotations/create', [QuotationController::class, 'create'])->name('create.quotations');
+Route::get('/quotations/success', [QuotationController::class, 'success'])->name('success.quotations');
 Route::post('/quotations/create/add', [QuotationController::class, 'addProducts'])->name('add.products');
 Route::post('/quotations/store', [QuotationController::class, 'store'])->name('store.quotations');
 

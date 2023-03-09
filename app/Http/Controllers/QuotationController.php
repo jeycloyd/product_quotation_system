@@ -15,31 +15,44 @@ class QuotationController extends Controller
     //show select customer first
     public function showSelectCustomer(){
         $customers = Customer::all();
-        return view('pages.quotations.select_customer',compact('customers'));
+        if($customers->isEmpty()){
+            return view('pages.customers.create');
+        }else{
+            return view('pages.quotations.select_customer',compact('customers'));
+        } 
     }
     //show create form for quotations
     public function create(Request $request){
-        $customers = Customer::all();
-        $products = Product::all();
-        
-        //extract value of customer_name via id
-        $selected_customer = $request->customer_name;
+        if(!isset($customers, $products, $selected_customer, $count_no_of_transactions, $select_customer, $customer_name, $generated_id)){
+            $customers = Customer::all();
+            $products = Product::all();
+            
+            //extract value of customer_name via id
+            $selected_customer = $request->customer_name;
 
-        //count the number of transactions already made by the user and add 1
-        $count_no_of_transactions = DB::table('quotations')
-             ->where('customer_id', $selected_customer)
-             ->count()+1;
+            //count the number of transactions already made by the user and add 1
+            $count_no_of_transactions = DB::table('quotations')
+                ->where('customer_id', $selected_customer)
+                ->count()+1;
 
-        //query to get the name of the equivalent id from the $selected_customer variable
-        $select_customer = DB::table('customers')->where('id', $selected_customer)->get()->pluck('customer_name');
+            //query to get the name of the equivalent id from the $selected_customer variable
+            $select_customer = DB::table('customers')->where('id', $selected_customer)->get()->pluck('customer_name');
 
-        //to get the data from the object as it was being outputted as an object
-        $customer_name = $select_customer[0];
+            //to get the data from the object as it was being outputted as an object
+            $customer_name = $select_customer[0];
 
-        //call a function to generate quotation id
-        $generated_id = $this->generateQuotationId($selected_customer,$count_no_of_transactions);
-
+            //call a function to generate quotation id
+            $generated_id = $this->generateQuotationId($selected_customer,$count_no_of_transactions);
+        }
         return view('pages.quotations.create', compact('customers','products','customer_name','generated_id','selected_customer'));
+    }
+    //show a success page when quotation has been made and saved successfully
+    public function success(){
+        return view('pages.quotations.success');
+    }
+    //show list of quotations in the page
+    public function viewQuotations(){
+        return view('pages.quotations.view');
     }
     //helper function to generate the quotation id
     public function generateQuotationId($customer_id, $transaction_id){
@@ -56,10 +69,6 @@ class QuotationController extends Controller
         $quotation->customer_id = $request->customer_id;
         $quotation->save();
     }
-    //show list of quotations in the page
-    public function viewQuotations(){
-        return view('pages.quotations.view');
-    }
     //add items to the quotation_product table
     public function addProducts(Request $request){
         //extract the name, id, and price of the item by using explode method with a delimiter
@@ -72,4 +81,5 @@ class QuotationController extends Controller
         //get price from multiplying quantity and product price
         $total = $quantity * floatval($product_price);
     }
+    
 }

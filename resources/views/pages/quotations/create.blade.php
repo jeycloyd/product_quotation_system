@@ -26,9 +26,9 @@
     <hr>
 
     <div>Date: {{  now()->toDateString('Y-m-d') }}</div>
-    <div>Quotation ID:{{$generated_id}}</div>
-    <div>User ID:{{$selected_customer}}</div>
-    <label for="customer_name">Quotation for: {{ $customer_name }}</label>
+    <div>Quotation ID:{{ isset($generated_id) ? $generated_id: ''}}</div>
+    <div>User ID:{{isset($selected_customer) ? $selected_customer: ''}}</div>
+    <label for="customer_name">Quotation for: {{ isset($customer_name) ? $customer_name: '' }}</label>
     <form action="{{route('store.quotations')}}" method="POST">
         @csrf
         <input type="text" hidden name="date" value="{{now()->toDateString('Y-m-d')}}">

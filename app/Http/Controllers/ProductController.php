@@ -30,6 +30,6 @@ class ProductController extends Controller
         $product->save();
         
         //return response
-        return back()->with('Success','Product added successfully');
+        return redirect()->back()->with('success','Product added successfully');
     }
 }

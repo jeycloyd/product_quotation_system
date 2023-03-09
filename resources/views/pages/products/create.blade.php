@@ -3,6 +3,13 @@
 @section('content')
     <h1>Add Product</h1>
     <div>
+        @if (\Session::has('success'))
+            <div class="alert alert-success">
+                <ul>
+                    <li>{!! \Session::get('success') !!}</li>
+                </ul>
+            </div>
+        @endif
         <form action="{{route('store.products')}}" method="POST">
             @csrf
             <div>
@@ -30,7 +37,7 @@
             </div>
             <div>
                 <label for="product_price">Price:</label>
-                <input type="number" name="product_price">
+                <input type="number" name="product_price" value="1" min="1">
             </div>
             <div>
                 <button type="submit">Add Product</button>

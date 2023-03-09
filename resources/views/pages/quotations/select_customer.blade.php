@@ -3,7 +3,14 @@
 @section('content')
     <h1>Select Customer</h1>
     <div>
-        <form action="{{route('create.quotations')}}" method="POST">
+        @if (\Session::has('success'))
+            <div class="alert alert-success">
+                <ul>
+                    <li>{!! \Session::get('success') !!}</li>
+                </ul>
+            </div>
+        @endif
+        <form action="{{route('create.quotations')}}" method="GET">
             @csrf
             <div>
                 <label for="customer_name">Customer Name:</label>

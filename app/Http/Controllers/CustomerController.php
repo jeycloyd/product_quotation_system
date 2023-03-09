@@ -28,6 +28,6 @@ class CustomerController extends Controller
         $customer->save();
         
         //return response
-        return back()->with('Success','Customer added successfully');
+        return redirect('/quotations/select-customer')->with('success','Customer added successfully');
     }
 }
