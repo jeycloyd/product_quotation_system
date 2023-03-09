@@ -7,8 +7,9 @@ use App\Models\Product;
 use App\Models\Customer;
 use App\Models\Quotation;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Decimal;
+use App\Models\ProductQuotation;
+use Illuminate\Support\Facades\DB;
 
 class QuotationController extends Controller
 {   
@@ -95,7 +96,17 @@ class QuotationController extends Controller
         $selected_customer = $request->customer_id;
         //get the customer name
         $customer_name = $request->customer_name;
-        return view('pages.quotations.create', compact('products','generated_id','selected_customer','customer_name'));
+
+        //insert into product_quotation table
+        DB::table('product_quotation')->insert(
+            [
+                'product_id' => strval($product_id),
+                'quotation_id' => strval($generated_id),
+                'quantity' => $quantity,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        return view('pages.quotations.create', compact('products','generated_id','selected_customer','customer_name','product_id','product_price'));
     }
 
 }

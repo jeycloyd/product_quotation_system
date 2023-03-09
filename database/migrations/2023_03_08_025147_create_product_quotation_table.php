@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('product_quotation', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
-            $table->string('quotation_id');
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->string('quotation_id',15)->nullable();
             $table->integer('quantity')->default(1);
             $table->timestamps();
 
