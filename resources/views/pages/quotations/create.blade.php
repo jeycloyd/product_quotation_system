@@ -19,17 +19,14 @@
             </div>
             {{-- HIDDEN INPUTS FOR RETAINING DURING REFRESH --}}
             <div>
-                <label for="">Date</label>
-                <input type="text"  name="date" value="{{now()->toDateString('Y-m-d')}}">
-                <label for="">Quotation ID:</label>
-                <input type="text"  name="quotation_id" value="{{$generated_id}}">
-                <label for="">User ID</label>
-                <input type="text"  name="customer_id" value="{{$selected_customer}}">
-                <label for="">Name</label>
-                <input type="text"  name="customer_name" value="{{$customer_name}}">
+                <input type="text" hidden name="date" value="{{now()->toDateString('Y-m-d')}}">
+                <input type="text"  hidden name="quotation_id" value="{{$generated_id}}">
+                <input type="text" hidden name="customer_id" value="{{$selected_customer}}">
+                <input type="text" hidden name="customer_name" value="{{$customer_name}}">
             </div>  
             <div>
-                <button type="submit">Add</button>
+                <button type="submit" name="action" value="add">Add</button>
+                <button type="submit" name="action" value="clear">Clear</button>
             </div>
         </form>
     </div>
@@ -38,7 +35,7 @@
 
     <div>Date: {{  now()->toDateString('Y-m-d') }}</div>
     <div>Quotation ID:{{ isset($generated_id) ? $generated_id: ''}}</div>
-    <div>User ID:{{isset($selected_customer) ? $selected_customer: ''}}</div>
+    <div>Customer ID:{{isset($selected_customer) ? $selected_customer: ''}}</div>
     <label for="customer_name">Quotation for: {{ isset($customer_name) ? $customer_name: '' }}</label>
     <form action="{{route('store.quotations')}}" method="POST">
         @csrf
@@ -58,11 +55,19 @@
                 </thead>
                 <tbody>
                     <tr>
+                        @foreach ($temp_tables as $temp_table)
+                            <tr>
+                                <td>{{$temp_table->product_name}}</td>
+                                <td>{{$temp_table->quantity}}</td>
+                                <td>{{$temp_table->unit_price}}</td>
+                                <td>{{$temp_table->total_price}}</td>
+                            </tr> 
+                        @endforeach
                     </tr>
                 </tbody>
               </table>
         </div>
-        <h3>Grand Total: P500.00</h3>
+        <h3>Grand Total: {{'PHP '.$grand_total}} </h3>
         <div>
             <button type="submit">Make Quotation</button>
         </div>
