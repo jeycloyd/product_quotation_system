@@ -15,6 +15,6 @@ class Quotation extends Model
     }
     //relationship to product
     public function products(){
-        return $this->belongsToMany(Product::class, 'product_quotation');
+        return $this->belongsToMany(Product::class);
     }
 }

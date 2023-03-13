@@ -54,10 +54,12 @@ class QuotationController extends Controller
                             ->where('quotation_id','=',$generated_id)
                             ->groupBy('product_name')
                             ->get();
+            //check if temp_table is empty
+            $temp_tables_isEmpty = DB::table('temp_tables')->count();
             //show grand total
             $grand_total = DB::table('temp_tables')->where('quotation_id', '=' , $generated_id)->sum('total_price');
         }
-        return view('pages.quotations.create', compact('customers','products','customer_name','generated_id','selected_customer','temp_tables','grand_total'));
+        return view('pages.quotations.create', compact('customers','products','customer_name','generated_id','selected_customer','temp_tables','grand_total','temp_tables_isEmpty'));
     }
     //show a success page when quotation has been made and saved successfully
     public function success(){
@@ -65,7 +67,13 @@ class QuotationController extends Controller
     }
     //show list of quotations in the page
     public function viewQuotations(){
-        return view('pages.quotations.view');
+        // combine the info from customers and quotations table via join
+        $quotations = DB::table('customers')
+            ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
+            ->select('customers.*', 'quotations.id' , 'quotations.created_at')
+            ->orderBy('quotations.created_at')
+            ->get();
+        return view('pages.quotations.view',compact('quotations'));
     }
     //helper function to generate the quotation id
     public function generateQuotationId($customer_id, $transaction_id){
@@ -139,13 +147,29 @@ class QuotationController extends Controller
                 'product_id' => $row->product_id,
                 'quotation_id' => $row->quotation_id,
                 'quantity' => $row->quantity,
-                'created_at' => $row->created_at,
-                'updated_at' => $row->updated_at
+                'created_at' => now(),
+                'updated_at' => now()
             ]);
         }
         //empty table temp based on the quotation id
         DB::table('temp_tables')->where('quotation_id', '=' , $request->quotation_id)->delete();
         return view('pages.quotations.success');
     }
-
+    //Show the details of a selected quotation
+    public function show($id){
+        $quotation_id = $id;
+        $quotation = '1';
+        $quotations = DB::table('products')
+            ->join('product_quotation', 'products.id', '=', 'product_quotation.product_id')
+            ->select('products.*', 'product_quotation.*')
+            ->where('quotation_id', $quotation_id)
+            ->get();
+        return view('pages.quotations.view_quotation',compact('quotation_id','quotations'));
+    }
+    //delete a quotation record from the list
+    public function destroy($id){
+        $quotations = Quotation::find($id);
+        $quotations->delete();
+        return redirect()->back()->with('success','data has been deleted successfully');
+    }
 }

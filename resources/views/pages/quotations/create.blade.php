@@ -69,7 +69,7 @@
         </div>
         <h3>Grand Total: {{'PHP '.$grand_total}} </h3>
         <div>
-            <button type="submit">Make Quotation</button>
+            <button type="submit" {{ $temp_tables_isEmpty === 0 ? 'disabled' : ''}}>Make Quotation</button>
         </div>
     </form>
 @endsection
