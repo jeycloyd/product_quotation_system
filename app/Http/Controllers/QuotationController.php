@@ -26,9 +26,15 @@ class QuotationController extends Controller
     }
     //show create form for quotations
     public function create(Request $request){
+        $products = Product::all();
+        $products_isEmpty = DB::table('products')->count();
+        //redirect the user if there are no products added yet
+        if($products_isEmpty == 0){
+            return view('pages.products.create');
+        }
         if(!isset($customers, $products, $selected_customer, $count_no_of_transactions, $select_customer, $customer_name, $generated_id)){
             $customers = Customer::all();
-            $products = Product::all();
+            
             
 
             //extract value of customer_name via id
@@ -70,8 +76,9 @@ class QuotationController extends Controller
         // combine the info from customers and quotations table via join
         $quotations = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
-            ->select('customers.*', 'quotations.id' , 'quotations.created_at')
-            ->orderBy('quotations.created_at')
+            ->select('customers.*', 'quotations.id' , 'quotations.created_at',)
+            ->whereNull('deleted_at')
+            ->orderByDesc('quotations.created_at')
             ->get();
         return view('pages.quotations.view',compact('quotations'));
     }
@@ -137,6 +144,7 @@ class QuotationController extends Controller
         $quotation->id = $request->quotation_id;
         $quotation->quotation_date =$request->date;
         $quotation->customer_id = $request->customer_id;
+        $quotation->total_price = $request->total_price;
         $quotation->save();
 
         //transfer table info from temp tables to product_quotation table
@@ -158,17 +166,29 @@ class QuotationController extends Controller
     //Show the details of a selected quotation
     public function show($id){
         $quotation_id = $id;
-        $quotation = '1';
+        //get the customer's name for this quotation
+        $customer_name = DB::table('customers')
+            ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
+            ->select('customers.customer_name')
+            ->where('quotations.id',$quotation_id)
+            ->value('customer_name');
+        //get the total of the quotation
+        $grand_total = DB::table('quotations')->where('id',$quotation_id)->value('total_price');
+        //get the total of the quotation
+        $quotation_date = DB::table('quotations')->where('id', $quotation_id)->value('created_at');
+        $quotation_date = Carbon::parse($quotation_date)->format('Y-m-d');
+        //group items by product name
         $quotations = DB::table('products')
-            ->join('product_quotation', 'products.id', '=', 'product_quotation.product_id')
-            ->select('products.*', 'product_quotation.*')
-            ->where('quotation_id', $quotation_id)
-            ->get();
-        return view('pages.quotations.view_quotation',compact('quotation_id','quotations'));
+                            ->join('product_quotation', 'products.id', '=', 'product_quotation.product_id')
+                            ->select('product_name', DB::raw('ROUND(AVG(product_price),2) as product_price'), DB::raw('SUM(quantity) as quantity'))
+                            ->where('quotation_id','=', $quotation_id)
+                            ->groupBy('product_name')
+                            ->get();
+        return view('pages.quotations.view_quotation',compact('quotation_id','quotations', 'grand_total', 'customer_name', 'quotation_date'));
     }
     //delete a quotation record from the list
     public function destroy($id){
-        $quotations = Quotation::find($id);
+        $quotations = Quotation::findOrFail($id);
         $quotations->delete();
         return redirect()->back()->with('success','data has been deleted successfully');
     }

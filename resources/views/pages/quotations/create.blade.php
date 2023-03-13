@@ -43,6 +43,7 @@
         <input type="text" hidden name="date" value="{{now()->toDateString('Y-m-d')}}">
         <input type="text" hidden name="quotation_id" value="{{$generated_id}}">
         <input type="text" hidden name="customer_id" value="{{$selected_customer}}">
+        <input type="text" hidden name="total_price" value="{{$grand_total}}">
         <div>
             <table>
                 <thead>
