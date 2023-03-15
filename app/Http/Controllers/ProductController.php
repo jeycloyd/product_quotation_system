@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -31,5 +32,12 @@ class ProductController extends Controller
         
         //return response
         return redirect()->back()->with('success','Product added successfully');
+    }
+    //delete a product from the temp tables 
+    public function destroyProductQuotation($product_name){
+        $product = DB::table('temp_tables')
+                    ->where('product_name','=',$product_name)
+                    ->delete();
+        return redirect()->back()->with('success','Product deleted successfully');
     }
 }

@@ -52,6 +52,7 @@
                         <th>Quantity</th>
                         <th>Price of Item</th>
                         <th>Price</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,6 +63,7 @@
                                 <td>{{$temp_table->quantity}}</td>
                                 <td>{{$temp_table->unit_price}}</td>
                                 <td>{{$temp_table->total_price}}</td>
+                                <td><a href="{{route('destroy.quotationsProducts',$temp_table->product_name)}}">Remove</a></td>
                             </tr> 
                         @endforeach
                     </tr>

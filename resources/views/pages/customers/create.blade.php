@@ -10,20 +10,20 @@
                     <div>{{$message}}</div>
                 @enderror
             </div>
-            <div>
+            <div style="padding-top: 15px">
                 <label for="customer_name">Name:</label>
                 <input type="text" class="@error('customer_name') is-invalid @enderror" name="customer_name">
             </div>
-            <div>
+            <div >
                 @error('customer_contact_no')
                     <div>{{$message}}</div>
                 @enderror
             </div>
-            <div>
+            <div style="padding-top: 15px">
                 <label for="customer_contact_no">Contact No:</label>
                 <input type="text" class="@error('customer_contact_no') is-invalid @enderror" name="customer_contact_no">
             </div>
-            <div>
+            <div style="padding-top: 15px">
                 <button type="submit">Add Customer</button>
             </div>
         </form>

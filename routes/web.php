@@ -29,6 +29,9 @@ Route::post('/customers/create/store', [CustomerController::class, 'store'])->na
 Route::get('/products/create', [ProductController::class, 'create'])->name('create.products');
 Route::post('/products/create/store', [ProductController::class, 'store'])->name('store.products');
 
+//Temp-tables for products
+Route::get('quotations/create/{id}',[ProductController::class, 'destroyProductQuotation'])->name('destroy.quotationsProducts');
+
 //Quotations
 Route::get('/quotations/select-customer', [QuotationController::class, 'showSelectCustomer'])->name('select.customers');
 Route::get('/quotations/view', [QuotationController::class, 'viewQuotations'])->name('view.quotations');
