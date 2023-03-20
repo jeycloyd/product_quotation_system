@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Make Quotation')
 @section('content')
-    <h1>Make Quotation</h1>
+@section('header','Make Quotation')
     <div>
         <form action="{{route('add.products')}}" method="POST">
             @csrf

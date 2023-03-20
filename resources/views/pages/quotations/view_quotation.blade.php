@@ -31,5 +31,5 @@
         </tbody>
       </table>
       <h1>Grand Total: {{$grand_total}}</h1>
-      <button>Export as PDF</button>
+      <a href="{{ route('export.quotations', $quotation_id) }}" class="btn btn-primary">Export PDF</a>
 @endsection

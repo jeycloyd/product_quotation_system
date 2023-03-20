@@ -41,5 +41,7 @@ Route::get('/quotations/success', [QuotationController::class, 'success'])->name
 Route::post('/quotations/create/add', [QuotationController::class, 'addProducts'])->name('add.products');
 Route::post('/quotations/store', [QuotationController::class, 'store'])->name('store.quotations');
 Route::get('quotations/delete/{id}',[QuotationController::class, 'destroy'])->name('destroy.quotations');
+//PDF for Quotation
+Route::get('quotations/export/{id}',[QuotationController::class, 'export'])->name('export.quotations');
 
 

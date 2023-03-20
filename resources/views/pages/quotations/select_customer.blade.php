@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Select Customer')
 @section('content')
-    <h1>Select Customer</h1>
+@section('header','Select Customer')
     <div>
         @if (\Session::has('success'))
             <div class="alert alert-success">

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'View Quotations')
 @section('content')
-    <h1>View Quotations</h1>
+@section('header','View Quotations')
     <table>
         <thead>
             <tr>

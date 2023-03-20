@@ -192,4 +192,7 @@ class QuotationController extends Controller
         $quotations->delete();
         return redirect()->back()->with('success','data has been deleted successfully');
     }
+    public function export(){
+        
+    }
 }
