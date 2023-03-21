@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'View Quotations')
+@section('header', 'View Quotations')
 @section('content')
-    <h1>View Quotations</h1>
     <h2>Quotation ID: {{ $quotation_id }}</h2>
     <h2>Quoted At: {{ $quotation_date }}</h2>
     <h2>Customer Name: {{ $customer_name }}</h2>
@@ -31,5 +31,5 @@
         </tbody>
       </table>
       <h1>Grand Total: {{$grand_total}}</h1>
-      <a href="{{ route('export.quotations', $quotation_id) }}" class="btn btn-primary">Export PDF</a>
+      <a href="{{ route('export.quotations', $quotation_id) }}" class="btn btn-primary">Download as PDF</a>
 @endsection
