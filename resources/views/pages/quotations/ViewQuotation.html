@@ -1,0 +1,299 @@
+<html>
+
+<head>
+<!-- <meta charset="UTF-8" -->
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+<!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
+
+<style>
+
+
+/*  ----------------TABLE VIEW LIST (Start)----------------  */
+
+
+
+.h1_ViewListTable {
+  display: flex;
+  justify-content: center;
+align-items: center;
+min-height: 25vh;
+flex-direction: column;
+  /*  align-items: center;
+  justify-content: center;  */
+}
+
+
+.content_table {   /* TABLE */
+  border-collapse: collapse;
+  border-color: black;
+  justify-content: center;
+  text-align: center;
+  margin-left: 320px;
+  padding: 10%;
+
+  width: 72%;
+ 
+
+}
+
+
+
+.content_table thead th {   /* AUXILIARY EQUIPMENTS */
+
+  background-color: #163f75;
+  color: #ffffff;
+  text-align: left;
+  font-size: 16;
+  font-family: sans-serif;
+  height: 49px; 
+  /* width: 70px; */
+
+  border-bottom: 0.9px solid #163f75;
+  border-right: 0.9px solid #163f75;
+  border-left: 0.9px solid #163f75;
+
+      
+}
+.content_table td  {   
+  background-color: white;
+  font-size: 15;
+    border-right: 0.9px solid #163f75;
+    padding: 1.2%;
+
+  }
+.content_table tbody tr {    /* BORDERS */
+  border-bottom: 0.9px solid #163f75;
+  border-right: 0.9px solid #163f75;
+  border-left: 0.9px solid #163f75;
+  width: 10%;
+}
+.tabledetails {
+  font-weight: bold;
+}
+
+.option {
+  width: 7.5%;
+}
+
+.description {
+  width: 67%;
+}
+
+
+.qty {
+  width: 5.5%;
+}
+
+.unitprice {
+  width: 10%;
+  
+}
+
+
+
+.sub-total {
+  width: 12%;
+}  
+
+
+
+
+.content_table tbody tr: nth-of-type (even) {
+  background-color: #f3f3f3;
+}
+
+.content_table tbody tr: last-of-type {
+border-bottom: 2px solid #009879;
+}
+
+
+
+.content_table tfoot tr {
+
+   border-bottom: 0.9px solid #163f75;
+  border-right: 0.9px solid #163f75;
+  border-left: 0.9px solid #163f75;
+}
+
+.content_table tfoot td {
+  background-color: #163f75;
+    color: #ffffff;
+    text-align: right;
+
+
+
+}
+
+.content_table tfoot 
+
+.totalname {
+    width: %;
+    height: 40px;
+    font-size: 20px;
+
+
+}
+
+
+.total {
+
+}
+
+/*  ----------------TABLE VIEW LIST (End)----------------  */
+
+
+
+</style> 
+
+<link rel="stylesheet" href="WebsitePractice.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="navbar">
+<div class="inner_navbar">
+
+
+<!--  LOGO AND NAME OF THE WEBSITE (Start)-->
+
+<div class="logo">
+ <img class="mediaonelogo" src= "mediaone_logo.png">    
+<a href="#">Media<span>One</span></a>
+</div>
+
+<!--  LOGO AND NAME OF THE WEBSITE (End)-->
+
+
+
+<!--  NAVIGATION BARS / CHOICES (Start)-->
+
+ <div class="menu">
+ <ul>
+ <a href="Home.html">Home</a>
+ <a href="AddCustomer.html">Add Customer</a>
+ <a href="AddProduct.html">Add Product</a>
+ <a href="AddQuotation.html">Add Quotation</a>
+ <a href="ViewQuotation.html">View Quotation</a>
+ </ul>
+ </div>
+ 
+ <!--  NAVIGATION BARS / CHOICES (End)-->
+ 
+</div>
+<div class="hamburger">
+
+
+
+ <i class="fas fa-bars"></i>
+ 
+</div>
+</div>
+
+
+<!--  SEARCH BAR (Start)-->
+
+
+
+<!--  SEARCH BAR (End)-->
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+
+<div>
+<!-- <h1> Find the place for your getaway </h1> -->
+
+
+
+</div>
+
+<!--  <h1>----- AYAWG KA WALA line! -----</h1> -->
+
+<!--  FILL UP FORM (Start)-->
+
+<div class="fillup_container">
+<div>
+
+
+ <!--  VIEW LIST TABLE (Start) -->
+
+<div class="viewlist_container">
+<div class="viewlist">
+
+
+
+<h1 class="h1_ViewListTable"> VIEW LIST </h1>
+<table class="content_table">
+     <thead>
+        <tr>
+              <th colspan="5"> AUXILIARY EQUIPMENTS </th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="tabledetails">
+              <td class="option"> Option </td>
+              <td class="description"> Description </td>
+              <td class="qty"> Qty </td>
+              <td class="unitprice"> Unit Price </td>
+              <td class="subtotal"> Sub Total </td>     
+        </tr>
+        <tr >
+              <td class="option"> 1 </td>
+              <td class="description"> Laravel is hard </td>
+              <td class="qty"> 3 </td>
+              <td class="unitprice"> 4 </td>
+              <td class="subtotal"> 5 </td>      
+        </tr>
+        <tfoot>
+            <tr>
+                  <td class="totalname"> TOTAL </td>
+                  <td class="total"> </td>
+            </tr>
+        </tfoot>
+     </tbody>
+</div>
+</div>
+
+<!--  VIEW LIST TABLE (End)-->
+
+
+
+</div>
+
+
+</div>
+
+<!--  FILL UP FORM (End)-->
+
+
+
+
+
+
+
+
+
+<script src="WebsitePractice.js"></script>
+
+</body>
+
+</html>

@@ -217,6 +217,7 @@ class QuotationController extends Controller
                             ->get();
         //download and export as pdf
         $dompdf = App::make('dompdf.wrapper');
+        $dompdf->set_paper('A4');
         $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','quotations', 'grand_total', 'customer_name', 'final_quotation_date')); 
         return $dompdf->stream('Quotation_'.$id .'.pdf');
     }
