@@ -37,7 +37,7 @@
             </div>
             <div>
                 <label for="product_price">Price:</label>
-                <input type="number" name="product_price" value="1" min="1">
+                <input type="number" name="product_price" value="1" min="1" step="0.01">
             </div>
             <div>
                 <button type="submit">Add Product</button>

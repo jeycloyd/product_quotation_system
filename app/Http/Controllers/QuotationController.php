@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Ramsey\Uuid\Type\Decimal;
 use App\Models\ProductQuotation;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\Console\Input\Input;
 
 class QuotationController extends Controller
@@ -192,7 +193,29 @@ class QuotationController extends Controller
         $quotations->delete();
         return redirect()->back()->with('success','data has been deleted successfully');
     }
-    public function export(){
-        
+    public function export($id){
+        $quotation_id = $id;
+        //get the customer's name for this quotation
+        $customer_name = DB::table('customers')
+            ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
+            ->select('customers.customer_name')
+            ->where('quotations.id',$quotation_id)
+            ->value('customer_name');
+        //get the total of the quotation
+        $grand_total = DB::table('quotations')->where('id',$quotation_id)->value('total_price');
+        //get the total of the quotation
+        $quotation_date = DB::table('quotations')->where('id', $quotation_id)->value('created_at');
+        $quotation_date = Carbon::parse($quotation_date)->format('Y-m-d');
+        //group items by product name
+        $quotations = DB::table('products')
+                            ->join('product_quotation', 'products.id', '=', 'product_quotation.product_id')
+                            ->select('product_name', DB::raw('ROUND(AVG(product_price),2) as product_price'), DB::raw('SUM(quantity) as quantity'))
+                            ->where('quotation_id','=', $quotation_id)
+                            ->groupBy('product_name')
+                            ->get();
+        //download and export as pdf
+        $dompdf = App::make('dompdf.wrapper');
+        $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','quotations', 'grand_total', 'customer_name', 'quotation_date')); 
+        return $dompdf->stream('Quotation_'.$id .'.pdf');
     }
 }
