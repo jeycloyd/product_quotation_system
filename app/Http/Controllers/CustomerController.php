@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -33,7 +34,7 @@ class CustomerController extends Controller
     }
     //show list of all customers
     public function index(){
-        $customers = customer::all();
+        $customers = DB::table('customers')->paginate(5);
         return view('pages/customers/index', compact('customers'));
     }
     //show a specific customer info
@@ -57,5 +58,14 @@ class CustomerController extends Controller
         $customer->customer_contact_no = $request->customer_contact_no;
         $customer->save();
         return redirect('customers/index')->with('success', 'customer details have been updated');
+    }
+    //search details from the customer list
+    public function search(Request $request){
+        $search = $request->search;
+        $customers =  DB::table('customers')
+                      ->select('*')
+                      ->where('customer_name', 'LIKE' , '%' . $search . '%')
+                      ->paginate(5);
+        return view('pages.customers.index', compact('customers'));
     }
 }

@@ -25,6 +25,7 @@ Route::get('/quotations/select-customer', [PagesController::class, 'selectCustom
 Route::get('/customers/index', [CustomerController::class, 'index'])->name('index.customers');
 Route::get('/customers/edit/{id}', [CustomerController::class, 'show'])->name('show.customers');
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('create.customers');
+Route::get('/customers/search', [CustomerController::class, 'search'])->name('search.customers');
 Route::post('/customers/create/store', [CustomerController::class, 'store'])->name('store.customers');
 Route::post('/customers/update/{id}', [CustomerController::class, 'update'])->name('update.customers');
 
@@ -32,8 +33,10 @@ Route::post('/customers/update/{id}', [CustomerController::class, 'update'])->na
 Route::get('/products/index', [ProductController::class, 'index'])->name('index.products');
 Route::get('/products/edit/{id}', [ProductController::class, 'show'])->name('show.products');
 Route::get('/products/create', [ProductController::class, 'create'])->name('create.products');
+Route::get('/products/search', [ProductController::class, 'search'])->name('search.products');
 Route::post('/products/create/store', [ProductController::class, 'store'])->name('store.products');
 Route::post('/products/update/{id}', [ProductController::class, 'update'])->name('update.products');
+Route::get('/products/delete/{id}', [ProductController::class, 'destroy'])->name('destroy.products');
 
 //Temp-tables for products
 Route::get('quotations/create/{id}',[ProductController::class, 'destroyProductQuotation'])->name('destroy.quotationsProducts');
@@ -47,6 +50,7 @@ Route::get('/quotations/success', [QuotationController::class, 'success'])->name
 Route::post('/quotations/create/add', [QuotationController::class, 'addProducts'])->name('add.products');
 Route::post('/quotations/store', [QuotationController::class, 'store'])->name('store.quotations');
 Route::get('quotations/delete/{id}',[QuotationController::class, 'destroy'])->name('destroy.quotations');
+Route::get('quotations/search/',[QuotationController::class, 'search'])->name('search.quotations');
 //PDF for Quotation
 Route::get('quotations/export/{id}',[QuotationController::class, 'export'])->name('export.quotations');
 

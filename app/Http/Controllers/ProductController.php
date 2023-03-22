@@ -42,7 +42,7 @@ class ProductController extends Controller
     }
     //show list of added products
     public function index(){
-        $products = Product::all();
+        $products = DB::table('products')->paginate(5);
         return view('pages/products/index', compact('products'));
     }
     //show the selected product details
@@ -60,5 +60,20 @@ class ProductController extends Controller
         $products->product_price = $request->product_price;
         $products->save();
         return redirect('/products/index')->with('success','Product details have been updated');
+    }
+    //search details from the customer list
+    public function search(Request $request){
+        $search = $request->search;
+        $products =  DB::table('products')
+                      ->select('*')
+                      ->where('product_name', 'LIKE' , '%' . $search . '%')
+                      ->paginate(5);
+        return view('pages.products.index', compact('products'));
+    }
+    //delete selected product from list
+    public function destroy($id){
+        $products = Product::findOrFail($id);
+        $products->delete();
+        return redirect('products/index')->with('success','product deleted successfully');
     }
 }

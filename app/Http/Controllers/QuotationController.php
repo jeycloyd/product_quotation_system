@@ -221,4 +221,16 @@ class QuotationController extends Controller
         $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','quotations', 'grand_total', 'customer_name', 'final_quotation_date')); 
         return $dompdf->stream('Quotation_'.$id .'.pdf');
     }
+    //search details from the quotation list
+    public function search(Request $request){
+        $search = $request->search;
+        $quotations = DB::table('customers')
+            ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
+            ->select('customers.*', 'quotations.id' , 'quotations.created_at',)
+            ->whereNull('deleted_at')
+            ->where('customer_name', 'LIKE' , '%' . $search . '%')
+            ->orderByDesc('quotations.created_at')
+            ->paginate(5);
+        return view('pages.quotations.view', compact('quotations'));
+    }
 }

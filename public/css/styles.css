@@ -65,15 +65,15 @@ font-weight: 900;
 
 .navbar .menu ul{
 display: block;
-padding: 20px;
+padding: 10px;
 }
 
 .navbar .menu ul a {
 display: block;
 width: 190px;
 margin-bottom: 20px;
-margin-top: 20px;
-padding: 12px;
+margin-top: -10px;
+padding: 10px;
 background: #1ac8cd;
 text-align: center;
 font-size: 12px;
@@ -95,16 +95,11 @@ background: #5bd485;
 
 /*  ----------------LOGO AND NAME OF THE WEBSITE (End)----------------  */
 
-/*  ----------------Center position of contents----------------  */
+/*  ----------------TABLE WRAPPER FOR THE VIEW TABLES----------------  */
 
-
-
-
-
-
-
-
-
-
-
+.table-wrapper {
+ margin-left: -190px;
+ margin-top: -70px;
+ width: 50em;
+}
 

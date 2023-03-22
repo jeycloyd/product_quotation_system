@@ -2,6 +2,14 @@
 @section('title', 'View Quotations')
 @section('content')
 @section('header','View Quotations')
+<div  class="table-wrapper">
+      <form action="{{route('search.quotations')}}" method="GET">
+            <div class="input-group mb-3">
+                @csrf
+                <input type="text" class="form-control" placeholder="Search..." name="search">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+      </form>  
       <table class="table table-hover">
         <thead>
           <tr>
@@ -29,5 +37,6 @@
       </table>
       <div class="d-flex justify-content-center">
         {{ $quotations->links() }}
-    </div>
+      </div>
+</div>
 @endsection

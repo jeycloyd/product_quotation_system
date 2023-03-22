@@ -2,6 +2,14 @@
 @section('title', 'View Customers')
 @section('content')
 @section('header','View Customers')
+<div class="table-wrapper">
+    <form action="{{route('search.customers')}}" method="GET">
+        <div class="input-group mb-3">
+            @csrf
+            <input type="text" class="form-control" placeholder="Search..." name="search">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>  
     <table class="table table-hover">
         <thead>
           <tr>
@@ -25,4 +33,9 @@
             @endforeach
         </tbody>
       </table>
+      <div class="d-flex justify-content-center">
+        {{ $customers->links() }}
+      </div>
+</div>
+
 @endsection
