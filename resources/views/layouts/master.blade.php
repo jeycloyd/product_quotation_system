@@ -30,6 +30,8 @@
                     <a href="/">Home</a>
                     <a href="/quotations/select-customer">Create Quotation</a>
                     <a href="/quotations/view">View Quotation</a>
+                    <a href="/customers/index">View Customers</a>
+                    <a href="/products/index">View Products</a>
                     <a href="/customers/create">Add Customer</a>
                     <a href="/products/create">Add Product</a>
                 </ul>

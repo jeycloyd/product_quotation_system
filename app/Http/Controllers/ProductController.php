@@ -40,4 +40,25 @@ class ProductController extends Controller
                     ->delete();
         return redirect()->back()->with('success','Product deleted successfully');
     }
+    //show list of added products
+    public function index(){
+        $products = Product::all();
+        return view('pages/products/index', compact('products'));
+    }
+    //show the selected product details
+    public function show($id){
+        $products = Product::findOrFail($id);
+        $product_id = $products->id;
+        $product_name = $products->product_name;
+        $product_price = $products->product_price;
+        return view('pages/products/edit', compact('products', 'product_id' , 'product_name', 'product_price'));
+    }
+    //update info of selected product
+    public function update($id, Request $request){
+        $products = Product::findOrFail($id);
+        $products->product_name = $request->product_name;
+        $products->product_price = $request->product_price;
+        $products->save();
+        return redirect('/products/index')->with('success','Product details have been updated');
+    }
 }

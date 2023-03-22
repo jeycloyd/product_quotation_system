@@ -22,12 +22,18 @@ Route::get('/', [PagesController::class, 'home'])->name('home');
 Route::get('/quotations/select-customer', [PagesController::class, 'selectCustomer'])->name('select_customers');
 
 //Customers
+Route::get('/customers/index', [CustomerController::class, 'index'])->name('index.customers');
+Route::get('/customers/edit/{id}', [CustomerController::class, 'show'])->name('show.customers');
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('create.customers');
 Route::post('/customers/create/store', [CustomerController::class, 'store'])->name('store.customers');
+Route::post('/customers/update/{id}', [CustomerController::class, 'update'])->name('update.customers');
 
 //Products
+Route::get('/products/index', [ProductController::class, 'index'])->name('index.products');
+Route::get('/products/edit/{id}', [ProductController::class, 'show'])->name('show.products');
 Route::get('/products/create', [ProductController::class, 'create'])->name('create.products');
 Route::post('/products/create/store', [ProductController::class, 'store'])->name('store.products');
+Route::post('/products/update/{id}', [ProductController::class, 'update'])->name('update.products');
 
 //Temp-tables for products
 Route::get('quotations/create/{id}',[ProductController::class, 'destroyProductQuotation'])->name('destroy.quotationsProducts');

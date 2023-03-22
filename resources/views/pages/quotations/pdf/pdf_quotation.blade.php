@@ -25,8 +25,7 @@
             border-bottom: 0.9px solid #163f75;
             border-right: 0.9px solid #163f75;
             border-left: 0.9px solid #163f75; 
-        }
-        .tabledetails th{
+        }        .tabledetails th{
             height: 49px;
             padding: auto;
             text-align: center;
@@ -137,8 +136,15 @@
                     <td class="subtotal">{{number_format($quotation->product_price * $quotation->quantity)}} </td>      
                 </tr> 
             @endforeach
+            <tr>
+                <td></td>
+                <td style="text-align: left">***Nothing Follows***</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+           </tr>
            <tr>
-                 <td style="text-align: right; background-color:#163f75; color:white" colspan="3"> TOTAL </td>
+                 <td style="text-align: right; background-color:#163f75; color:white" colspan="3"> <strong> TOTAL </strong> </td>
                  <td colspan="2">PHP {{number_format($grand_total)}} </td>
            </tr>
         </tbody>

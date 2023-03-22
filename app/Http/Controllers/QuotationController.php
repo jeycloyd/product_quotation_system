@@ -80,7 +80,7 @@ class QuotationController extends Controller
             ->select('customers.*', 'quotations.id' , 'quotations.created_at',)
             ->whereNull('deleted_at')
             ->orderByDesc('quotations.created_at')
-            ->get();
+            ->paginate(5);
         return view('pages.quotations.view',compact('quotations'));
     }
     //helper function to generate the quotation id
