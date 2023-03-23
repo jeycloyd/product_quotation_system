@@ -17,13 +17,13 @@
         <tbody>
             <tr>
                 <tr>
-                    @foreach ($quotations as $quotation)
+                    @foreach ($product_quotations as $product_quotation)
                         <tr>
                             {{-- <td>{{$quotation->id}}</td> --}}
-                            <td>{{$quotation->product_name}}</td>
-                            <td>{{$quotation->quantity}}</td>
-                            <td>{{$quotation->product_price}}</td>
-                            <td>{{$quotation->product_price * $quotation->quantity}}</td> 
+                            <td>{{$product_quotation->product_name}}</td>
+                            <td>{{$product_quotation->quantity}}</td>
+                            <td>{{$product_quotation->unit_price}}</td>
+                            <td>{{$product_quotation->unit_price * $product_quotation->quantity}}</td> 
                         </tr>
                     @endforeach
                 </tr> 

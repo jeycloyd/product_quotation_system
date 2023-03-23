@@ -127,13 +127,13 @@
            </tr>
        </thead>
        <tbody>
-            @foreach ($quotations as $quotation)
+            @foreach ($product_quotations as $product_quotation)
                 <tr>
                     <td class="option"> {{$loop->iteration}} </td>
-                    <td class="description"> {{$quotation->product_name}} </td>
-                    <td class="qty"> {{$quotation->quantity}} </td>
-                    <td class="unitprice"> {{$quotation->product_price}} </td>
-                    <td class="subtotal">{{number_format($quotation->product_price * $quotation->quantity)}} </td>      
+                    <td class="description"> {{$product_quotation->product_name}} </td>
+                    <td class="qty"> {{$product_quotation->quantity}} </td>
+                    <td class="unitprice"> {{$product_quotation->unit_price}} </td>
+                    <td class="subtotal">{{number_format($product_quotation->unit_price * $product_quotation->quantity)}} </td>      
                 </tr> 
             @endforeach
             <tr>

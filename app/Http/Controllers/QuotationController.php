@@ -145,17 +145,20 @@ class QuotationController extends Controller
         $quotation->id = $request->quotation_id;
         $quotation->quotation_date =$request->date;
         $quotation->customer_id = $request->customer_id;
-        $quotation->total_price = $request->total_price;
+        $grand_total = $request->grand_total;
         $quotation->save();
 
         //transfer table info from temp tables to product_quotation table
-        $data = DB::table('temp_tables')->select('product_id', 'quotation_id', 'quantity', 'created_at' , 'updated_at')->get();
+        $data = DB::table('temp_tables')->select('product_id', 'quotation_id', 'quantity', 'created_at' , 'updated_at','product_name','unit_price','total_price')->get();
 
         foreach ($data as $row) {
             DB::table('product_quotation')->insert([
                 'product_id' => $row->product_id,
                 'quotation_id' => $row->quotation_id,
                 'quantity' => $row->quantity,
+                'product_name' => $row->product_name,
+                'unit_price' => $row->unit_price,
+                'sub_total' => $row->total_price,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
@@ -174,18 +177,17 @@ class QuotationController extends Controller
             ->where('quotations.id',$quotation_id)
             ->value('customer_name');
         //get the total of the quotation
-        $grand_total = DB::table('quotations')->where('id',$quotation_id)->value('total_price');
+        $grand_total = DB::table('product_quotation')->where('quotation_id', $quotation_id)->sum('sub_total');
         //get the date of the quotation
         $quotation_date = DB::table('quotations')->where('id', $quotation_id)->value('created_at');
         $quotation_date = Carbon::parse($quotation_date)->format('Y-m-d');
-        //group items by product name
-        $quotations = DB::table('products')
-                            ->join('product_quotation', 'products.id', '=', 'product_quotation.product_id')
-                            ->select('product_name', DB::raw('ROUND(AVG(product_price),2) as product_price'), DB::raw('SUM(quantity) as quantity'))
-                            ->where('quotation_id','=', $quotation_id)
+        //get items purchased and group them by product name based on the quotation id
+        $product_quotations = DB::table('product_quotation')
+                            ->select('product_name', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(sub_total) as total_price'))
+                            ->where('quotation_id','=',$id)
                             ->groupBy('product_name')
                             ->get();
-        return view('pages.quotations.view_quotation',compact('quotation_id','quotations', 'grand_total', 'customer_name', 'quotation_date'));
+        return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date'));
     }
     //delete a quotation record from the list
     public function destroy($id){
@@ -202,23 +204,23 @@ class QuotationController extends Controller
             ->where('quotations.id',$quotation_id)
             ->value('customer_name');
         //get the total of the quotation
-        $grand_total = DB::table('quotations')->where('id',$quotation_id)->value('total_price');
+        $grand_total = DB::table('product_quotation')->where('quotation_id', $quotation_id)->sum('sub_total');
         //get the date of the quotation
         $quotation_date = DB::table('quotations')->where('id', $quotation_id)->value('created_at');
         $quotation_date = Carbon::parse($quotation_date)->format('Y-m-d');
         $formatted_date = \Carbon\Carbon::createFromFormat('Y-m-d', $quotation_date);
         $final_quotation_date = $formatted_date->format('F j, Y');
         //group items by product name
-        $quotations = DB::table('products')
-                            ->join('product_quotation', 'products.id', '=', 'product_quotation.product_id')
-                            ->select('product_name', DB::raw('ROUND(AVG(product_price),2) as product_price'), DB::raw('SUM(quantity) as quantity'))
-                            ->where('quotation_id','=', $quotation_id)
+        //get items purchased and group them by product name based on the quotation id
+        $product_quotations = DB::table('product_quotation')
+                            ->select('product_name', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(sub_total) as total_price'))
+                            ->where('quotation_id','=',$id)
                             ->groupBy('product_name')
                             ->get();
         //download and export as pdf
         $dompdf = App::make('dompdf.wrapper');
         $dompdf->set_paper('A4');
-        $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','quotations', 'grand_total', 'customer_name', 'final_quotation_date')); 
+        $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date')); 
         return $dompdf->stream('Quotation_'.$id .'.pdf');
     }
     //search details from the quotation list
