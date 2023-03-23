@@ -77,6 +77,9 @@
             Customer Name: {{ $customer_name }}
         </p>
     </div>
+    <br>
+    <br>
+    <br>
     {{-- <table class="table table-bordered" >
         <thead>
           <tr style="background-color:#10345c; color:white">

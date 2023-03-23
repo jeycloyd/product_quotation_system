@@ -2,7 +2,7 @@
 @section('title', 'Add Customer')
 @section('content')
 @section('header','Add Customer')
-    <div>
+    {{-- <div>
         <form action="{{route('store.customers')}}" method="POST">
             @csrf
             <div>
@@ -27,7 +27,7 @@
                 <button type="submit">Add Customer</button>
             </div>
         </form>
-    </div>
+    </div> --}}
     {{-- <form>
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
@@ -44,4 +44,28 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form> --}}
+
+    <!--  FILL UP FORM (Start)-->
+    <div class="wrapper2">
+            <div>
+                <!--  REGISTRATION FORM (Start)-->
+                <h1 class="h1_CustomerRegistration"> ADD CUSTOMER </h1>
+                <form class="fillupform" action="{{route('store.customers')}}" method="POST">
+                    @csrf
+                    <div>
+                        @error('customer_name')
+                            <div>{{$message}}</div>
+                        @enderror
+                    </div>
+                    <div class="inputbox">  
+                        <input type="text" required class="@error('customer_name') is-invalid @enderror" name="customer_name" placeholder="Enter customer name...">
+                    </div>
+                    <div class="inputbox">
+                    <input type="text" required name="customer_contact_no" placeholder="Enter contact number...">
+                    </div>
+                    <button type="submit" class="btn-confirm border-0" >ADD CUSTOMER</button>   
+                </form>
+        </div>
+    </div>
+    <!--  FILL UP FORM (End)-->
 @endsection

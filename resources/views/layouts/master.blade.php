@@ -23,7 +23,7 @@
                     <!--  LOGO AND NAME OF THE WEBSITE (Start)-->
                         <div class="logo">
                             <img class="mediaonelogo" src= "{{asset('../images/global_images/media_one_logo.png')}}" alt="media one logo">    
-                            <a href="#">Media<span>One</span></a>
+                            <a href="/" style="text-decoration: none;" >Media<span>One</span></a>
                         </div>
              <div class="menu">
                 <ul>

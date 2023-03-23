@@ -10,9 +10,9 @@
 
 body {
   background-image: linear-gradient(rgba(255,255,255,0.1),rgba(255,255,255,0.1)), url(../images/global_images/background.png);
-  background-position: center;
+  /* background-position: center;
   height: 100%;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   background-size: cover;
 }
 
@@ -21,7 +21,12 @@ body {
 .navbar {
   width: 20%;
   height: 100%;
-  background-image: linear-gradient(rgba(6,67,153,0.6),rgba(9,144,240,0.6),rgba(0,255,177, 0.6));
+  background-image: linear-gradient(  /* MEDIAONE MAIN BACKGROUND */
+    rgba(20,24,70,3),
+    rgba(20,56,96,0.9),
+    rgba(18,128,152,5),
+    rgba(23,175,181,2),
+    rgba(186,241,243,1));
   position: absolute;
   padding: 0 25px;
 }
@@ -52,8 +57,6 @@ font-size: 30px;
 letter-spacing: 3px;
 margin: 30px;
 }
-
-
 /*  ----------------LOGO AND NAME OF THE WEBSITE (Start)----------------  */
 
 .navbar .logo a span{
@@ -69,6 +72,7 @@ padding: 10px;
 }
 
 .navbar .menu ul a {
+text-decoration: none;
 display: block;
 width: 190px;
 margin-bottom: 20px;
@@ -79,7 +83,7 @@ text-align: center;
 font-size: 12px;
 text-transform: uppercase;
 color: #fff;
-border-radius: 25px;
+border-radius: 7px;
 letter-spacing: 2px;
 transition: all 0.2s ease;
 }
@@ -103,3 +107,221 @@ background: #5bd485;
  width: 50em;
 }
 
+/*  ----------------------------- ADD CUSTOMER FORM (Start) -----------------------------  */
+
+.wrapper2 {
+  background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
+  position: absolute;
+  margin-left: -85px;
+  width: 35em;
+  padding-top: 15px;
+  padding-bottom: 100px;
+  border-radius: 7px;
+} 
+
+.h1_CustomerRegistration{
+  font-family: 'Ubuntu', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 6vh;
+  background: linear-gradient(90deg,#2ec2a3,#0f5bab); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.p {
+  font-family: 'Ubuntu', sans-serif;
+  justify-content: center;
+  align-items: center;
+}
+.fillupform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 20vh;
+  flex-direction: column;
+  gap: 25px;
+  background-image: linear-gradient(rgba(255,255,255,0.0),rgba(255,255,255,0.0));
+}
+
+
+.inputbox {
+  position: relative;
+  width: 370px;
+}
+  
+.inputbox input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(130,140,147,0.9);
+  background: 1d2b3a;
+  border-radius: 9px;
+  outline: none;
+  font-size: 1em;  
+}
+  
+.inputbox span {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 0.8em;
+  color: rgba(0,0,0,0.5);
+  text-transform: uppercase;
+}
+  
+.inputbox input:valid ~ span,
+.inputbox input:focus ~ span  { 
+  color: #828c93;
+  tranform: translateX(10px) translateY(-7px);
+  font-size: 0.01em;
+  padding: 5px;
+  margin-left: 10px;
+  margin-bottom: 20%;
+  background-image: linear-gradient(rgba(196,192,226,0.1),rgba(196,192,226,0.1));
+}
+  
+.inputbox input:valid,
+.inputbox input:focus  {
+  border: 1px solid #828c93;
+}
+
+.btn-confirm {
+  position: fixed; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
+  justify-content: center;
+  margin-right: 10px;
+  margin-top: 230px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px;
+  background: #1ac8cd;
+  width: 220px;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-confirm:hover, 
+.btn-confirm:active {
+  background: #5bd485;
+} 
+
+
+/*  -------------- ADD PRODUCT (Start) --------------  */
+
+
+
+
+.h1_ProductRegistration{
+  display: flex;
+  justify-content: center;
+align-items: center;
+min-height: 6vh;
+
+background: linear-gradient(90deg,#2ec2a3,#0f5bab); 
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+  /*  align-items: center;
+  justify-content: center;  */
+}
+
+
+.RegistrationSpan {
+  color: #FFFFFF;
+}
+
+.p {
+  display: flex;
+  justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+
+.productform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 10vh;
+  flex-direction: column;
+  gap: 10px;
+  background-image: linear-gradient(rgba(255,255,255,0.0),rgba(255,255,255,0.0));
+}
+
+/*  -------------- ADD PRODUCT (End) --------------  */
+
+.inputbox {
+  position: relative;
+  width: 370px;
+}
+  
+  .inputbox input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(130,140,147,0.9);
+  background: 1d2b3a;
+  border-radius: 9px;
+  outline: none;
+  font-size: 1em;  
+  }
+  
+  .inputbox span {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 0.8em;
+  color: rgba(0,0,0,0.5);
+  text-transform: uppercase;
+  }
+  
+  .inputbox input:valid ~ span,
+  .inputbox input:focus ~ span  {
+  
+  color: #828c93;
+  tranform: translateX(10px) translateY(-7px);
+  font-size: 0.01em;
+  padding: 5px;
+  margin-left: 10px;
+  margin-bottom: 20%;
+  background-image: linear-gradient(rgba(196,192,226,0.1),rgba(196,192,226,0.1));
+  
+  }
+  
+  .inputbox input:valid,
+  .inputbox input:focus  {
+  
+  border: 1px solid #828c93;
+  
+  }
+  
+  
+  
+.btn-confirm {
+  position: fixed; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
+  justify-content: center;
+  margin-right: 10px;
+  margin-top: 230px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px;
+  background: #1ac8cd;
+  width: 220px;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+.btn-confirm:hover, 
+.btn-confirm:active {
+  background: #5bd485;
+} 
+/*  ----------------------------- FORM (End) -----------------------------  */
+  

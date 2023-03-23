@@ -2,7 +2,7 @@
 @section('title', 'Add Product')
 @section('content')
 @section('header','Add Product')
-    <div>
+    {{-- <div>
         @if (\Session::has('success'))
             <div class="alert alert-success">
                 <ul>
@@ -43,5 +43,33 @@
                 <button type="submit">Add Product</button>
             </div>
         </form>
-    </div>
+    </div> --}}
+<!--  FILL UP FORM (Start)-->
+<div class="wrapper2">
+    <div class="fillup_container">
+        <div>
+            <!--  PRODUCT FORM (Start)-->
+            <h1 class="h1_ProductRegistration"> ADD PRODUCT </h1>
+            <form class="productform" action="{{route('store.products')}}" method="POST">
+                @csrf
+                <div>
+                    @error('product_name')
+                        <div>{{$message}}</div>
+                    @enderror
+                </div>
+                <div class="inputbox">  
+                    <input type="text" required class="@error('product_name') is-invalid @enderror" name="product_name" placeholder="Enter product name...">
+                </div>
+                <div class="inputbox">  
+                    <input type="text" required name="product_description" placeholder="Enter product description...">
+                </div>
+                <div class="inputbox">
+                    <input type="number" required name="product_price" min="1" step=".01" value="1">
+                </div>
+                <button type="submit" class="btn-confirm border-0" >ADD PRODUCT </button> 
+            </form>
+        </div>
+    </div>  
+</div>
+<!--  PRODUCT FORM (End)-->
 @endsection
