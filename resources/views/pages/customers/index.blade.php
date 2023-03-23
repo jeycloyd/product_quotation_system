@@ -27,7 +27,7 @@
                     <td>{{$customer->customer_contact_no}}</td>
                     <td>
                         <a href="{{route('show.customers',$customer->id)}}" class="btn btn-success">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <a href="{{route('destroy.customers',$customer->id)}}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>    
             @endforeach

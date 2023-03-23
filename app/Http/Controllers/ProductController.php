@@ -28,6 +28,7 @@ class ProductController extends Controller
         $product->product_name = $request->product_name;
         $product->product_description = $request->product_description;
         $product->product_price = $request->product_price;
+        $product->status = 'Active';
         $product->save();
         
         //return response
@@ -42,7 +43,7 @@ class ProductController extends Controller
     }
     //show list of added products
     public function index(){
-        $products = DB::table('products')->paginate(5);
+        $products = DB::table('products')->where('status','Active')->paginate(5);
         return view('pages/products/index', compact('products'));
     }
     //show the selected product details
@@ -73,7 +74,8 @@ class ProductController extends Controller
     //delete selected product from list
     public function destroy($id){
         $products = Product::findOrFail($id);
-        $products->delete();
+        $products->status = 'Inactive';
+        $products->save();
         return redirect('products/index')->with('success','product deleted successfully');
     }
 }

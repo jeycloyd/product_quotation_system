@@ -2,6 +2,7 @@
 @section('title', 'Make Quotation')
 @section('content')
 @section('header','Make Quotation')
+<div class="table-wrapper" style="width: 900px;">
     <div>
         <form action="{{route('add.products')}}" method="POST">
             @csrf
@@ -44,35 +45,34 @@
         <input type="text" hidden name="quotation_id" value="{{$generated_id}}">
         <input type="text" hidden name="customer_id" value="{{$selected_customer}}">
         <input type="text" hidden name="total_price" value="{{$grand_total}}">
-        <div>
-            <table>
-                <thead>
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Product Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Sub Total</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+                @foreach ($temp_tables as $temp_table)
                     <tr>
-                        <th>Product Name</th>
-                        <th>Quantity</th>
-                        <th>Price of Item</th>
-                        <th>Price</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        @foreach ($temp_tables as $temp_table)
-                            <tr>
-                                <td>{{$temp_table->product_name}}</td>
-                                <td>{{$temp_table->quantity}}</td>
-                                <td>{{$temp_table->unit_price}}</td>
-                                <td>{{$temp_table->total_price}}</td>
-                                <td><a href="{{route('destroy.quotationsProducts',$temp_table->product_name)}}">Remove</a></td>
-                            </tr> 
-                        @endforeach
-                    </tr>
-                </tbody>
-              </table>
-        </div>
+                        <td>{{$temp_table->product_name}}</td>
+                        <td>{{$temp_table->quantity}}</td>
+                        <td>{{$temp_table->unit_price}}</td>
+                        <td>{{$temp_table->total_price}}</td>
+                        <td>
+                            <a href="{{route('destroy.quotationsProducts',$temp_table->product_name)}}" class="btn btn-danger">Remove</a>
+                        </td>
+                    </tr>    
+                @endforeach
+            </tbody>
+          </table>
         <h3>Grand Total: {{'PHP '.$grand_total}} </h3>
         <div>
-            <button type="submit" {{ $temp_tables_isEmpty === 0 ? 'disabled' : ''}}>Make Quotation</button>
+            <button type="submit" {{ $temp_tables_isEmpty === 0 ? 'disabled' : ''}}>Create Quotation</button>
         </div>
     </form>
+</div>
 @endsection

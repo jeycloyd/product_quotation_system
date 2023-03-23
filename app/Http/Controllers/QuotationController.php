@@ -18,9 +18,9 @@ class QuotationController extends Controller
 {   
     //show select customer first
     public function showSelectCustomer(){
-        $customers = Customer::all();
+        $customers = DB::table('customers')->whereNull('deleted_at')->get();
         if($customers->isEmpty()){
-            return view('pages.customers.create');
+            return redirect('/customers/create');
         }else{
             return view('pages.quotations.select_customer',compact('customers'));
         } 
@@ -78,7 +78,7 @@ class QuotationController extends Controller
         $quotations = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
             ->select('customers.*', 'quotations.id' , 'quotations.created_at',)
-            ->whereNull('deleted_at')
+            ->whereNull('quotations.deleted_at')
             ->orderByDesc('quotations.created_at')
             ->paginate(5);
         return view('pages.quotations.view',compact('quotations'));
@@ -229,7 +229,7 @@ class QuotationController extends Controller
         $quotations = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
             ->select('customers.*', 'quotations.id' , 'quotations.created_at',)
-            ->whereNull('deleted_at')
+            ->whereNull('customers.deleted_at')
             ->where('customer_name', 'LIKE' , '%' . $search . '%')
             ->orderByDesc('quotations.created_at')
             ->paginate(5);

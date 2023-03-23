@@ -17,12 +17,25 @@ class CustomerController extends Controller
     //store data in customer table
     public function store(Request $request){
 
-        //validate data
+        //validate data and check if name already exist in the soft delete records
         $request->validate([
-            'customer_name' => 'required|unique:customers',
+            'customer_name' => [
+                'required',
+                Rule::unique('customers')->whereNull('deleted_at'),
+                function ($attribute, $value, $fail) {
+                    $softDeletedRecord = Customer::onlyTrashed()
+                        ->where('customer_name', $value)
+                        ->first();
+        
+                    if ($softDeletedRecord) {
+                        //restore the softdeleted data if it exists before
+                        $softDeletedRecord->restore();
+                        $fail("The name already exists before. It has been restored instead.");
+                    }
+                },
+            ],
             'customer_contact_no' => 'required'
         ]);
-
         //save data
         $customer = new Customer();
         $customer->customer_name = $request->customer_name;
@@ -34,7 +47,9 @@ class CustomerController extends Controller
     }
     //show list of all customers
     public function index(){
-        $customers = DB::table('customers')->paginate(5);
+        $customers = DB::table('customers')
+                    ->whereNull('deleted_at')
+                    ->paginate(5);
         return view('pages/customers/index', compact('customers'));
     }
     //show a specific customer info
@@ -67,5 +82,11 @@ class CustomerController extends Controller
                       ->where('customer_name', 'LIKE' , '%' . $search . '%')
                       ->paginate(5);
         return view('pages.customers.index', compact('customers'));
+    }
+    //delete customers 
+    public function destroy($id){
+        $customers = Customer::findOrFail($id);
+        $customers->delete();
+        return redirect()->back()->with('success','Customer details removed successfully');
     }
 }
