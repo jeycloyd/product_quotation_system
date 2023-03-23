@@ -35,9 +35,6 @@ class QuotationController extends Controller
         }
         if(!isset($customers, $products, $selected_customer, $count_no_of_transactions, $select_customer, $customer_name, $generated_id)){
             $customers = Customer::all();
-            
-            
-
             //extract value of customer_name via id
             $selected_customer = $request->customer_name;
 
@@ -147,9 +144,10 @@ class QuotationController extends Controller
         $quotation->customer_id = $request->customer_id;
         $grand_total = $request->grand_total;
         $quotation->save();
-
         //transfer table info from temp tables to product_quotation table
-        $data = DB::table('temp_tables')->select('product_id', 'quotation_id', 'quantity', 'created_at' , 'updated_at','product_name','unit_price','total_price')->get();
+        $data = DB::table('temp_tables')->select('product_id', 'quotation_id', 'quantity', 'created_at' , 'updated_at','product_name','unit_price','total_price')
+                ->where('quotation_id',$request->quotation_id)
+                ->get();
 
         foreach ($data as $row) {
             DB::table('product_quotation')->insert([
@@ -230,6 +228,7 @@ class QuotationController extends Controller
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
             ->select('customers.*', 'quotations.id' , 'quotations.created_at',)
             ->whereNull('customers.deleted_at')
+            ->whereNull('quotations.deleted_at')
             ->where('customer_name', 'LIKE' , '%' . $search . '%')
             ->orderByDesc('quotations.created_at')
             ->paginate(5);

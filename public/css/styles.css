@@ -113,8 +113,9 @@ background: #5bd485;
   background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
   position: absolute;
   margin-left: -85px;
+  margin-top: -50px;
   width: 35em;
-  padding-top: 15px;
+  padding-top: 10px;
   padding-bottom: 100px;
   border-radius: 7px;
 } 

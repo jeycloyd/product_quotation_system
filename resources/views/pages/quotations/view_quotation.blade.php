@@ -30,6 +30,6 @@
             </tr>
         </tbody>
       </table>
-      <h1>Grand Total: {{$grand_total}}</h1>
+      <h1>Grand Total: PHP {{number_format($grand_total)}}</h1>
       <a href="{{ route('export.quotations', $quotation_id) }}" class="btn btn-primary">Download as PDF</a>
 @endsection
