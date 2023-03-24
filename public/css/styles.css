@@ -10,9 +10,6 @@
 
 body {
   background-image: linear-gradient(rgba(255,255,255,0.1),rgba(255,255,255,0.1)), url(../images/global_images/background.png);
-  /* background-position: center;
-  height: 100%;
-  background-repeat: no-repeat; */
   background-size: cover;
 }
 
@@ -102,7 +99,7 @@ background: #5bd485;
 /*  ----------------TABLE WRAPPER FOR THE VIEW TABLES----------------  */
 
 .table-wrapper {
- margin-left: -190px;
+ margin-left: -200px;
  margin-top: -70px;
  width: 50em;
 }
@@ -325,4 +322,267 @@ flex-direction: column;
   background: #5bd485;
 } 
 /*  ----------------------------- FORM (End) -----------------------------  */
+
+/* .container {
+  position: relative;
+}
+
+.signature-container {
+  position: absolute;
+} */
+
+/* --------------MAKE QUOTATION NEXT PROCESS WRAPPER------------- */
+.wrapper4 { 
+  background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
+  position: relative;
+  width: 100%;
+  height: 168px;
+}
+
+.float_quotationcontainer {
+}
+
+.h1_AddQuotation{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  min-height: 7 vh;
+  font-weight: 3px;
+  background: linear-gradient(90deg,#2ec2a3,#0f5bab); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.p {
+  font-family: 'Ubuntu', sans-serif;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-dropdown .dropdown-menu {
+  margin-left: 90%;
+  margin-top: 295px;
+  width:70%;
+  padding: 10px;
+}
+
+/* QTY DROPDOWN */
+
+.qtyquotation {
+  position: absolute;
+  margin-left: 830px;
+  width: 170px;
+  margin-top: 110px;
+}
+
+.qtyquotation input {
+  width: 100%;
+  padding: 7px;
+  border: 1px solid rgba(130,140,147,0.9);
+  background: 1d2b3a;
+  border-radius: 9px;
+  outline: none;
+  font-size: 1em;  
+}
+
+.qtyquotation span {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 0.8em;
+  color: rgba(0,0,0,0.5);
+  text-transform: uppercase;
+}
+
+.qtyquotation input:valid ~ span,
+.qtyquotation input:focus ~ span  {
+  color: #828c93;
+  tranform: translateX(10px) translateY(-7px);
+  font-size: 0.01em;
+  padding: 5px;
+  margin-left: 10px;
+  background-image: linear-gradient(rgba(196,192,226,0.1),rgba(196,192,226,0.1));
+}
+
+.qtyquotation input:valid,
+.qtyquotation input:focus  {
+border: 1px solid #828c93;
+}
+
+.btn-add {
+  display: block; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
+  margin-left: 50px;
+  margin-top: 15px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px;
+  background: #1ac8cd;
+  width: 100px;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-clear {
+  display: block; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
+    margin-left: 180px;
+    margin-top: -32px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    background: #7bafba;
+    width: 100px;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-makequotation {
+  display: block;
+  justify-content: center;
+  margin-left: 50px;
+  margin-top: 10px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 15px;
+  background: #1ac8cd;
+  width: 200px;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.btn-makequotation:hover, 
+.btn-makequotation:active {
+  background: #5bd485;
+}
+
+/* -----------------GRAND TOTAL---------------------------------------------------------- */
+.wrapper5 {
+  background-image: linear-gradient(rgba(196,192,226,0.1),rgba(196,192,226,0.1));
+  margin-left: 0.3%;
+  margin-top: 1px;
+  width: 100%;
+  height: 270%;
+}
+.h4_GrandTotalName  {
+  padding-left: 50px;
+  background: linear-gradient(90deg,#536976,#292E49); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/*------------------------VIEW QUOTATION---------------------------------*/
+
+
+.content_table {   /* TABLE */
+  margin: auto;
+  border-collapse: collapse;
+  border-color: black;
+  text-align: center;
+  width: 90%;
+}
+.table-title {   /* AUXILIARY EQUIPMENTS */
+  background-color: #163f75;
+  color: #ffffff;
+  padding: auto;
+  text-align: left;
+  height: 49px;
+  border-bottom: 0.9px solid #163f75;
+  border-right: 0.9px solid #163f75;
+  border-left: 0.9px solid #163f75; 
+}        .tabledetails th{
+  height: 49px;
+  padding: auto;
+  text-align: center;
+  border-bottom: 0.9px solid #163f75;
+  border-right: 0.9px solid #163f75;
+  border-left: 0.9px solid #163f75; 
+}
+.content_table td  {   
+  background-color: white;
+  padding: 12px 15px;
+  border-bottom: 0.9px solid #163f75;
+  border-right: 0.9px solid #163f75;
+  border-left: 0.9px solid #163f75;    
+}
+.content_table tbody tr {    /* BORDERS */
+  border-bottom: 0.9px solid #163f75;
+  border-right: 0.9px solid #163f75;
+  border-left: 0.9px solid #163f75;
+}
+
+/*---------------- SUCCESS INFORMATION (Start) ---------------- */
+
+
+.wrappersuccess {
+    background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
+    margin-left: -34%;
+    margin-top: -18%;
+    padding-top: 200px;
+    padding-left: 110px;
+    width: 1200px;
+    height: 640px;
+    border-radius: 5px;
+  }
+  .h1_SuccessInformation  {
+    font-weight: bold;
+    padding-left: 40px;
+    font-size: 71px;
+    min-height: 3vh;
+    background: linear-gradient(70deg,#014082,#0dd0df); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .btn-makeanewquotation {
+    display: block;
+    margin-left: 33%;
+    margin-top: 50px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 13px;
+    background: #1ac8cd;
+    width: 220px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  }
   
+  .btn-viewquotation {
+    display:block;
+    margin-left: 33%;
+    margin-top: 25px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 13px;
+    background: #1ac8cd;
+    width: 220px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  /*---------------- SUCCESS INFORMATION (End) ---------------- */

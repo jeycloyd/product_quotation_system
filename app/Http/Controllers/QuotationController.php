@@ -59,11 +59,11 @@ class QuotationController extends Controller
                             ->groupBy('product_name')
                             ->get();
             //check if temp_table is empty
-            $temp_tables_isEmpty = DB::table('temp_tables')->count();
+            $temp_tables_count = DB::table('temp_tables')->where('quotation_id', $generated_id)->count();
             //show grand total
             $grand_total = DB::table('temp_tables')->where('quotation_id', '=' , $generated_id)->sum('total_price');
         }
-        return view('pages.quotations.create', compact('customers','products','customer_name','generated_id','selected_customer','temp_tables','grand_total','temp_tables_isEmpty'));
+        return view('pages.quotations.create', compact('customers','products','customer_name','generated_id','selected_customer','temp_tables','grand_total','temp_tables_count'));
     }
     //show a success page when quotation has been made and saved successfully
     public function success(){
@@ -184,7 +184,7 @@ class QuotationController extends Controller
                             ->select('product_name', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(sub_total) as total_price'))
                             ->where('quotation_id','=',$id)
                             ->groupBy('product_name')
-                            ->get();
+                            ->paginate(5);
         return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date'));
     }
     //delete a quotation record from the list

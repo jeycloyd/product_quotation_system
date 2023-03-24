@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('title', 'Select Customer')
 @section('content')
-@section('header','Create Quotation')
     <div>
         <!--  FILL UP FORM (Start)-->
         <div class="wrapper2">

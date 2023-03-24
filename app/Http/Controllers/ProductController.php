@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -41,6 +42,13 @@ class ProductController extends Controller
                     ->delete();
         return redirect()->back()->with('success','Product deleted successfully');
     }
+    //subtract one quantity from the temp tables products list
+    public function subtractOne($id){
+        $quotations = DB::table('temp_tables')
+                    ->where('quotation_id', $id)
+                    ->decrement('quantity',1);
+        return view('pages.quotations.view', compact('quotations'));
+    }
     //show list of added products
     public function index(){
         $products = DB::table('products')->where('status','Active')->paginate(5);
@@ -57,6 +65,16 @@ class ProductController extends Controller
     //update info of selected product
     public function update($id, Request $request){
         $products = Product::findOrFail($id);
+
+        // //validate data
+        $request->validate([
+            'product_name' => [ 'required',
+                Rule::unique('products')->ignore($id),
+            ],
+            'product_price' => 'required'
+        ]);
+
+        //update data
         $products->product_name = $request->product_name;
         $products->product_price = $request->product_price;
         $products->save();

@@ -116,58 +116,63 @@
         </tr>
         </tbody>
     </table> --}}
-    <table class="content_table">
-        <thead>
-           <tr>
-                 <th class="table-title" colspan="5"> AUXILIARY EQUIPMENT </th>
-           </tr>
-           <tr class="tabledetails">
-                <th class="option"> Option </th>
-                <th class="description"> Description </th>
-                <th class="qty"> Qty </th>
-                <th class="unitprice"> Unit Price </th>
-                <th class="subtotal"> Sub Total </th>     
-           </tr>
-       </thead>
-       <tbody>
-            @foreach ($product_quotations as $product_quotation)
+        <table class="content_table">
+            <thead>
+               <tr>
+                     <th class="table-title" colspan="5"> AUXILIARY EQUIPMENT </th>
+               </tr>
+               <tr class="tabledetails">
+                    <th class="option"> Option </th>
+                    <th class="description"> Description </th>
+                    <th class="qty"> Qty </th>
+                    <th class="unitprice"> Unit Price </th>
+                    <th class="subtotal"> Sub Total </th>     
+               </tr>
+           </thead>
+           <tbody>
+                @foreach ($product_quotations as $product_quotation)
+                    <tr>
+                        <td class="option"> {{$loop->iteration}} </td>
+                        <td class="description"> {{$product_quotation->product_name}} </td>
+                        <td class="qty"> {{$product_quotation->quantity}} </td>
+                        <td class="unitprice"> {{$product_quotation->unit_price}} </td>
+                        <td class="subtotal">{{number_format($product_quotation->unit_price * $product_quotation->quantity)}} </td>      
+                    </tr> 
+                @endforeach
                 <tr>
-                    <td class="option"> {{$loop->iteration}} </td>
-                    <td class="description"> {{$product_quotation->product_name}} </td>
-                    <td class="qty"> {{$product_quotation->quantity}} </td>
-                    <td class="unitprice"> {{$product_quotation->unit_price}} </td>
-                    <td class="subtotal">{{number_format($product_quotation->unit_price * $product_quotation->quantity)}} </td>      
-                </tr> 
-            @endforeach
-            <tr>
-                <td></td>
-                <td style="text-align: left">***Nothing Follows***</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-           </tr>
-           <tr>
-                 <td style="text-align: right; background-color:#163f75; color:white" colspan="3"> <strong> TOTAL </strong> </td>
-                 <td colspan="2">PHP {{number_format($grand_total)}} </td>
-           </tr>
-        </tbody>
-   </table>
-    <footer style="position: absolute; bottom: 50%; width: 100%;">
-        <div>
-            <table style="width: 100%;">
-                <tr>
-                    <td>
-                                Prepared By: <br>
-                        <strong> MARK ADRIAN RESTAURO</strong> <br>
-                               Marketing Manager
-                    </td>
-                    <td>        Approved By: <br>
-                        <strong>RUINZE A. MALINAO</strong> <br>
-                            CEO | Mediaone Software Solutions
-                    </td>
-                </tr>
-            </table>
+                    <td></td>
+                    <td style="text-align: left">***Nothing Follows***</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+               </tr>
+               <tr>
+                     <td style="text-align: right; background-color:#163f75; color:white" colspan="3"> <strong> TOTAL </strong> </td>
+                     <td colspan="2">PHP {{number_format($grand_total)}} </td>
+               </tr>
+            </tbody>
+       </table>
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
+        <div style="position: absolute; bottom: 30%; width: 100%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                                    Prepared By: <br>
+                            <strong> MARK ADRIAN RESTAURO</strong> <br>
+                                   Marketing Manager
+                        </td>
+                        <td>        Approved By: <br>
+                            <strong>RUINZE A. MALINAO</strong> <br>
+                                CEO | Mediaone Software Solutions
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
-    </footer>
 </body>
 </html>

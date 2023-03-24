@@ -1,13 +1,11 @@
 @extends('layouts.master')
 @section('title', 'Success')
 @section('content')
-    <H1>Quotation has been created successfully</H1>
-    <ul>
-        <li>
-            <a href="/quotations/select-customer">Make a new Quotation</a>
-        </li>
-        <li>
-            <a href="/quotations/view">View Quotations</a>
-        </li>
-    </ul>
+    <!--  FILL UP FORM (Start)-->
+    <div class="wrappersuccess">
+        <h1 class="h1_SuccessInformation"> QUOTATION HAS BEEN CREATED SUCCESSFULLY!</h1>
+        <a href="/quotations/select-customer" class="btn-makeanewquotation"> MAKE A NEW QUOTATION </a>
+        <a href="/quotations/view" class="btn-viewquotation" > VIEW QUOTATION </a>
+    </div>	
+    <!--  FILL UP FORM (End)-->
 @endsection
