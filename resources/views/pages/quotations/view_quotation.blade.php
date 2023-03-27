@@ -7,7 +7,7 @@
         <h4>Quoted At: {{ $quotation_date }}</h4>
         <h4>Customer Name: {{ $customer_name }}</h4>
     </div>
-    <a href="{{ route('export.quotations', $quotation_id) }}" class="btn btn-primary" style="margin-left:700px">Download as PDF</a>
+    <a href="{{ route('downloadPDF.quotations', $quotation_id) }}" class="btn btn-primary" style="margin-left:700px">Export PDF</a>
     <br>
     <br>
     <table class="content_table">

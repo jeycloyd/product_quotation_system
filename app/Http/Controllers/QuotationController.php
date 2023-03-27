@@ -193,7 +193,7 @@ class QuotationController extends Controller
         $quotations->delete();
         return redirect()->back()->with('success','data has been deleted successfully');
     }
-    public function export($id){
+    public function downloadPDF($id){
         $quotation_id = $id;
         //get the customer's name for this quotation
         $customer_name = DB::table('customers')

@@ -53,6 +53,7 @@ Route::post('/quotations/store', [QuotationController::class, 'store'])->name('s
 Route::get('quotations/delete/{id}',[QuotationController::class, 'destroy'])->name('destroy.quotations');
 Route::get('quotations/search/',[QuotationController::class, 'search'])->name('search.quotations');
 //PDF for Quotation
-Route::get('quotations/export/{id}',[QuotationController::class, 'export'])->name('export.quotations');
+Route::get('quotations/download/{id}',[QuotationController::class, 'downloadPDF'])->name('downloadPDF.quotations');
+Route::get('quotations/preview/{id}',[QuotationController::class, 'previewPDF'])->name('previewPDF.quotations');
 
 
