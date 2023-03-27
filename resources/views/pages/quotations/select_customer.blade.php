@@ -1,19 +1,22 @@
 @extends('layouts.master')
 @section('title', 'Select Customer')
 @section('content')
-    <div>
+    
         <!--  FILL UP FORM (Start)-->
+        {{-- @if (\Session::has('success'))
+                <div class="alert alert-success">
+                        {!! \Session::get('success') !!}
+                </div>
+        @endif --}}
         <div class="wrapper2">
+            @if (\Session::has('success'))
+                <div class="alert alert-success">
+                    {!! \Session::get('success') !!}
+                </div>
+            @endif
             <div>
                 <!--  REGISTRATION FORM (Start)-->
                 <h1 class="h1_CustomerRegistration"> SELECT CUSTOMER </h1>
-                @if (\Session::has('success'))
-                <div class="alert alert-success">
-                    <ul>
-                        <li>{!! \Session::get('success') !!}</li>
-                    </ul>
-                </div>
-                @endif
                 <form action="{{route('create.quotations')}}" method="GET" class="fillupform">
                     @csrf
                     <div>
@@ -28,5 +31,4 @@
             </div>
         </div>
         <!--  FILL UP FORM (End)-->
-    </div>
 @endsection

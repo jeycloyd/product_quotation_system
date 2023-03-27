@@ -14,6 +14,7 @@
             border-collapse: collapse;
             border-color: black;
             text-align: center;
+            margin-bottom: 50px;
             width: 90%;
         }
         .table-title {   /* AUXILIARY EQUIPMENTS */
@@ -152,13 +153,7 @@
                </tr>
             </tbody>
        </table>
-       <br>
-       <br>
-       <br>
-       <br>
-       <br>
-       <br>
-        <div style="position: absolute; bottom: 30%; width: 100%;">
+        <div style="position: absolute; width: 100%; margin-left: 36px; margin-top:50px">
                 <table style="width: 100%;">
                     <tr>
                         <td>
