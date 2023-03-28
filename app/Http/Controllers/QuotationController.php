@@ -8,11 +8,8 @@ use App\Models\Customer;
 use App\Models\Quotation;
 use App\Models\TempTable;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Type\Decimal;
-use App\Models\ProductQuotation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
-use Symfony\Component\Console\Input\Input;
 
 class QuotationController extends Controller
 {   
@@ -118,6 +115,11 @@ class QuotationController extends Controller
 
         //check if what button was pressed
         if ($request->input('action') == 'add') {
+            //prevent inserting into temp tables if the quotation id is already existing in the database
+            $quotation_id_check = DB::table('quotations')->where('id',$request->quotation_id)->value('id');
+            if(($quotation_id_check == $request->quotation_id)){
+                return redirect()->back();
+            }
             //check if product name already exists in temp table
             $temp_table = TempTable::where('product_name', $product_name)
                                     ->where('quotation_id', $quotation_id)
@@ -147,33 +149,69 @@ class QuotationController extends Controller
     }
     //store data to quotations table
     public function store(Request $request){
-        
-        $quotation = new Quotation();
-        $quotation->id = $request->quotation_id;
-        $quotation->quotation_date =$request->date;
-        $quotation->customer_id = $request->customer_id;
-        $grand_total = $request->grand_total;
-        $quotation->save();
-        //transfer table info from temp tables to product_quotation table
-        $data = DB::table('temp_tables')->select('product_id', 'quotation_id', 'quantity', 'created_at' , 'updated_at','product_name','unit_price','total_price')
-                ->where('quotation_id',$request->quotation_id)
-                ->get();
-
-        foreach ($data as $row) {
-            DB::table('product_quotation')->insert([
-                'product_id' => $row->product_id,
-                'quotation_id' => $row->quotation_id,
-                'quantity' => $row->quantity,
-                'product_name' => $row->product_name,
-                'unit_price' => $row->unit_price,
-                'sub_total' => $row->total_price,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-        }
-        //empty table temp based on the quotation id
-        DB::table('temp_tables')->where('quotation_id', '=' , $request->quotation_id)->delete();
-        return view('pages.quotations.success');
+        //check first if the quotation already exists in the quotations database
+        $quotation_id_check = DB::table('quotations')->where('id',$request->quotation_id)->value('id');
+        if(!($request->quotation_id === $quotation_id_check)){
+            //download pdf and insert data into the quotations table
+            $quotation = new Quotation();
+            $quotation->id = $request->quotation_id;
+            $quotation->quotation_date =$request->date;
+            $quotation->customer_id = $request->customer_id;
+            $grand_total = $request->grand_total;
+            $quotation->save();
+            //transfer table info from temp tables to product_quotation table
+            $data = DB::table('temp_tables')->select('product_id', 'quotation_id', 'quantity', 'created_at' , 'updated_at','product_name','unit_price','total_price')
+                    ->where('quotation_id',$request->quotation_id)
+                    ->get();
+            foreach ($data as $row) {
+                DB::table('product_quotation')->insert([
+                    'product_id' => $row->product_id,
+                    'quotation_id' => $row->quotation_id,
+                    'quantity' => $row->quantity,
+                    'product_name' => $row->product_name,
+                    'unit_price' => $row->unit_price,
+                    'sub_total' => $row->total_price,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+            //empty table temp based on the quotation id
+            DB::table('temp_tables')->where('quotation_id', '=' , $request->quotation_id)->delete();
+            // ----------------------------------- PDF CODE HERE-------------------------------------------------------------//
+            $quotation_id = $request->quotation_id;
+            $product_quotations = DB::table('product_quotation')
+                                ->select('product_name', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(sub_total) as total_price'))
+                                ->where('quotation_id','=',$quotation_id)
+                                ->groupBy('product_name')
+                                ->get();
+            $customer_name = DB::table('customers')->where('id',$request->customer_id)->value('customer_name');
+            $final_quotation_date = DB::table('quotations')->where('id',$quotation_id)->value('created_at');
+            $grand_total = DB::table('product_quotation')->select(DB::raw('SUM(sub_total) as total_price'))->where('quotation_id',$quotation_id)->value('total_price');
+            //download and export as pdf
+            $dompdf = App::make('dompdf.wrapper');
+            $dompdf->set_paper('A4');
+            $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date')); 
+            $pdf = $dompdf->render();
+            return $dompdf->download('Quotation_'.$quotation_id .'.pdf');
+        }else{
+            //download only the pdf of the quotation based on the id
+            // ----------------------------------- PDF CODE HERE-------------------------------------------------------------//
+            $quotation_id = $request->quotation_id;
+            $product_quotations = DB::table('product_quotation')
+                                ->select('product_name', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(sub_total) as total_price'))
+                                ->where('quotation_id','=',$quotation_id)
+                                ->groupBy('product_name')
+                                ->get();
+            $customer_name = DB::table('customers')->where('id',$request->customer_id)->value('customer_name');
+            $final_quotation_date = DB::table('quotations')->where('id',$quotation_id)->value('created_at');
+            $grand_total = DB::table('product_quotation')->select(DB::raw('SUM(sub_total) as total_price'))->where('quotation_id',$quotation_id)->value('total_price');
+            //download and export as pdf
+            $dompdf = App::make('dompdf.wrapper');
+            $dompdf->set_paper('A4');
+            $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date')); 
+            $pdf = $dompdf->render();
+            return $dompdf->download('Quotation_'.$quotation_id .'.pdf');
+        } 
     }
     //Show the details of a selected quotation
     public function show($id){

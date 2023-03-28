@@ -13,6 +13,49 @@ body {
   background-size: cover;
 }
 
+/*  ----------------------------- HOME PAGE (Start) -----------------------------  */
+
+
+.homewrapper {
+  
+
+  position: fixed;
+  margin-left: 20%;
+  margin-bottom: 20%;
+  width: 80%;
+  height: 115%;
+    
+  }
+  
+  
+  .homewallpaper {
+    
+  border-radius: 3px;
+  margin-bottom: 30%;
+  align-items: center;
+  width:100%;
+  height:100%;
+  
+  }
+  
+  
+  .h1_HomeLabel  {
+    position: relative;
+    font-family: ;
+  min-height: 3vh;
+  font-size: 71px;
+  
+  background: linear-gradient(70deg,#014082,#0dd0df); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  }
+  
+  
+  
+/*  ----------------------------- HOME PAGE (End) -----------------------------  */
+
+
 /*  ----------------NAVIGATION BAR (Start)----------------  */
 
 .navbar {
@@ -100,7 +143,7 @@ background: #5bd485;
 
 .table-wrapper {
  margin-left: -200px;
- margin-top: -70px;
+ margin-top: -110px;
  width: 50em;
 }
 

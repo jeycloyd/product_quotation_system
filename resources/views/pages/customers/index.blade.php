@@ -3,6 +3,12 @@
 @section('content')
 @section('header','View Customers')
   <div class="table-wrapper">
+    @if (\Session::has('success'))
+        <div class="alert alert-success">
+              {!! \Session::get('success') !!}
+        </div>
+    @endif
+    <a href="/customers/create" class="btn btn-success" style="margin-bottom: 15px">Add New Customer</a>
       <form action="{{route('search.customers')}}" method="GET">
           <div class="input-group mb-3">
               @csrf
@@ -26,7 +32,8 @@
                       <td>{{$customer->customer_name}}</td>
                       <td>{{$customer->customer_contact_no}}</td>
                       <td>
-                          <a href="{{route('show.customers',$customer->id)}}" class="btn btn-success">Edit</a>
+                          <a href="{{route('view.customers',$customer->id)}}" class="btn btn-dark">View</a>
+                          <a href="{{route('show.customers',$customer->id)}}" class="btn btn-warning">Edit</a>
                           <a href="{{route('destroy.customers',$customer->id)}}" class="btn btn-danger">Delete</a>
                       </td>
                   </tr>    

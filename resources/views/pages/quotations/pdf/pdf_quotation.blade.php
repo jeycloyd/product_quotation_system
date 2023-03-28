@@ -149,7 +149,7 @@
                </tr>
                <tr>
                      <td style="text-align: right; background-color:#163f75; color:white" colspan="3"> <strong> TOTAL </strong> </td>
-                     <td colspan="2">PHP {{number_format($grand_total,2)}} </td>
+                     <td colspan="2"><strong>PHP {{number_format($grand_total,2)}}</strong></td>
                </tr>
             </tbody>
        </table>

@@ -43,7 +43,7 @@ class CustomerController extends Controller
         $customer->save();
         
         //return response
-        return redirect('/quotations/select-customer')->with('success','Customer added successfully');
+        return redirect('customers/index')->with('success','Customer added successfully!');
     }
     //show list of all customers
     public function index(){
@@ -69,10 +69,16 @@ class CustomerController extends Controller
             'customer_contact_no' => 'required'
         ]);
         $customer = Customer::findOrFail($id);
-        $customer->customer_name = $request->customer_name;
-        $customer->customer_contact_no = $request->customer_contact_no;
-        $customer->save();
-        return redirect('customers/index')->with('success', 'customer details have been updated');
+        $customer_name = DB::table('customers')->where('customer_name', $request->customer_name)->value('customer_name');
+        if($customer_name == $request->customer_name){
+            return redirect('customers/index');
+        }else{
+            $customer->customer_name = $request->customer_name;
+            $customer->customer_contact_no = $request->customer_contact_no;
+            $customer->save();
+            return redirect('customers/index')->with('success', 'Customer details have been updated');
+        }
+        
     }
     //search details from the customer list
     public function search(Request $request){
@@ -87,6 +93,17 @@ class CustomerController extends Controller
     public function destroy($id){
         $customers = Customer::findOrFail($id);
         $customers->delete();
-        return redirect()->back()->with('success','Customer details removed successfully');
+        return redirect()->back()->with('success','Customer removed successfully!');
+    }
+    //show all quotations made by a specific user
+    public function view($id){
+        // $customers = Customer::all();
+        $customer_name = Customer::where('id',$id)->value('customer_name');
+        $customer_quotations = DB::table('quotations')
+                     ->join('customers' , 'customers.id' , '=' , 'quotations.customer_id')
+                     ->select('quotations.id as quotation_id', 'quotations.created_at', 'customers.id as customer_id')
+                     ->where('customers.id',$id)
+                     ->paginate(5);
+        return view('pages.customers.view_customer',compact('customer_quotations','customer_name'));
     }
 }

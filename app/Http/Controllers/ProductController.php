@@ -25,7 +25,6 @@ class ProductController extends Controller
             $product->status = 'Active';
             $product->save();
             return redirect()->back()->with('message','Product details already exists and has been restored.');
-            dd(session()->all());
         } else {
             // product does not exist, add it to the database
             $request->validate([
@@ -44,7 +43,7 @@ class ProductController extends Controller
             $product->status = 'Active';
             $product->save();
             //return response
-            return redirect()->back()->with('success','Product added successfully');
+            return redirect('/products/index')->with('success','Product added successfully');
         }  
     }
     //delete a product from the temp tables 
@@ -101,11 +100,16 @@ class ProductController extends Controller
             'product_price' => 'required'
         ]);
 
-        //update data
-        $products->product_name = $request->product_name;
-        $products->product_price = $request->product_price;
-        $products->save();
-        return redirect('/products/index')->with('success','Product details have been updated');
+        $product_name = DB::table('products')->where('product_name', $request->product_name)->value('product_name');
+        if($product_name == $request->product_name){
+            return redirect('products/index');
+        }else{
+            //update data
+            $products->product_name = $request->product_name;
+            $products->product_price = $request->product_price;
+            $products->save();
+            return redirect('/products/index')->with('success','Product details have been updated');
+        }
     }
     //search details from the customer list
     public function search(Request $request){
@@ -121,6 +125,6 @@ class ProductController extends Controller
         $products = Product::findOrFail($id);
         $products->status = 'Inactive';
         $products->save();
-        return redirect('products/index')->with('success','product deleted successfully');
+        return redirect('products/index')->with('success','Product deleted successfully!');
     }
 }
