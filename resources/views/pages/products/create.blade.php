@@ -5,6 +5,11 @@
 <div class="wrapper2">
     <div class="fillup_container">
         <div>
+            @if (\Session::has('success'))
+                <div class="alert alert-success">
+                    {!! \Session::get('success') !!}
+                </div>
+            @endif
             <!--  PRODUCT FORM (Start)-->
             <h1 class="h1_ProductRegistration"> ADD PRODUCT </h1>
             <form class="productform" action="{{route('store.products')}}" method="POST">
@@ -14,6 +19,13 @@
                     @error('product_name')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
+                    @if(session('message'))
+                    <div class="invalid-feedback" style="display: block;
+                    width: 100%;
+                    margin-top: .25rem;
+                    font-size: 80%;
+                    color: #dc3545;">{{ session('message') }}</div>
+                    @endif
                 </div>
                 <div class="inputbox">  
                     <input type="text" required name="product_description" placeholder="Enter product description...">

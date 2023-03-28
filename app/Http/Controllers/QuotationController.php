@@ -114,21 +114,31 @@ class QuotationController extends Controller
 
         //insert into product_quotation table
         $temp_tables = TempTable::all();
-        $temp_table = New TempTable();
-        $temp_table->product_id = $product_id;
-        $temp_table->product_name = $product_name;
-        $temp_table->product_name = $product_name;
-        $temp_table->product_description = 'This is a temporary description.';
-        $temp_table->quotation_id = $quotation_id;
-        $temp_table->quantity = $quantity;
-        $temp_table->unit_price = $product_price;
-        $temp_table->total_price = $total;
         $grand_total = DB::table('temp_tables')->where('quotation_id', '=' , $generated_id)->sum('total_price');
 
         //check if what button was pressed
         if ($request->input('action') == 'add') {
-            // perform save action
-            $temp_table->save();
+            //check if product name already exists in temp table
+            $temp_table = TempTable::where('product_name', $product_name)
+                                    ->where('quotation_id', $quotation_id)
+                                    ->first();
+            if ($temp_table) {
+                // Product exists, add the quantity
+                $temp_table->quantity += $request->quantity;
+                $temp_table->total_price = $temp_table->quantity * $temp_table->unit_price;
+                $temp_table->save();
+            }else{
+                $temp_table = New TempTable();
+                $temp_table->product_id = $product_id;
+                $temp_table->product_name = $product_name;
+                $temp_table->quantity = $quantity;
+                $temp_table->product_description = 'This is a temporary description.';
+                $temp_table->quotation_id = $quotation_id;
+                $temp_table->quantity = $quantity;
+                $temp_table->unit_price = $product_price;
+                $temp_table->total_price = $quantity * $product_price;
+                $temp_table->save();
+            }
         } elseif ($request->input('action') == 'clear') {
             // perform clear 
             DB::table('temp_tables')->where('quotation_id', '=' , $generated_id)->delete();

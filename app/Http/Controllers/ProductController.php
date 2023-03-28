@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\TempTable;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -16,38 +17,64 @@ class ProductController extends Controller
     
     //store data to products table
     public function store(Request $request){
-
-        // //validate data
-        $request->validate([
-            'product_name' => 'required|unique:products',
-            'product_description' => 'required',
-            'product_price' => 'required'
-        ]);
-
-        //save data
-        $product = new Product();
-        $product->product_name = $request->product_name;
-        $product->product_description = $request->product_description;
-        $product->product_price = $request->product_price;
-        $product->status = 'Active';
-        $product->save();
-        
-        //return response
-        return redirect()->back()->with('success','Product added successfully');
+        $product = Product::where('product_name', $request->product_name)
+                    ->where('status','Inactive')
+                    ->first();
+        if ($product) {
+            // product already exists, update its status to 'Active'
+            $product->status = 'Active';
+            $product->save();
+            return redirect()->back()->with('message','Product details already exists and has been restored.');
+            dd(session()->all());
+        } else {
+            // product does not exist, add it to the database
+            $request->validate([
+                'product_name' => 'required|unique:products',
+                'product_description' => 'required',
+                'product_price' => 'required',
+            ]);
+            $product = new Product([
+                'product_name' => $request->product_name,
+                'product_description' => $request->product_description,
+                'product_price' => $request->product_price,
+                'status' => 'Active',
+            ]);
+            $product->product_description = $request->product_description;
+            $product->product_price = $request->product_price;
+            $product->status = 'Active';
+            $product->save();
+            //return response
+            return redirect()->back()->with('success','Product added successfully');
+        }  
     }
     //delete a product from the temp tables 
-    public function destroyProductQuotation($product_name){
-        $product = DB::table('temp_tables')
-                    ->where('product_name','=',$product_name)
-                    ->delete();
-        return redirect()->back()->with('success','Product deleted successfully');
+    public function destroyProductQuotation($product_name, $id){
+        $product = TempTable::where('product_name','=',$product_name)
+                             ->where('quotation_id',$id);
+        $product->delete(); 
+        return redirect()->back()->with('success','Product removed from the list');
     }
     //subtract one quantity from the temp tables products list
-    public function subtractOne($id){
+    public function subtractOne($product_name, $id){
         $quotations = DB::table('temp_tables')
-                    ->where('quotation_id', $id)
-                    ->decrement('quantity',1);
-        return view('pages.quotations.view', compact('quotations'));
+                ->select('product_name', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(total_price) as total_price'))
+                ->where('product_name', '=', $product_name)
+                ->where('quotation_id', $id)
+                ->groupBy('product_name')
+                ->first();
+        $quantity = $quotations->quantity;
+        if ($quantity <= 1) {
+            DB::table('temp_tables')
+                ->where('product_name', '=', $product_name)
+                ->delete();
+        } else {
+            //$temp_table = new TempTable();
+            $temp_table = TempTable::where('product_name', '=', $product_name)->first();
+            $temp_table->quantity -= 1;
+            $temp_table->total_price = $temp_table->quantity * $temp_table->unit_price;
+            $temp_table->save();
+        }
+        return redirect()->back();
     }
     //show list of added products
     public function index(){

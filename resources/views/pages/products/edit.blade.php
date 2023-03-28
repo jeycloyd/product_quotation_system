@@ -17,7 +17,7 @@
                     <div class="inputbox">
                         <input type="number" required name="product_price" min="1" step=".01" value="{{$product_price}}">
                     </div>
-                    <button type="submit" class="btn-confirm border-0" >ADD PRODUCT </button> 
+                    <button type="submit" class="btn-confirm border-0" >UPDATE PRODUCT </button> 
                 </form>
             </div>
         </div>  

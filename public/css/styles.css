@@ -413,7 +413,7 @@ border: 1px solid #828c93;
 
 .btn-add {
   display: block; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
-  margin-left: 50px;
+  margin-left: 38px;
   margin-top: 15px;
   font-family: 'Ubuntu', sans-serif;
   font-size: 14px;
@@ -431,7 +431,7 @@ border: 1px solid #828c93;
 
 .btn-clear {
   display: block; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
-    margin-left: 180px;
+    margin-left: 160px;
     margin-top: -32px;
     font-family: 'Ubuntu', sans-serif;
     font-size: 14px;

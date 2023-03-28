@@ -11,18 +11,16 @@
                     <form action="{{route('add.products')}}" method="POST">
                         @csrf
                         <select class="form-select" name="product_name" aria-label="Default select example" style=
-                        "margin-left:50px;
+                        "margin-left:38px;
                         margin-top:15px;
                         width:680px;
                         padding:6px;">
                             @foreach ($products as $product)
-                                <option value="{{$product->id . '|' . $product->product_price . '|' . $product->product_name}}">{{$product->product_name . ' - ' . $product->product_price}}</option>
+                                <option value="{{$product->id . '|' . $product->product_price . '|' . $product->product_name}}">{{$product->product_name . ' - ' . 'PHP '.number_format($product->product_price,2)}}</option>
                             @endforeach
                         </select>
-                        
                         <div class="qtyquotation" style="top:-38px; left: -50px">
                             <input type="number" required="required" name="quantity" min="1" value="1">
-                        <span> Qty </span>
                         </div>
                         <div>
                             <button type="submit" name="action" class="btn-add border-0" value="add">Add</button>
@@ -41,7 +39,7 @@
         </div>
     </div>
     <!--  FILL UP FORM (End)-->
-    <div style="padding: 8px 1em 1em 1em;">
+    <div style="padding: 8px 1em 1em 2.3em;">
         <div> Date: {{ \Carbon\Carbon::parse(now())->format('F j, Y')}} </div>
         <div> Quotation ID: <strong>{{ isset($generated_id) ? $generated_id: ''}} </strong></div>
         <label for="customer_name">Quotation for: {{ isset($customer_name) ? $customer_name: '' }}</label>
@@ -71,10 +69,11 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$temp_table->product_name}}</td>
                             <td>{{$temp_table->quantity}}</td>
-                            <td>{{$temp_table->unit_price}}</td>
-                            <td>{{$temp_table->total_price}}</td>
+                            <td>PHP{{number_format($temp_table->unit_price,2)}}</td>
+                            <td>PHP{{number_format($temp_table->total_price,2)}}</td>
                             <td>
-                                <a href="{{route('destroy.quotationsProducts',$temp_table->product_name)}}" class="btn btn-danger">Remove</a>  
+                                <a href="{{route('destroy.quotationsProducts', ['product_name' => $temp_table->product_name, 'quotation_id' => $generated_id])}}" class="btn btn-danger">Remove</a>
+                                <a href="{{route('subtractOne.quotationsProducts', ['product_name' => $temp_table->product_name, 'quotation_id' => $generated_id])}}" class="btn btn-danger">-</a>  
                             </td>
                         </tr>    
                     @endforeach
@@ -82,7 +81,7 @@
               </table>
         </div>
         <div class="wrapper5">
-            <h4 class="h4_GrandTotalName">GRAND TOTAL: {{ 'PHP ' . number_format($grand_total)}}</h4> 
+            <h4 class="h4_GrandTotalName">GRAND TOTAL: {{ 'PHP ' . number_format($grand_total,2)}}</h4> 
         </div>
         <div>
             <button type="submit" {{ $temp_tables_count === 0 ? 'disabled' : ''}} class="btn-makequotation border-0">Create Quotation</button>

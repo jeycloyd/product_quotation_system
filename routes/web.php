@@ -40,8 +40,8 @@ Route::post('/products/update/{id}', [ProductController::class, 'update'])->name
 Route::get('/products/delete/{id}', [ProductController::class, 'destroy'])->name('destroy.products');
 
 //Temp-tables for products
-Route::get('quotations/create/{id}',[ProductController::class, 'destroyProductQuotation'])->name('destroy.quotationsProducts');
-
+Route::get('quotations/create/{product_name}/{quotation_id}',[ProductController::class, 'destroyProductQuotation'])->name('destroy.quotationsProducts');
+Route::get('quotations/create/subtract/{product_name}/{quotation_id}',[ProductController::class, 'subtractOne'])->name('subtractOne.quotationsProducts');
 //Quotations
 Route::get('/quotations/select-customer', [QuotationController::class, 'showSelectCustomer'])->name('select.customers');
 Route::get('/quotations/view', [QuotationController::class, 'viewQuotations'])->name('view.quotations');

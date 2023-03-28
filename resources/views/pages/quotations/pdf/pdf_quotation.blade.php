@@ -136,8 +136,8 @@
                         <td class="option"> {{$loop->iteration}} </td>
                         <td class="description"> {{$product_quotation->product_name}} </td>
                         <td class="qty"> {{$product_quotation->quantity}} </td>
-                        <td class="unitprice"> {{$product_quotation->unit_price}} </td>
-                        <td class="subtotal">{{number_format($product_quotation->unit_price * $product_quotation->quantity)}} </td>      
+                        <td class="unitprice"> PHP {{number_format($product_quotation->unit_price,2)}} </td>
+                        <td class="subtotal">PHP {{number_format($product_quotation->unit_price * $product_quotation->quantity,2)}} </td>
                     </tr> 
                 @endforeach
                 <tr>
@@ -149,7 +149,7 @@
                </tr>
                <tr>
                      <td style="text-align: right; background-color:#163f75; color:white" colspan="3"> <strong> TOTAL </strong> </td>
-                     <td colspan="2">PHP {{number_format($grand_total)}} </td>
+                     <td colspan="2">PHP {{number_format($grand_total,2)}} </td>
                </tr>
             </tbody>
        </table>
