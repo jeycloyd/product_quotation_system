@@ -158,10 +158,15 @@
                     <tr>
                         <td>
                                     Prepared By: <br>
+                            <p>MARK'S SIGNATURE PLACEHOLDER</p>
                             <strong> MARK ADRIAN RESTAURO</strong> <br>
                                    Marketing Manager
+                                   
                         </td>
                         <td>        Approved By: <br>
+                            @if ($approval_status != 'For Approval')
+                                <p>RUINZE MALINAO'S SIGNATURE PLACEHOLDER</p>
+                            @endif
                             <strong>RUINZE A. MALINAO</strong> <br>
                                 CEO | Mediaone Software Solutions
                         </td>

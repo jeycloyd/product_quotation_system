@@ -243,6 +243,8 @@ class QuotationController extends Controller
     }
     public function downloadPDF($id){
         $quotation_id = $id;
+        //approval status
+        $approval_status = 'For Approval' ;
         //get the customer's name for this quotation
         $customer_name = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
@@ -266,7 +268,7 @@ class QuotationController extends Controller
         //download and export as pdf
         $dompdf = App::make('dompdf.wrapper');
         $dompdf->set_paper('A4');
-        $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date')); 
+        $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date','approval_status')); 
         return $dompdf->stream('Quotation_'.$id .'.pdf');
     }
     //search details from the quotation list
