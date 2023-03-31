@@ -28,7 +28,7 @@
                 <div class="inputbox">
                     <input type="number" required name="product_price" min="1" step=".01" value="1">
                 </div>
-                <button type="submit" class="btn-confirm border-0" style="margin-top: 20%" >ADD PRODUCT </button> 
+                <button type="submit" class="btn-confirm border-0" style="margin-top: 52%; margin-left: 20px" >ADD PRODUCT </button> 
             </form>
         </div>
     </div>  

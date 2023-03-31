@@ -1,50 +1,52 @@
 @extends('layouts.master')
-@section('title', 'View Products')
+@section('title', 'View Users')
 @section('scripts')
 @section('content')
-@section('header','View Products')
+@section('header','View Users')
   <div class="table-wrapper">
     @if (\Session::has('success'))
         <div class="alert alert-success">
               {!! \Session::get('success') !!}
         </div>
     @endif
-    <a href="/products/create" class="btn btn-success" style="margin-bottom: 15px"><i class='bx bxs-user-plus' style='color:#ffffff' ></i>Add New Product</a>
-      <form action="{{route('search.products')}}" method="GET">
+      {{-- <form action="{{route('search.products')}}" method="GET">
         <div class="input-group mb-3">
             @csrf
             <input type="text" class="form-control" placeholder="Search..." name="search">
-            <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i></button>
+            <button type="submit" class="btn btn-primary">Search</button>
         </div>
-      </form>  
+      </form>   --}}
       <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">Product ID</th>
-              <th scope="col">Product Name</th>
-              <th scope="col">Price</th>
+                <th scope="col">User ID</th>
+              <th scope="col">Username</th>
+              <th scope="col">Email</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Role</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
-              @foreach ($products as $product)
+              @foreach ($users as $user)
                   <tr>
-                      <td>{{$product->id}}</td>
-                      <td>{{$product->product_name}}</td>
-                      <td>PHP {{number_format($product->product_price,2)}}</td>
+                      <td>{{$user->id}}</td>
+                      <td>{{$user->name}}</td>
+                      <td>{{$user->email}}</td>
+                      <td>{{$user->created_at}}</td>
+                      <td>{{$user->role}}</td>
                       <td>
-                          <a href="{{route('show.products',$product->id)}}" class="btn btn-warning"><i class='bx bx-edit' style='color:#ffffff' ></i></a>
-                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{$product->id}}"><i class='bx bxs-trash' style='color:#ffffff' ></i></button>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#deleteModal" data-id="{{$user->id}}">Change Role</button>
                       </td>
                   </tr>    
               @endforeach
           </tbody>
         </table>
         <div class="d-flex justify-content-center">
-          {{ $products->withQueryString()->links() }}
+          {{ $users->withQueryString()->links() }}
         </div>
   </div>
-<!---------------------------------- POP UP MODAL FOR CONFIRM DELETE----------------------------------------------------->
+  <!---------------------------------- POP UP MODAL FOR CONFIRM CHANGE ROLE----------------------------------------------------->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -55,13 +57,13 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to remove this product?
-        <form action="{{route('destroy.products')}}" method="GET">
+        Are you sure you want to change the user's role?
+        <form action="{{route('update.users')}}" method="GET">
           @csrf
           <input hidden type="text" name="id" class="form-control" id="id">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-danger">Yes, Delete it</button>
+            <button type="submit" class="btn btn-danger">Yes, Change Role</button>
           </div>
         </form>
       </div>

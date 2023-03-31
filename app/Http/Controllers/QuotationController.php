@@ -236,8 +236,8 @@ class QuotationController extends Controller
         return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date'));
     }
     //delete a quotation record from the list
-    public function destroy($id){
-        $quotations = Quotation::findOrFail($id);
+    public function destroy(Request $request){
+        $quotations = Quotation::findOrFail($request->id);
         $quotations->delete();
         return redirect()->back()->with('success','data has been deleted successfully');
     }

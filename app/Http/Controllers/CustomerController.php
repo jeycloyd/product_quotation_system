@@ -89,9 +89,9 @@ class CustomerController extends Controller
                       ->paginate(5);
         return view('pages.customers.index', compact('customers'));
     }
-    //delete customers 
-    public function destroy($id){
-        $customers = Customer::findOrFail($id);
+    // //delete customers 
+    public function destroy(Request $request){
+        $customers = Customer::findOrFail($request->id);
         $customers->delete();
         return redirect()->back()->with('success','Customer removed successfully!');
     }

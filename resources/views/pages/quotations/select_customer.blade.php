@@ -26,7 +26,7 @@
                             @endforeach
                         </select>
                     </div>
-                        <button type="submit" class="btn-confirm border-0" >NEXT</button> 
+                        <button type="submit" class="btn-confirm border-0" style="margin-top: 35%; margin-left: 18px" >NEXT</button> 
                 </form>
             </div>
         </div>

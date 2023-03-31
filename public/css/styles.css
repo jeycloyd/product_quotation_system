@@ -17,31 +17,24 @@ body {
 
 
 .homewrapper {
-  
-
-  position: fixed;
-  margin-left: 20%;
-  margin-bottom: 20%;
-  width: 80%;
-  height: 115%;
-    
-  }
+  position: relative;
+  margin-left: -35%;
+  margin-top: -11%;
+  width: 1140px;
+  height: 550px;
+}
   
   
-  .homewallpaper {
-    
-  border-radius: 3px;
-  margin-bottom: 30%;
-  align-items: center;
-  width:100%;
-  height:100%;
-  
+  .homewallpaper { 
+    border-radius: 3px;
+    align-items: center;
+    width:100%;
+    height:100%;
   }
   
   
   .h1_HomeLabel  {
-    position: relative;
-    font-family: ;
+  position: relative;
   min-height: 3vh;
   font-size: 71px;
   
@@ -58,7 +51,7 @@ body {
 
 /*  ----------------NAVIGATION BAR (Start)----------------  */
 
-.navbar {
+.sidebar {
   width: 20%;
   height: 100%;
   background-image: linear-gradient(  /* MEDIAONE MAIN BACKGROUND */
@@ -69,16 +62,17 @@ body {
     rgba(186,241,243,1));
   position: absolute;
   padding: 0 25px;
+  top: 0;
 }
 
-.navbar .inner_navbar {
+.sidebar .inner_sidebar {
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100%;
 }
 
-.navbar .hamburger {
+.sidebar .hamburger {
   display: none;
 }
 
@@ -90,7 +84,7 @@ width:100px;
 height:100px;
 }
 
-.navbar .logo a{
+.sidebar .logo a{
 color: #48c6fa;
 font-weight: 300;
 font-size: 30px;
@@ -99,19 +93,19 @@ margin: 30px;
 }
 /*  ----------------LOGO AND NAME OF THE WEBSITE (Start)----------------  */
 
-.navbar .logo a span{
+.sidebar .logo a span{
 color: #FFFFFF;
 font-weight: 900;
 }
 
 /*  ----------------LOGO AND NAME OF THE WEBSITE (End)----------------  */
 
-.navbar .menu ul{
+.sidebar .menu ul{
 display: block;
 padding: 10px;
 }
 
-.navbar .menu ul a {
+.sidebar .menu ul a {
 text-decoration: none;
 display: block;
 width: 190px;
@@ -128,12 +122,12 @@ letter-spacing: 2px;
 transition: all 0.2s ease;
 }
 
-  .navbar .menu ul :last-child a {
+  .sidebar .menu ul :last-child a {
    margin-right: 0px;
 }
 
-.navbar .menu ul  a:hover, 
-.navbar .menu ul  a:active {
+.sidebar .menu ul  a:hover, 
+.sidebar .menu ul  a:active {
 background: #5bd485;
 } 
 
@@ -142,8 +136,8 @@ background: #5bd485;
 /*  ----------------TABLE WRAPPER FOR THE VIEW TABLES----------------  */
 
 .table-wrapper {
- margin-left: -200px;
- margin-top: -110px;
+ margin-left: -160px;
+ margin-top: -50px;
  width: 50em;
 }
 
@@ -152,7 +146,7 @@ background: #5bd485;
 .wrapper2 {
   background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
   position: absolute;
-  margin-left: -85px;
+  margin-left: -60px;
   margin-top: -50px;
   width: 35em;
   padding-top: 10px;
@@ -342,7 +336,7 @@ flex-direction: column;
   
   
 .btn-confirm {
-  position: fixed; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
+  position: absolute; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
   justify-content: center;
   margin-right: 10px;
   margin-top: 230px;

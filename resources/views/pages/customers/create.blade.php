@@ -17,7 +17,7 @@
                     <div class="inputbox">
                         <input type="text" required name="customer_contact_no" placeholder="Enter contact number...">
                     </div>
-                    <button type="submit" class="btn-confirm border-0" >ADD CUSTOMER</button>
+                    <button type="submit" class="btn-confirm border-0" style="margin-left: 15px" >ADD CUSTOMER</button>
                 </form>
         </div>
     </div>

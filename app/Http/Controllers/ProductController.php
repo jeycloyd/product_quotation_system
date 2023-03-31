@@ -121,8 +121,8 @@ class ProductController extends Controller
         return view('pages.products.index', compact('products'));
     }
     //delete selected product from list
-    public function destroy($id){
-        $products = Product::findOrFail($id);
+    public function destroy(Request $request){
+        $products = Product::findOrFail($request->id);
         $products->status = 'Inactive';
         $products->save();
         return redirect('products/index')->with('success','Product deleted successfully!');

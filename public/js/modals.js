@@ -1,7 +1,8 @@
-deleteModal.addEventListener('click', function (event) {
-    const element = document.getElementsById('btnDelete');
-    var test = element.getAttribute("data-id");
-    //populate the textbox with the value from the button
-    document.getElementById("customer_id_input").value = test;
-    console.log(element);
-});
+//confirm delete script
+$('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var customer_id = button.data('id') // Extract info from data-* attributes
+    // Update the modal's content. (JQuery method)
+    var modal = $(this)
+    modal.find('.modal-body input').val(customer_id)
+})
