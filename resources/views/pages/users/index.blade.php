@@ -16,7 +16,7 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
       </form>   --}}
-      <table class="table table-hover">
+      <table class="table table-hover text-center">
           <thead>
             <tr>
                 <th scope="col">User ID</th>
@@ -36,7 +36,7 @@
                       <td>{{$user->created_at}}</td>
                       <td>{{$user->role}}</td>
                       <td>
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#deleteModal" data-id="{{$user->id}}">Change Role</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal" data-id="{{$user->id}}">Change Role</button>
                       </td>
                   </tr>    
               @endforeach

@@ -6,16 +6,24 @@
         <form action="{{route('search.quotations')}}" method="GET">
               <div class="input-group mb-3">
                   @csrf
+                  <div class="col-xs-2">
+                    <select class="form-select" name="approval_status">
+                      <option  value="">All</option>
+                      <option  value="Approved" >Approved</option>
+                      <option  value="For Approval">For Approval</option>
+                    </select>
+                  </div>
                   <input type="text" class="form-control" placeholder="Search..." name="search">
                   <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i></button>
               </div>
         </form>  
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
           <thead>
             <tr>
               <th scope="col">Quotation ID</th>
               <th scope="col">Quoted For</th>
               <th scope="col">Quoted At</th>
+              <th scope="col">Approval Status</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -26,10 +34,15 @@
                           <td>{{$quotation->id}}</td>
                           <td>{{$quotation->customer_name}}</td>
                           <td>{{$quotation->created_at}}</td>
+                          <td>{{$quotation->approval_status}}</td>
                           <td>
-                              <a href="{{route('show.quotations', $quotation->id)}}" class="btn btn-success">View</a>
+                              
+                              <a href="{{route('show.quotations', $quotation->id)}}" class="btn btn-outline-primary">View</a>
                               @if (auth()->user()->role == 'admin')
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{$quotation->id}}"><i class='bx bxs-trash' style='color:#ffffff' ></i></button>
+                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation->id}}" {{($quotation->approval_status == 'Approved') ? 'disabled' : ''}} >Approve</button>
+                              @endif  
+                              @if (auth()->user()->role == 'admin')
+                                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{$quotation->id}}">Delete</button>
                               @endif
                           </td>
                       </tr>
@@ -42,7 +55,7 @@
         </div>
   </div>
 <!---------------------------------- POP UP MODAL FOR CONFIRM DELETE----------------------------------------------------->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -53,12 +66,37 @@
       </div>
       <div class="modal-body">
         Are you sure you want to remove this quotation detail?
-        <form action="{{route('destroy.quotations')}}" method="GET">
+        <form id="delete_form" action="{{route('destroy.quotations')}}" method="GET">
           @csrf
-          <input hidden type="text" name="id" class="form-control" id="id">
+          <input  type="text" hidden name="id" class="form-control" id="id">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-danger">Yes, Delete it</button>
+            <button type="submit" form="delete_form" class="btn btn-danger">Yes, Delete it</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---------------------------------- POP UP MODAL FOR APPROVING----------------------------------------------------->
+<div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="approveModalLabel">Confirm Quotation Approval?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Approve this quotation?
+        <form id="approve_form" action="{{route('approve.quotations')}}" method="PUT">
+          @csrf
+          <input type="text" hidden name="id" class="form-control" id="id">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" form="approve_form" class="btn btn-success">Yes, Approve it</button>
           </div>
         </form>
       </div>

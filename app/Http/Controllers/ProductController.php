@@ -83,10 +83,11 @@ class ProductController extends Controller
     //show the selected product details
     public function show($id){
         $products = Product::findOrFail($id);
+        $product_description = $products->product_description;
         $product_id = $products->id;
         $product_name = $products->product_name;
         $product_price = $products->product_price;
-        return view('pages/products/edit', compact('products', 'product_id' , 'product_name', 'product_price'));
+        return view('pages/products/edit', compact('products', 'product_id' , 'product_name', 'product_price','product_description'));
     }
     //update info of selected product
     public function update($id, Request $request){
@@ -101,11 +102,13 @@ class ProductController extends Controller
         ]);
 
         $product_name = DB::table('products')->where('product_name', $request->product_name)->value('product_name');
-        if($product_name == $request->product_name){
-            return redirect('products/index');
+        $product_description = DB::table('products')->where('product_description', $request->product_description)->value('product_description');
+        if($product_name == $request->product_name && $product_description == $request->product_description){
+            return redirect()->back();
         }else{
             //update data
             $products->product_name = $request->product_name;
+            $products->product_description = $request->product_description;
             $products->product_price = $request->product_price;
             $products->save();
             return redirect('/products/index')->with('success','Product details have been updated');

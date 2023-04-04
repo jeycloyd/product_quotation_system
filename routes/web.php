@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,36 +19,41 @@ use App\Http\Controllers\UserController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-//pages that can be accessed by everyone
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::middleware(['auth'])->group(function () {
     //pages that both admin and viewer can see but must be logged in
-    //Pages 
-    Route::get('/', [PagesController::class, 'home'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    
+    //Pages
     Route::get('/quotations/select-customer', [PagesController::class, 'selectCustomer'])->name('select_customers');
     
+    //quotations
     Route::get('/quotations/view', [QuotationController::class, 'viewQuotations'])->name('view.quotations');
     Route::get('/quotations/view/{id}', [QuotationController::class, 'show'])->name('show.quotations');
+    Route::get('quotations/search/',[QuotationController::class, 'search'])->name('search.quotations');
     
     //PDF for Quotation
     Route::get('quotations/download/{id}',[QuotationController::class, 'downloadPDF'])->name('downloadPDF.quotations');
     Route::get('quotations/preview/{id}',[QuotationController::class, 'previewPDF'])->name('previewPDF.quotations');
 
+    //Customers
+    Route::get('/customers/index', [CustomerController::class, 'index'])->name('index.customers');
+    Route::get('/customers/search', [CustomerController::class, 'search'])->name('search.customers');
+    Route::get('/customers/view/{id}',[CustomerController::class, 'view'])->name('view.customers');
+    Route::get('/customers/view/{id}/search',[CustomerController::class, 'searchCustomerQuotations'])->name('search.customerQuotations');
+
     //pages that only the admin can access and use
     Route::middleware(['check_role'])->group(function () {
         
         // For customers
-        Route::get('/customers/index', [CustomerController::class, 'index'])->name('index.customers');
+       
         Route::get('/customers/edit/{id}', [CustomerController::class, 'show'])->name('show.customers');
         Route::get('/customers/create', [CustomerController::class, 'create'])->name('create.customers');
-        Route::get('/customers/search', [CustomerController::class, 'search'])->name('search.customers');
         Route::post('/customers/create/store', [CustomerController::class, 'store'])->name('store.customers');
         Route::post('/customers/update/{id}', [CustomerController::class, 'update'])->name('update.customers');
         Route::get('/customers/delete', [CustomerController::class, 'destroy'])->name('destroy.customers');
-        Route::get('/customers/view/{id}',[CustomerController::class, 'view'])->name('view.customers');
+        
         
         //Quotations
         Route::get('/quotations/select-customer', [QuotationController::class, 'showSelectCustomer'])->name('select.customers');
@@ -56,10 +62,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/quotations/create/add', [QuotationController::class, 'addProducts'])->name('add.products');
         Route::post('/quotations/store', [QuotationController::class, 'store'])->name('store.quotations');
         Route::get('quotations/delete',[QuotationController::class, 'destroy'])->name('destroy.quotations');
-        Route::get('quotations/search/',[QuotationController::class, 'search'])->name('search.quotations');
-
-       
-
+        Route::get('quotations/approve',[QuotationController::class, 'approveQuotations'])->name('approve.quotations');
+        
+        
         //Temp-tables for products
         Route::get('quotations/create/{product_name}/{quotation_id}',[ProductController::class, 'destroyProductQuotation'])->name('destroy.quotationsProducts');
         Route::get('quotations/create/subtract/{product_name}/{quotation_id}',[ProductController::class, 'subtractOne'])->name('subtractOne.quotationsProducts');

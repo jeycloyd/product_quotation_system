@@ -14,6 +14,12 @@
                           <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="inputbox">  
+                        <input type="text" required class="form-control @error('product_description') is-invalid @enderror mb-0" name="product_description" value="{{$product_description}}">
+                        @error('product_description')
+                          <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="inputbox">
                         <input type="number" required name="product_price" min="1" step=".01" value="{{$product_price}}">
                     </div>

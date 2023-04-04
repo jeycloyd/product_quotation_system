@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+<br>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -25,7 +35,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        {{-- <div class="row mb-3">
                             <label for="role" class="col-md-4 col-form-label text-md-end">Role</label>
                             <div class="col-md-6">
                                 <select required name="role" id="role" class="form-control @error('role') is-invalid @enderror">
@@ -39,7 +49,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>

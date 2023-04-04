@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Quotation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -99,11 +100,43 @@ class CustomerController extends Controller
     public function view($id){
         // $customers = Customer::all();
         $customer_name = Customer::where('id',$id)->value('customer_name');
+        $customer_id = $id;
         $customer_quotations = DB::table('quotations')
                      ->join('customers' , 'customers.id' , '=' , 'quotations.customer_id')
-                     ->select('quotations.id as quotation_id', 'quotations.created_at', 'customers.id as customer_id')
+                     ->select('quotations.id as quotation_id', 'quotations.created_at', 'customers.id as customer_id','quotations.approval_status')
                      ->where('customers.id',$id)
+                     ->whereNull('quotations.deleted_at')
                      ->paginate(5);
-        return view('pages.customers.view_customer',compact('customer_quotations','customer_name'));
+        return view('pages.customers.view_customer',compact('customer_quotations','customer_name','customer_id'));
+    }
+    //search a quotation from the list of quotations of a specific user
+    public function searchCustomerQuotations($id, Request $request){
+        $search = $request->search;
+        $approval_status = $request->approval_status;
+        $customer_id = $id;
+        $customer_name = Customer::where('id',$id)->value('customer_name');
+        if(!is_null($approval_status)){
+            //show list of all quotations by the customer
+            $customer_quotations = DB::table('quotations')
+                     ->join('customers' , 'customers.id' , '=' , 'quotations.customer_id')
+                     ->select('quotations.id as quotation_id', 'quotations.created_at', 'customers.id as customer_id','quotations.approval_status')
+                     ->where('customers.id',$id)
+                     ->where('quotations.id', 'LIKE' , '%' . $search . '%')
+                     ->where('quotations.approval_status',$approval_status)
+                     ->whereNull('quotations.deleted_at')
+                     ->paginate(5);
+            return view('pages.customers.view_customer',compact('customer_quotations','customer_name','customer_id'));
+        }else{
+            $customer_quotations = DB::table('quotations')
+                     ->join('customers' , 'customers.id' , '=' , 'quotations.customer_id')
+                     ->select('quotations.id as quotation_id', 'quotations.created_at', 'customers.id as customer_id','quotations.approval_status')
+                     ->where('customers.id',$id)
+                     ->where('quotations.id', 'LIKE' , '%' . $search . '%')
+                     ->whereNull('quotations.deleted_at')
+                     ->paginate(5);
+            return view('pages.customers.view_customer',compact('customer_quotations','customer_name','customer_id'));
+        }
+        
+        
     }
 }

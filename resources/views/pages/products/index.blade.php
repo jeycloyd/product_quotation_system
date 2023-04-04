@@ -9,7 +9,7 @@
               {!! \Session::get('success') !!}
         </div>
     @endif
-    <a href="/products/create" class="btn btn-success" style="margin-bottom: 15px"><i class='bx bxs-user-plus' style='color:#ffffff' ></i>Add New Product</a>
+    <a href="/products/create" class="btn btn-success" style="margin-bottom: 15px"><i class='bx bxs-package' style='color:#ffffff'  ></i>Add New Product</a>
       <form action="{{route('search.products')}}" method="GET">
         <div class="input-group mb-3">
             @csrf
@@ -17,11 +17,12 @@
             <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i></button>
         </div>
       </form>  
-      <table class="table table-hover">
+      <table class="table table-hover text-center">
           <thead>
             <tr>
               <th scope="col">Product ID</th>
               <th scope="col">Product Name</th>
+              <th scope="col">Description</th>
               <th scope="col">Price</th>
               <th scope="col">Actions</th>
             </tr>
@@ -31,10 +32,11 @@
                   <tr>
                       <td>{{$product->id}}</td>
                       <td>{{$product->product_name}}</td>
+                      <td>{{$product->product_description}}</td>
                       <td>PHP {{number_format($product->product_price,2)}}</td>
                       <td>
-                          <a href="{{route('show.products',$product->id)}}" class="btn btn-warning"><i class='bx bx-edit' style='color:#ffffff' ></i></a>
-                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{$product->id}}"><i class='bx bxs-trash' style='color:#ffffff' ></i></button>
+                          <a href="{{route('show.products',$product->id)}}" class="btn btn-outline-warning">Edit</a>
+                          <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{$product->id}}">Delete</button>
                       </td>
                   </tr>    
               @endforeach

@@ -136,9 +136,9 @@ background: #5bd485;
 /*  ----------------TABLE WRAPPER FOR THE VIEW TABLES----------------  */
 
 .table-wrapper {
- margin-left: -160px;
- margin-top: -50px;
- width: 50em;
+ margin-left: -270px;
+ margin-top: -60px;
+ width: 65em;
 }
 
 /*  ----------------------------- ADD CUSTOMER FORM (Start) -----------------------------  */
@@ -576,9 +576,10 @@ border: 1px solid #828c93;
     height: 640px;
     border-radius: 5px;
   }
-  .h1_SuccessInformation  {
+  h1  {
     font-weight: bold;
     padding-left: 40px;
+    padding-top: 18px;
     font-size: 71px;
     min-height: 3vh;
     background: linear-gradient(70deg,#014082,#0dd0df); 

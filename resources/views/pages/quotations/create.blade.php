@@ -16,7 +16,7 @@
                         width:680px;
                         padding:6px;">
                             @foreach ($products as $product)
-                                <option value="{{$product->id . '|' . $product->product_price . '|' . $product->product_name}}">{{$product->product_name . ' - ' . 'PHP '.number_format($product->product_price,2)}}</option>
+                                <option value="{{$product->id . '|' . $product->product_price . '|' . $product->product_name. '|' . $product->product_description}}">{{$product->product_name . ' - ' . 'PHP '.number_format($product->product_price,2)}}</option>
                             @endforeach
                         </select>
                         <div class="qtyquotation" style="top:-38px; left: -50px">
@@ -57,6 +57,7 @@
                   <tr style="text-align: center">
                     <th scope="col">Item</th>
                     <th scope="col">Product Name</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Price</th>
                     <th scope="col">Sub Total</th>
@@ -68,6 +69,7 @@
                         <tr style="text-align: center">
                             <td>{{$loop->iteration}}</td>
                             <td>{{$temp_table->product_name}}</td>
+                            <td>{{$temp_table->product_description}}</td>
                             <td>{{$temp_table->quantity}}</td>
                             <td>PHP{{number_format($temp_table->unit_price,2)}}</td>
                             <td>PHP{{number_format($temp_table->total_price,2)}}</td>

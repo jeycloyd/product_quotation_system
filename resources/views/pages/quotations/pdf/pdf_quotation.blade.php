@@ -163,13 +163,13 @@
                                    Marketing Manager
                                    
                         </td>
-                        <td>        Approved By: <br>
-                            @if ($approval_status != 'For Approval')
+                        @if ($approval_status != 'For Approval')
+                            <td>        Approved By: <br>
                                 <p>RUINZE MALINAO'S SIGNATURE PLACEHOLDER</p>
-                            @endif
-                            <strong>RUINZE A. MALINAO</strong> <br>
-                                CEO | Mediaone Software Solutions
-                        </td>
+                                <strong>RUINZE A. MALINAO</strong> <br>
+                                    CEO | Mediaone Software Solutions
+                            </td>
+                        @endif
                     </tr>
                 </table>
             </div>

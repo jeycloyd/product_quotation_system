@@ -51,9 +51,9 @@ class QuotationController extends Controller
             //show list of quoted items based on the quotation id
             //$temp_tables = DB::table('temp_tables')->where('quotation_id',$generated_id)->get();
             $temp_tables = DB::table('temp_tables')
-                            ->select('product_name', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(total_price) as total_price'))
+                            ->select('product_name','product_description', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(total_price) as total_price'))
                             ->where('quotation_id','=',$generated_id)
-                            ->groupBy('product_name')
+                            ->groupBy('product_name','product_description')
                             ->get();
             //check if temp_table is empty
             $temp_tables_count = DB::table('temp_tables')->where('quotation_id', $generated_id)->count();
@@ -71,7 +71,7 @@ class QuotationController extends Controller
         // combine the info from customers and quotations table via join
         $quotations = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
-            ->select('customers.*', 'quotations.id' , 'quotations.created_at',)
+            ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status')
             ->whereNull('quotations.deleted_at')
             ->orderByDesc('quotations.created_at')
             ->paginate(5);
@@ -91,6 +91,7 @@ class QuotationController extends Controller
         $product_id = $product[0];
         $product_price = $product[1];
         $product_name = $product[2];
+        $product_description = $product[3];
         //get qty value
         $quantity = $request->quantity;
         //get price from multiplying quantity and product price
@@ -134,7 +135,8 @@ class QuotationController extends Controller
                 $temp_table->product_id = $product_id;
                 $temp_table->product_name = $product_name;
                 $temp_table->quantity = $quantity;
-                $temp_table->product_description = 'This is a temporary description.';
+                $temp_table->product_description = DB::table('products')->where('product_name',$product_name)->value('product_description');
+                // $temp_table->product_description = 'This is a temporary description.';
                 $temp_table->quotation_id = $quotation_id;
                 $temp_table->quantity = $quantity;
                 $temp_table->unit_price = $product_price;
@@ -145,7 +147,7 @@ class QuotationController extends Controller
             // perform clear 
             DB::table('temp_tables')->where('quotation_id', '=' , $generated_id)->delete();
         }
-        return redirect()->back()->with(compact('products','generated_id','selected_customer','customer_name','product_id','product_price','temp_tables','grand_total'));
+        return redirect()->back()->with(compact('products','generated_id','selected_customer','customer_name','product_id','product_price','temp_tables','grand_total','product_description'));
     }
     //store data to quotations table
     public function store(Request $request){
@@ -158,9 +160,12 @@ class QuotationController extends Controller
             $quotation->quotation_date =$request->date;
             $quotation->customer_id = $request->customer_id;
             $grand_total = $request->grand_total;
+            //approval status
+            $approval_status = 'For Approval';
+            $quotation->approval_status = $approval_status;
             $quotation->save();
             //transfer table info from temp tables to product_quotation table
-            $data = DB::table('temp_tables')->select('product_id', 'quotation_id', 'quantity', 'created_at' , 'updated_at','product_name','unit_price','total_price')
+            $data = DB::table('temp_tables')->select('product_id', 'quotation_id', 'quantity', 'created_at' , 'updated_at','product_name','unit_price','total_price','product_description')
                     ->where('quotation_id',$request->quotation_id)
                     ->get();
             foreach ($data as $row) {
@@ -169,6 +174,7 @@ class QuotationController extends Controller
                     'quotation_id' => $row->quotation_id,
                     'quantity' => $row->quantity,
                     'product_name' => $row->product_name,
+                    'product_description'=> $row->product_description,
                     'unit_price' => $row->unit_price,
                     'sub_total' => $row->total_price,
                     'created_at' => now(),
@@ -190,7 +196,7 @@ class QuotationController extends Controller
             //download and export as pdf
             $dompdf = App::make('dompdf.wrapper');
             $dompdf->set_paper('A4');
-            $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date')); 
+            $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date','approval_status')); 
             $pdf = $dompdf->render();
             return $dompdf->download('Quotation_'.$quotation_id .'.pdf');
         }else{
@@ -205,10 +211,12 @@ class QuotationController extends Controller
             $customer_name = DB::table('customers')->where('id',$request->customer_id)->value('customer_name');
             $final_quotation_date = DB::table('quotations')->where('id',$quotation_id)->value('created_at');
             $grand_total = DB::table('product_quotation')->select(DB::raw('SUM(sub_total) as total_price'))->where('quotation_id',$quotation_id)->value('total_price');
+            //approval status
+            $approval_status = 'For Approval';
             //download and export as pdf
             $dompdf = App::make('dompdf.wrapper');
             $dompdf->set_paper('A4');
-            $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date')); 
+            $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date','approval_status')); 
             $pdf = $dompdf->render();
             return $dompdf->download('Quotation_'.$quotation_id .'.pdf');
         } 
@@ -224,6 +232,8 @@ class QuotationController extends Controller
             ->value('customer_name');
         //get the total of the quotation
         $grand_total = DB::table('product_quotation')->where('quotation_id', $quotation_id)->sum('sub_total');
+        //get approval status
+        $approval_status = DB::table('quotations')->where('id',$id)->value('approval_status');
         //get the date of the quotation
         $quotation_date = DB::table('quotations')->where('id', $quotation_id)->value('created_at');
         $quotation_date = Carbon::parse($quotation_date)->format('Y-m-d');
@@ -233,7 +243,7 @@ class QuotationController extends Controller
                             ->where('quotation_id','=',$id)
                             ->groupBy('product_name')
                             ->paginate(5);
-        return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date'));
+        return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status'));
     }
     //delete a quotation record from the list
     public function destroy(Request $request){
@@ -244,7 +254,7 @@ class QuotationController extends Controller
     public function downloadPDF($id){
         $quotation_id = $id;
         //approval status
-        $approval_status = 'For Approval' ;
+        $approval_status = DB::table('quotations')->where('id',$quotation_id)->value('approval_status');
         //get the customer's name for this quotation
         $customer_name = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
@@ -274,14 +284,35 @@ class QuotationController extends Controller
     //search details from the quotation list
     public function search(Request $request){
         $search = $request->search;
-        $quotations = DB::table('customers')
+        $search_approval_status = $request->approval_status;
+        if(is_null($search_approval_status)){
+            //retrieve all quotations
+            $quotations = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
-            ->select('customers.*', 'quotations.id' , 'quotations.created_at',)
-            ->whereNull('customers.deleted_at')
+            ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status')
             ->whereNull('quotations.deleted_at')
             ->where('customer_name', 'LIKE' , '%' . $search . '%')
             ->orderByDesc('quotations.created_at')
             ->paginate(5);
-        return view('pages.quotations.view', compact('quotations'));
+            return view('pages.quotations.view', compact('quotations'));
+        }else{
+            $quotations = DB::table('customers')
+            ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
+            ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status')
+            ->whereNull('quotations.deleted_at')
+            ->where('customer_name', 'LIKE' , '%' . $search . '%')
+            ->where('approval_status',$search_approval_status)
+            ->orderByDesc('quotations.created_at')
+            ->paginate(5);
+            return view('pages.quotations.view', compact('quotations'));
+        }
+    }
+    //approve quotations
+    public function approveQuotations(Request $request){
+
+            $quotations = Quotation::find($request->id);
+            $quotations->approval_status = 'Approved';
+            $quotations->save();
+            return redirect()->back()->with('success','Quotation has been approved successfully!');
     }
 }

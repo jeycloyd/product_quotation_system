@@ -120,9 +120,11 @@
                             <a href="/quotations/view">View Quotation</a>
                             @if (auth()->user()->role == 'admin')
                                 <a href="/users/index">View Users</a>
-                                <a href="/customers/index">View Customers</a>
+                            @endif
+                            <a href="/customers/index">View Customers</a>
+                            @if (auth()->user()->role == 'admin')
                                 <a href="/products/index">View Products</a>
-                                @endif
+                            @endif
                         </ul>
                     </div>
                 </body>

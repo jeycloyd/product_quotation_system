@@ -16,7 +16,7 @@
               <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i></button>
           </div>
       </form>  
-      <table class="table table-hover">
+      <table class="table table-hover text-center">
           <thead>
             <tr>
               <th scope="col">Customer ID</th>
@@ -32,10 +32,11 @@
                       <td>{{$customer->customer_name}}</td>
                       <td>{{$customer->customer_contact_no}}</td>
                       <td>
-                          <a href="{{route('view.customers',$customer->id)}}" class="btn btn-dark">View</a>
-                          <a href="{{route('show.customers',$customer->id)}}" class="btn btn-warning"><i class='bx bx-edit' style='color:#ffffff' ></i></a>
-                          {{-- <a href="{{route('destroy.customers',$customer->id)}}" class="btn btn-danger">Delete</a> --}}
-                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{$customer->id}}"><i class='bx bxs-trash' style='color:#ffffff' ></i></button>
+                          <a href="{{route('view.customers',$customer->id)}}" class="btn btn-outline-primary">View</a>
+                          @if (auth()->user()->role == 'admin')
+                            <a href="{{route('show.customers',$customer->id)}}" class="btn btn-outline-warning">Edit</a>
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{$customer->id}}">Delete</button>
+                          @endif        
                       </td>
                   </tr>    
               @endforeach

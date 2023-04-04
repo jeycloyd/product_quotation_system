@@ -7,10 +7,17 @@
         <h4>Quoted At: {{ $quotation_date }}</h4>
         <h4>Customer Name: {{ $customer_name }}</h4>
     </div>
-    <a href="{{ route('downloadPDF.quotations', $quotation_id) }}" target="_blank" class="btn btn-primary" style="margin-left:768px">View PDF</a>
+    <div class="row" style="margin-left:73%">
+      <div class="col">
+        @if (auth()->user()->role == 'admin' && $approval_status != 'Approved')
+            <button type="button" class="btn btn-outline-success mx-1" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation_id}}">Approve</button>
+        @endif 
+        <a href="{{ route('downloadPDF.quotations', $quotation_id) }}" target="_blank" class="btn btn-primary mx-1" style="margin-left:768px">View PDF</a>
+      </div>
+    </div> 
     <br>
     <br>
-    <table class="content_table">
+    <table class="content_table text-center">
         <thead>
            <tr>
                  <th class="table-title" colspan="5"> AUXILIARY EQUIPMENT </th>
@@ -42,5 +49,30 @@
    <div class="d-flex justify-content-center">
     {{ $product_quotations->links() }}
   </div>
-</div> 
+</div>
+<!---------------------------------- POP UP MODAL FOR APPROVING----------------------------------------------------->
+<div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="approveModalLabel">Confirm Quotation Approval?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Approve this quotation?
+          <form id="approve_form" action="{{route('approve.quotations')}}" method="PUT">
+            @csrf
+            <input type="text" hidden name="id" class="form-control" id="id">
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" form="approve_form" class="btn btn-success">Yes, Approve it</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div> 
+<script src="{{ asset('js/modals.js') }}"></script>
 @endsection
