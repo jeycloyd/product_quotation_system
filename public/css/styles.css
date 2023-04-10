@@ -1,5 +1,4 @@
 *{
-  font-family: 'Ubuntu', sans-serif;
   list-style: none;
   text-decoration: none;
   margin: 0;
@@ -9,27 +8,19 @@
 }
 
 body {
-  background-image: linear-gradient(rgba(255,255,255,0.1),rgba(255,255,255,0.1)), url(../images/global_images/background.png);
-  background-size: cover;
+  /* background-image: linear-gradient(rgba(255,255,255,0.1),rgba(255,255,255,0.1)), url(../images/global_images/background.png);
+  background-size: cover; */
 }
 
 /*  ----------------------------- HOME PAGE (Start) -----------------------------  */
 
 
-.homewrapper {
-  position: relative;
-  margin-left: -35%;
-  margin-top: -11%;
-  width: 1140px;
-  height: 550px;
-}
   
-  
-  .homewallpaper { 
-    border-radius: 3px;
-    align-items: center;
-    width:100%;
-    height:100%;
+  .homewallpaper {
+    margin-top: -7.2%;
+    margin-left: -23%;
+    height: 620px; /* Set the desired height of the container */
+    width: 1300px;
   }
   
   
@@ -51,46 +42,6 @@ body {
 
 /*  ----------------NAVIGATION BAR (Start)----------------  */
 
-.sidebar {
-  width: 20%;
-  height: 100%;
-  background-image: linear-gradient(  /* MEDIAONE MAIN BACKGROUND */
-    rgba(20,24,70,3),
-    rgba(20,56,96,0.9),
-    rgba(18,128,152,5),
-    rgba(23,175,181,2),
-    rgba(186,241,243,1));
-  position: absolute;
-  padding: 0 25px;
-  top: 0;
-}
-
-.sidebar .inner_sidebar {
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-.sidebar .hamburger {
-  display: none;
-}
-
-.mediaonelogo {
-border-radius: 7px;
-margin: 55px;
-align-items: center;
-width:100px;
-height:100px;
-}
-
-.sidebar .logo a{
-color: #48c6fa;
-font-weight: 300;
-font-size: 30px;
-letter-spacing: 3px;
-margin: 30px;
-}
 /*  ----------------LOGO AND NAME OF THE WEBSITE (Start)----------------  */
 
 .sidebar .logo a span{
@@ -136,8 +87,8 @@ background: #5bd485;
 /*  ----------------TABLE WRAPPER FOR THE VIEW TABLES----------------  */
 
 .table-wrapper {
- margin-left: -270px;
- margin-top: -60px;
+ margin-left: -400px;
+ margin-top: -100px;
  width: 65em;
 }
 
@@ -146,8 +97,8 @@ background: #5bd485;
 .wrapper2 {
   background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
   position: absolute;
-  margin-left: -60px;
-  margin-top: -50px;
+  margin-left: -180px;
+  margin-top: -100px;
   width: 35em;
   padding-top: 10px;
   padding-bottom: 100px;
@@ -624,3 +575,270 @@ border: 1px solid #828c93;
   
   
   /*---------------- SUCCESS INFORMATION (End) ---------------- */
+
+
+  
+.loginwrapper {
+  background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
+    position: absolute;
+    margin-top: 1%;
+    margin-left: 32%;
+    width: 35%;
+    height: 70%;
+    padding-top: 15px;
+    padding-bottom: 100px;
+    border-radius: 7px;
+  }
+  
+  
+  .login_mediaonelogo {    /* LOGO */
+  border-radius: 7px;
+  margin-top: 5px;
+  margin-left: 190px;
+  width:100px;
+  height:100px;
+  }
+  
+  .login_QuotationFormSystem {
+  width: 300px;
+  height: 145px;
+  margin-left: 95px;
+  margin-bottom: -40px;
+  }
+  
+  
+  
+  .p_login {
+    font-family: 'Ubuntu', sans-serif;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 90px;
+  }
+  
+  
+  
+  .loginbox  {
+    position: relative;
+    width: 370px;
+    margin-top:7px;
+    padding:3px;
+  }
+  
+  
+  
+  .loginbox input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(130,140,147,0.9);
+    background: 1d2b3a;
+    border-radius: 9px;
+    outline: none;
+    font-size: 1em;  
+  }
+  
+  .loginbox span {
+    position: absolute;
+    left: 0;
+    padding: 10px;
+    pointer-events: none;
+    font-size: 0.8em;
+    color: rgba(0,0,0,0.5);
+    text-transform: uppercase;
+  }
+  
+  .loginbox input:valid ~ span,
+  .loginbox input:focus ~ span  {
+  
+  color: #828c93;
+  tranform: translateX(10px) translateY(-7px);
+  font-size: 0.01em;
+  padding: 5px;
+  margin-left: 10px;
+  margin-bottom: 20%;
+  background-image: linear-gradient(rgba(196,192,226,0.1),rgba(196,192,226,0.1));
+  
+  }
+  
+  .loginbox input:valid,
+  .loginbox input:focus  {
+  
+  border: 1px solid #828c93;
+  
+  }
+  
+  
+  .btn-login {
+   position: absolute; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
+    justify-content: center;
+    margin-right: -5px;
+    margin-top: 210px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px;
+  background: #1ac8cd;
+  width: 220px;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+  }
+  
+ 
+  /*-----------------------FOR INPUT GLOW LIKE BOOTSTRAP--------------------------*/
+
+input:focus, input:hover, 
+textarea:focus, textarea:hover,
+select:focus, select:hover {
+
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+
+}
+
+ /*------------------------- REGISTRATION-----------------------------------------*/
+
+.registerwrapper {
+  background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
+    position: absolute;
+    margin-top: 1%;
+    margin-left: 29%;
+    width: 45%;
+    height: 65%;
+    padding-top: 15px;
+    padding-bottom: 100px;
+    border-radius: 7px;
+  }
+  
+  .register_mediaonelogo {    /* LOGO */
+    position:absolute;
+    border-radius: 7px;
+    margin-top: 1px;
+    margin-left: 15px;
+    width:50px;
+    height:50px;
+    }
+    
+    .register_QuotationFormSystem {
+    width: 220px;
+    height: 100px;
+    margin-left: 195px;
+    margin-bottom: -2px;
+    
+  
+    }
+    
+  
+  
+  
+    .h1_Register{
+      display: flex;
+      justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-left: 100px;
+    margin-bottom: 220px;
+    min-height: 1vh;
+    font-family: 'Open Sans';
+    background-color: #1988d7; 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+      /*  align-items: center;
+      justify-content: center;  */
+    }
+  
+  
+    .registerform {
+    justify-content: center;
+    align-items: center;
+    min-height: 10vh;
+    flex-direction: column;
+    gap: 10px;
+    /*  background: #1d2b3a; */
+    background-image: linear-gradient(rgba(255,255,255,0.0),rgba(255,255,255,0.0)); */
+    
+    
+    }
+  
+  
+  .registerbox  {
+  
+  position: relative;
+  width: 470px;
+  }
+  
+  
+  .registerbox input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(130,140,147,0.9);
+  background: 1d2b3a;
+  border-radius: 9px;
+  outline: none;
+  font-size: 1em;  
+  }
+  
+  .registerbox span {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 0.8em;
+  color: rgba(0,0,0,0.5);
+  text-transform: uppercase;
+  }
+  
+  .registerbox input:valid ~ span,
+  .registerbox input:focus ~ span  {
+  
+  color: #828c93;
+  tranform: translateX(10px) translateY(-7px);
+  font-size: 0.01em;
+  padding: 5px;
+  margin-left: 10px;
+  margin-bottom: 20%;
+  background-image: linear-gradient(rgba(196,192,226,0.1),rgba(196,192,226,0.1));
+  
+  }
+  
+  .registerbox input:valid,
+  .registerbox input:focus  {
+  
+  border: 1px solid #828c93;
+  
+  }
+  
+  
+  .btn-register {
+    position: absolute; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
+     justify-content: center;
+     margin-right: 12px;
+     margin-top: 290px;
+   font-family: 'Ubuntu', sans-serif;
+   font-size: 14px;
+   background: #1ac8cd;
+   width: 220px;
+   padding: 15px;
+   text-align: center;
+   text-decoration: none;
+   text-transform: uppercase;
+   color: #fff;
+   border-radius: 5px;
+   cursor: pointer;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   
+   }
+  
+  
+  
+  
+  
+  /*  ----------------------------- REGISTER (End) -----------------------------  */
+
+  /* .img-signature{
+    width: 50px;
+    height: 30px;
+  } */

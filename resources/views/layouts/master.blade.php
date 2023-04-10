@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/Navbar.css') }}" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">   
     <title>@yield('title')</title>
 
@@ -39,7 +40,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Media One
+                    
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -92,44 +93,121 @@
         {{-- <main>
             @yield('content')
         </main> --}}
-        <div class="whole-container">
-            <h1 style="position:absolute; margin-left: 20%">@yield('header')</h1>
-            <div style="position:absolute; top: 30%; left: 45%;">
-                <main >
-                    @yield('content')
-                </main>
-            </div>  
-            <div>
-                <body>
-                    <div class="wrapper">
-                        <div class="sidebar">
-                            <div class="inner_sidebar">
-                            <!--  LOGO AND NAME OF THE WEBSITE (Start)-->
-                                <div class="logo">
-                                    <img class="mediaonelogo" src= "{{asset('../images/global_images/media_one_logo.png')}}" alt="media one logo">    
-                                    <a href="/" style="text-decoration: none;" >Media<span>One</span></a>
-                                </div>
-                    <div class="menu">
-                        <ul>
-                            
-                            @if (auth()->user()->role == 'admin')
-                                <a href="/quotations/select-customer">Create Quotation</a>
-                                {{-- <a href="/customers/create">Add Customers</a>
-                                <a href="/products/create">Add Products</a> --}}
-                            @endif
-                            <a href="/quotations/view">View Quotation</a>
-                            @if (auth()->user()->role == 'admin')
-                                <a href="/users/index">View Users</a>
-                            @endif
-                            <a href="/customers/index">View Customers</a>
-                            @if (auth()->user()->role == 'admin')
-                                <a href="/products/index">View Products</a>
-                            @endif
-                        </ul>
-                    </div>
-                </body>
-            </div> 
-        </div> 
+        
     </div>
+
+
+    
+<!--------------------------NAVIGATION BARS AND MENU (Start)---------------------------->
+
+
+
+  <div class="sidebar close">
+    <div class="logo-details">
+      <img class="mediaonelogo" src="{{asset('images/global_images/media_one_logo.png')}}"></i>
+      <span class="logo_name"> MediaOne</span>
+    </div>
+    
+    <ul class="nav-links">
+      @if(auth()->user()->role == 'admin')
+      <li>
+        <a href="/">
+          <i class='bx bxs-home' style='color:#ffffff'  ></i>
+          <span class="link_name">Home</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Category</a></li>
+        </ul>
+      </li>
+
+      @endif
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bxs-user'></i>
+            <span class="link_name">Customers</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Customer</a></li>
+          <li><a href="/customers/create">Add Customer</a></li>
+          <li><a href="/customers/index">View Customer</a></li>
+        </ul>
+      </li>
+      @if(auth()->user()->role == 'admin')
+        <li>
+          <div class="iocn-link">
+            <a href="#">
+              <i class='bx bx-book-alt' ></i>
+              <span class="link_name">Products</span>
+            </a>
+            <i class='bx bxs-chevron-down arrow' ></i>
+          </div>
+          <ul class="sub-menu">
+            <li><a class="link_name" href="#">Products</a></li>
+            <li><a href="/products/create">Add Product</a></li>
+            <li><a href="/products/index">View Product</a></li>
+          </ul>
+        </li>
+      @endif
+
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bxs-file'></i>
+            <span class="link_name">Quotations</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Quotations</a></li>
+          <li><a href="/quotations/select-customer">Create Quotation</a></li>
+          <li><a href="/quotations/view">View Quotation</a></li>
+        </ul>
+      </li>
+      @if(auth()->user()->role == 'admin')
+        <li>
+          <a href="/users/index">
+            <i class='bx bxs-user-account' style='color:#ffffff'  ></i>
+            <span class="link_name">Users</span>
+          </a>
+        </li>
+      @endif
+    </ul>
+  </div>
+
+    <section class="home-section">
+        <div class="home-content">
+            {{-- <i class='bx bx-menu' ></i> --}}
+            <span class="text"></span>
+            <h1 style="position:absolute; margin-left: 5%">@yield('header')</h1>
+                <div style="position:absolute; top: 30%; left: 45%;">
+                    <main >
+                        @yield('content')
+                    </main>
+                </div>
+        </div>
+    </section>
+    
+    <script>
+        let arrow = document.querySelectorAll(".arrow");
+        for (var i = 0; i < arrow.length; i++) {
+            arrow[i].addEventListener("click", (e)=> {
+              let arrowParent = e.target.parentElement.parentElement; //select  main parent of arrow
+              arrowParent.classList.toggle("showMenu");
+            });
+        }
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".bx-menu");
+        console.log(sidebarBtn);
+        sidebar.addEventListener("mouseenter", ()=>{
+            sidebar.classList.toggle("close");
+        });
+        sidebar.addEventListener("mouseleave", ()=>{
+            sidebar.classList.toggle("close");
+        });
+    </script>
+
 </body>
 </html>

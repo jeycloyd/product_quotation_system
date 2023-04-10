@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Make Quotation')
 @section('content')
-<div class="table-wrapper" style="width: 1090px; margin-left: -335px; margin-top:-190px;">
+<div class="table-wrapper" style="width: 1250px; margin-left: -560px; margin-top:-188px; height: -100px">
     <!--  FILL UP FORM (Start)-->
     <div class="wrapper4">
         <div class="fillup_container">
@@ -10,6 +10,7 @@
                 <div class="float_quotationcontainer">
                     <form action="{{route('add.products')}}" method="POST">
                         @csrf
+                        {{-- <label for="products">Product Name</label> --}}
                         <select class="form-select" name="product_name" aria-label="Default select example" style=
                         "margin-left:38px;
                         margin-top:15px;
@@ -19,7 +20,9 @@
                                 <option value="{{$product->id . '|' . $product->product_price . '|' . $product->product_name. '|' . $product->product_description}}">{{$product->product_name . ' - ' . 'PHP '.number_format($product->product_price,2)}}</option>
                             @endforeach
                         </select>
-                        <div class="qtyquotation" style="top:-38px; left: -50px">
+                        {{-- <label for="products">Quantity</label> --}}
+                        <div class="qtyquotation" style="top:-43px; left: -50px">
+                            
                             <input type="number" required="required" name="quantity" min="1" value="1">
                         </div>
                         <div>
@@ -51,7 +54,7 @@
         <input type="text" hidden name="quotation_id" value="{{$generated_id}}">
         <input type="text" hidden name="customer_id" value="{{$selected_customer}}">
         <input type="text" hidden name="total_price" value="{{$grand_total}}">
-        <div class="scrollable" style="overflow: scroll; height: 270px; max-height:270px; width: 67em; max-width: 200em;">
+        <div class="scrollable" style="overflow: scroll; height: 270px; max-height:270px; width: 100%; max-width: 200em;">
             <table class="table table-hover">
                 <thead>
                   <tr style="text-align: center">

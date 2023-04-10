@@ -37,7 +37,9 @@
         </div>
     </div>
 </div> --}}
-<div class="homewrapper">
+
+       
+ <div class="homewallpaper">
     <img class="homewallpaper" src= "{{asset('../images/home/homewallpaper.png')}}" alt="product quotation system title image">    
-</div>
+ </div>
 @endsection

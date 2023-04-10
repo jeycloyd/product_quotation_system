@@ -158,14 +158,19 @@
                     <tr>
                         <td>
                                     Prepared By: <br>
-                            <p>MARK'S SIGNATURE PLACEHOLDER</p>
+                            {{-- <p>MARK'S SIGNATURE PLACEHOLDER</p> --}}
+                            <img class="img-signature" src="{{public_path('images/signatures/RESTAURO_SIGNATURE.jpg')}}" alt="mark restauro signature" style="    width: 150px;
+                            height: 40px;">
+                            <br>
                             <strong> MARK ADRIAN RESTAURO</strong> <br>
                                    Marketing Manager
                                    
                         </td>
                         @if ($approval_status != 'For Approval')
                             <td>        Approved By: <br>
-                                <p>RUINZE MALINAO'S SIGNATURE PLACEHOLDER</p>
+                                <img class="img-signature" src="{{public_path('images/signatures/MALINAO_SIGNATURE.jpg')}}" alt="mark restauro signature" style="    width: 150px;
+                            height: 40px;">
+                            <br>
                                 <strong>RUINZE A. MALINAO</strong> <br>
                                     CEO | Mediaone Software Solutions
                             </td>

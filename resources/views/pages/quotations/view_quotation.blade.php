@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'View Quotations')
 @section('content')
-<div class="table-wrapper" style="width: 900px; margin-left: -300px; margin-top: -170px">
+<div class="table-wrapper" style="width: 900px; margin-left: -390px; margin-top: -170px">
     <div style="margin-top: 50px">
         <h4>Quotation ID: {{ $quotation_id }}</h4>
         <h4>Quoted At: {{ $quotation_date }}</h4>
@@ -11,8 +11,10 @@
       <div class="col">
         @if (auth()->user()->role == 'admin' && $approval_status != 'Approved')
             <button type="button" class="btn btn-outline-success mx-1" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation_id}}">Approve</button>
-        @endif 
-        <a href="{{ route('downloadPDF.quotations', $quotation_id) }}" target="_blank" class="btn btn-primary mx-1" style="margin-left:768px">View PDF</a>
+        @endif
+      </div>
+      <div class="col" style="margin-left:-28%">
+            <a href="{{ route('downloadPDF.quotations', $quotation_id) }}" target="_blank" class="btn btn-primary mx-1" style="margin-left:768px">View PDF</a>
       </div>
     </div> 
     <br>
