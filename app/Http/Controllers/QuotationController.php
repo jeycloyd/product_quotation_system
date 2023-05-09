@@ -35,6 +35,9 @@ class QuotationController extends Controller
             //extract value of customer_name via id
             $selected_customer = $request->customer_name;
 
+            //extract value of quotation_type via id
+            $quotation_type = $request->quotation_type;
+
             //count the number of transactions already made by the user and add 1
             $count_no_of_transactions = DB::table('quotations')
                 ->where('customer_id', $selected_customer)
@@ -60,7 +63,7 @@ class QuotationController extends Controller
             //show grand total
             $grand_total = DB::table('temp_tables')->where('quotation_id', '=' , $generated_id)->sum('total_price');
         }
-        return view('pages.quotations.create', compact('customers','products','customer_name','generated_id','selected_customer','temp_tables','grand_total','temp_tables_count'));
+        return view('pages.quotations.create', compact('customers','products','customer_name','generated_id','selected_customer','temp_tables','grand_total','temp_tables_count','quotation_type'));
     }
     //show a success page when quotation has been made and saved successfully
     public function success(){
@@ -71,7 +74,7 @@ class QuotationController extends Controller
         // combine the info from customers and quotations table via join
         $quotations = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
-            ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status','quotations.quotation_type')
+            ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status','quotations.quotation_type','billing_approval_status')
             ->whereNull('quotations.deleted_at')
             ->orderByDesc('quotations.created_at')
             ->paginate(5);
@@ -109,6 +112,8 @@ class QuotationController extends Controller
         $selected_customer = $request->customer_id;
         //get the customer name
         $customer_name = $request->customer_name;
+        //get quotation type
+        $quotation_type = $request->quotation_type;
 
         //insert into product_quotation table
         $temp_tables = TempTable::all();
@@ -147,7 +152,7 @@ class QuotationController extends Controller
             // perform clear 
             DB::table('temp_tables')->where('quotation_id', '=' , $generated_id)->delete();
         }
-        return redirect()->back()->with(compact('products','generated_id','selected_customer','customer_name','product_id','product_price','temp_tables','grand_total','product_description'));
+        return redirect()->back()->with(compact('products','generated_id','selected_customer','customer_name','product_id','product_price','temp_tables','grand_total','product_description','quotation_type'));
     }
     //store data to quotations table
     public function store(Request $request){
@@ -159,6 +164,7 @@ class QuotationController extends Controller
             $quotation->id = $request->quotation_id;
             $quotation->quotation_date =$request->date;
             $quotation->customer_id = $request->customer_id;
+            $quotation->quotation_type = $request->quotation_type;
             $grand_total = $request->grand_total;
             //approval status
             $approval_status = 'For Approval';
@@ -310,7 +316,7 @@ class QuotationController extends Controller
         // }
         $quotations = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
-            ->select('customers.*', 'quotations.id', 'quotations.created_at', 'quotations.approval_status', 'quotations.quotation_type')
+            ->select('customers.*', 'quotations.id', 'quotations.created_at', 'quotations.approval_status', 'quotations.quotation_type','quotations.billing_approval_status')
             ->whereNull('quotations.deleted_at')
             ->where('customer_name', 'LIKE', '%' . $search . '%');
 

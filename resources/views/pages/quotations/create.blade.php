@@ -34,6 +34,7 @@
                             <input type="text" hidden name="date" value="{{now()->toDateString('Y-m-d')}}">
                             <input type="text" hidden name="quotation_id" value="{{$generated_id}}">
                             <input type="text" hidden name="customer_id" value="{{$selected_customer}}">
+                            <input type="text" hidden name="quotation_type" value="{{$quotation_type}}">
                             <input type="text" hidden name="customer_name" value="{{$customer_name}}">
                         </div> 
                     </form>
@@ -45,6 +46,7 @@
     <div style="padding: 8px 1em 1em 2.3em;">
         <div> Date: {{ \Carbon\Carbon::parse(now())->format('F j, Y')}} </div>
         <div> Quotation ID: <strong>{{ isset($generated_id) ? $generated_id: ''}} </strong></div>
+        <div> Quotation Type: {{ isset($quotation_type) ? $quotation_type: ''}}</div>
         <label for="customer_name">Quotation for: {{ isset($customer_name) ? $customer_name: '' }}</label>
     </div>
     <form action="{{route('store.quotations')}}" method="POST">
@@ -54,6 +56,7 @@
         <input type="text" hidden name="quotation_id" value="{{$generated_id}}">
         <input type="text" hidden name="customer_id" value="{{$selected_customer}}">
         <input type="text" hidden name="total_price" value="{{$grand_total}}">
+        <input type="text" hidden name="quotation_type" value="{{$quotation_type}}">
         <div class="scrollable" style="overflow: scroll; height: 270px; max-height:270px; width: 100%; max-width: 200em;">
             <table class="table table-hover">
                 <thead>

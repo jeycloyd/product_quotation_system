@@ -2,7 +2,7 @@
 @section('title', 'View Quotations')
 @section('content')
 @section('header','View Quotations')
-  <div  class="table-wrapper">
+  <div  class="table-wrapper" style="width: 1200px; margin-left: -530px;">
         <form action="{{route('search.quotations')}}" method="GET">
               <div class="input-group mb-3">
                   @csrf
@@ -35,6 +35,7 @@
               <th scope="col">Quoted For</th>
               <th scope="col">Quoted At</th>
               <th scope="col">Approval Status</th>
+              <th scope="col">Billing Approval Status</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -47,15 +48,23 @@
                           <td>{{$quotation->customer_name}}</td>
                           <td>{{$quotation->created_at}}</td>
                           <td>{{$quotation->approval_status}}</td>
+                          <td>{{$quotation->billing_approval_status}}</td>
                           <td>
                               
                               <a href="{{route('show.quotations', $quotation->id)}}" class="btn btn-outline-primary">View</a>
-                              @if (auth()->user()->role == 'admin')
+                              {{-- @if (auth()->user()->role == 'admin')
                                 <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation->id}}" {{($quotation->approval_status == 'Approved') ? 'disabled' : ''}} >Approve</button>
                               @endif  
                               @if (auth()->user()->role == 'admin')
                                 <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{$quotation->id}}">Delete</button>
-                                <button class="btn btn-outline-warning" data-toggle="modal" data-target="#billingApprovalModal">Approve For Billing</button>
+                                <button class="btn btn-outline-warning" data-toggle="modal" data-target="#billingApprovalModal" {{($quotation->approval_status == 'Approved') ? 'disabled' : ''}}>Approve For Billing</button>
+                              @endif --}}
+                              @if (auth()->user()->role == 'admin')
+                                @if ($quotation->billing_approval_status != 'Approved' && $quotation->approval_status == 'For Approval')
+                                  <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation->id}}">Approve</button>
+                                @else
+                                  <button class="btn btn-outline-warning" data-toggle="modal" data-target="#billingApprovalModal" {{($quotation->billing_approval_status == 'Approved') ? 'disabled' : ''}}>Approve For Billing</button>
+                                @endif
                               @endif
                           </td>
                       </tr>
@@ -122,7 +131,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="approveModalLabel">Approve Billing Approval?</h5>
+        <h5 class="modal-title" id="approveModalLabel">Confirm Billing Approval?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

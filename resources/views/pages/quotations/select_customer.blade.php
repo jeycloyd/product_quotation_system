@@ -20,14 +20,14 @@
                 <form action="{{route('create.quotations')}}" method="GET" class="fillupform">
                     @csrf
                     <div>
-                        <select name="customer_name" class="form-select" aria-label="Default select example" id="customer_name" style="width: 300px">
+                        <select name="customer_name" class="form-select" aria-label="Default select example" id="customer_name" style="width: 300px" required>
                             <option value="" disabled selected>------------Select Customer------------</option>
                             @foreach ($customers as $customer)
                                 <option value="{{$customer->id}}">{{$customer->customer_name}}</option>
                             @endforeach
                         </select>
                         <br>
-                        <select name="quotation_type" class="form-select" aria-label="Default select example" id="quotation_type" style="width: 300px">
+                        <select name="quotation_type" class="form-select" aria-label="Default select example" id="quotation_type" style="width: 300px" required>
                             <option value="" disabled selected>------------Quotation Type------------</option>
                             <option value="Retail">Retail</option>
                             <option value="Services">Services</option>
