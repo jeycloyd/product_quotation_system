@@ -10,8 +10,9 @@
             font-family: "Calibri", sans-serif;
         }
          .content_table {   /* TABLE */
-            margin: auto;
             border-collapse: collapse;
+            margin: auto;
+                -collapse: collapse;
             border-color: black;
             text-align: center;
             margin-bottom: 50px;

@@ -123,7 +123,7 @@
       @endif
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="/customers/index">
             <i class='bx bxs-user'></i>
             <span class="link_name">Customers</span>
           </a>
@@ -138,7 +138,7 @@
       @if(auth()->user()->role == 'admin')
         <li>
           <div class="iocn-link">
-            <a href="#">
+            <a href="/products/index">
               <i class='bx bx-book-alt' ></i>
               <span class="link_name">Products</span>
             </a>
@@ -154,7 +154,7 @@
 
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="/quotations/view">
             <i class='bx bxs-file'></i>
             <span class="link_name">Quotations</span>
           </a>
@@ -166,6 +166,16 @@
           <li><a href="/quotations/view">View Quotation</a></li>
         </ul>
       </li>
+      
+      <li>
+        <div class="iocn-link">
+          <a href="/billings">
+            <i class='bx bxs-file'></i>
+            <span class="link_name">Billing</span>
+          </a>
+        </div>
+      </li>
+
       @if(auth()->user()->role == 'admin')
         <li>
           <a href="/users/index">

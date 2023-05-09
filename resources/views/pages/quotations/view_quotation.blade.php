@@ -7,16 +7,23 @@
         <h4>Quoted At: {{ $quotation_date }}</h4>
         <h4>Customer Name: {{ $customer_name }}</h4>
     </div>
-    <div class="row" style="margin-left:73%">
-      <div class="col">
-        @if (auth()->user()->role == 'admin' && $approval_status != 'Approved')
-            <button type="button" class="btn btn-outline-success mx-1" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation_id}}">Approve</button>
+    
+    {{-- <div class="btn-group" style="margin-left:51.9%">
+      <div>
+        @if (auth()->user()->role == 'admin' && $approval_status == 'Approved')
+            <button type="button" class="btn btn-outline-success mx-1" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation_id}}">Approve</button>          
         @endif
       </div>
-      <div class="col" style="margin-left:-28%">
-            <a href="{{ route('downloadPDF.quotations', $quotation_id) }}" target="_blank" class="btn btn-primary mx-1" style="margin-left:768px">View PDF</a>
+      <div>
+        @if (auth()->user()->role == 'admin' && $approval_status == 'Approved')
+            <a href="{{ route('previewPDFBilling.quotations', $quotation_id) }}" class="btn btn-secondary" target="_blank">View Billing PDF</a>
+        @endif
       </div>
-    </div> 
+      <div>
+            <a href="{{ route('downloadPDF.quotations', $quotation_id) }}" target="_blank" class="btn btn-primary mx-1" style="margin-left:768px">View Quotation PDF</a>
+      </div>
+    </div>  --}}
+     
     <br>
     <br>
     <table class="content_table text-center">
@@ -51,6 +58,43 @@
    <div class="d-flex justify-content-center">
     {{ $product_quotations->links() }}
   </div>
+  <br>
+  {{-- <div class="btn-group" style="margin-left:51.9%">
+    <div>
+      @if (auth()->user()->role == 'admin' && $approval_status != 'Approved')
+          <button type="button" class="btn btn-outline-success mx-1" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation_id}}">Approve</button>          
+      @endif
+    </div>
+    <div>
+      @if (auth()->user()->role == 'admin' && $approval_status == 'Approved')
+          <a href="{{ route('previewPDFBilling.quotations', $quotation_id) }}" class="btn btn-secondary" target="_blank">View Billing PDF</a>
+      @endif
+    </div>
+    <div>
+      <a href="{{ route('downloadPDF.quotations', $quotation_id) }}" target="_blank" class="btn btn-primary mx-1" style="margin-left:768px">View Quotation PDF</a>
+    </div>
+  </div>  --}}
+  {{-- show only view pdf and approve button when the quotation is not yet approved --}}
+  @if (auth()->user()->role == 'admin' && $approval_status != 'Approved')
+    <div class="btn-group" style="margin-left:67%">
+      <div>
+        <button type="button" class="btn btn-outline-success mx-1" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation_id}}">Approve</button>          
+      </div>
+      <div>
+        <a href="{{ route('downloadPDF.quotations', $quotation_id) }}" target="_blank" class="btn btn-primary mx-1" style="margin-left:768px">View Quotation PDF</a>
+      </div>
+    </div>
+  {{-- show only view pdf and view billing when the quotation is approved --}}
+  @else
+    <div class="btn-group" style="margin-left:62%">
+      <div>
+        <a href="{{ route('previewPDFBilling.quotations', $quotation_id) }}" class="btn btn-secondary" target="_blank">View Billing PDF</a>
+      </div>
+      <div>
+        <a href="{{ route('downloadPDF.quotations', $quotation_id) }}" target="_blank" class="btn btn-primary mx-1" style="margin-left:768px">View Quotation PDF</a>
+      </div>
+    </div>
+  @endif
 </div>
 <!---------------------------------- POP UP MODAL FOR APPROVING----------------------------------------------------->
 <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">

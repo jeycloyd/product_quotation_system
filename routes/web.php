@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BillingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
@@ -35,7 +36,11 @@ Route::middleware(['auth'])->group(function () {
     
     //PDF for Quotation
     Route::get('quotations/download/{id}',[QuotationController::class, 'downloadPDF'])->name('downloadPDF.quotations');
-    Route::get('quotations/preview/{id}',[QuotationController::class, 'previewPDF'])->name('previewPDF.quotations');
+
+    //PDF for Billing
+    Route::get('quotations/billing/{id}',[QuotationController::class, 'previewPDFBilling'])->name('previewPDFBilling.quotations');
+    //Billing for period-due-balance ui for a specific customer
+    Route::get('customers/billings/{id}', [BillingController::class, 'viewBilling'])->name('view.billings');
 
     //Customers
     Route::get('/customers/index', [CustomerController::class, 'index'])->name('index.customers');
@@ -81,5 +86,14 @@ Route::middleware(['auth'])->group(function () {
         //Users
         Route::get('/users/index', [UserController::class, 'index'])->name('index.users');
         Route::get('/users/update', [UserController::class, 'update'])->name('update.users');
+
+        //Image for signature
+        Route::post('/store-image',[CustomerController::class, 'storeImage'])->name('store.image');
+
+        //signature form page
+        Route::get('/input-signature',[CustomerController::class, 'signatureForm'])->name('signature.form');
+
+        //pdf for signature
+        Route::get('/pdftest', [CustomerController::class, 'exportSignaturePDF'])->name('export.signature');
     });
 });

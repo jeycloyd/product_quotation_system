@@ -15,7 +15,10 @@
                     @enderror
                 </div>
                 <div class="inputbox">
-                <input type="text" required name="customer_contact_no" value="{{$customer_contact_no}}">
+                    <input type="text" required name="customer_contact_no" value="{{$customer_contact_no}}">
+                </div>
+                <div class="inputbox">
+                    <input type="text" required name="customer_address" value="{{$customer_address}}">
                 </div>
                 <button type="submit" class="btn-confirm border-0" >UPDATE CUSTOMER</button>   
             </form>

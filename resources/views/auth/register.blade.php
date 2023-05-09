@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title','Register')
 @section('content')
 <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 <br>

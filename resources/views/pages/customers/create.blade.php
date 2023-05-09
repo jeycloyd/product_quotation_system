@@ -14,6 +14,12 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="inputbox">  
+                        <input type="text" required class="form-control @error('address') is-invalid @enderror" name="address" placeholder="Enter address...">
+                        @error('address')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="inputbox">
                         <input type="text" required name="customer_contact_no" placeholder="Enter contact number...">
                     </div>

@@ -55,6 +55,13 @@
 <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 {{-- <link href="{{ asset('css/Navbar.css') }}" rel="stylesheet"> --}}
 
+{{-----------------------------------JQuery UI Signature-----------------------------------------------}}
+<link type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/south-street/jquery-ui.css" rel="stylesheet"> 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+ 
+<link type="text/css" href="{{ asset('css/jquery.signature.css') }}" rel="stylesheet"> 
+<script type="text/javascript" src="{{ asset('js/jquery.signature.js') }}"></script>
+
 <!--  LOGIN WALLPAPER (Start)-->
 
 <div class="loginwrapper">

@@ -2,7 +2,7 @@
 @section('title', 'View Customers')
 @section('content')
 @section('header','View Customers')
-  <div class="table-wrapper">
+  <div class="table-wrapper" style="width:70em">
     @if (\Session::has('success'))
         <div class="alert alert-success">
               {!! \Session::get('success') !!}
@@ -21,6 +21,7 @@
             <tr>
               <th scope="col">Customer ID</th>
               <th scope="col">Name</th>
+              <th scope="col">Address</th>
               <th scope="col">Contact No.</th>
               <th scope="col">Actions</th>
             </tr>
@@ -30,6 +31,7 @@
                   <tr>
                       <td>{{$customer->id}}</td>
                       <td>{{$customer->customer_name}}</td>
+                      <td>{{$customer->address}}</td>
                       <td>{{$customer->customer_contact_no}}</td>
                       <td>
                           <a href="{{route('view.customers',$customer->id)}}" class="btn btn-outline-primary">View</a>

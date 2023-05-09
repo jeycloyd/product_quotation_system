@@ -7,6 +7,7 @@ use App\Models\Quotation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 
 class CustomerController extends Controller
 {
@@ -27,7 +28,6 @@ class CustomerController extends Controller
                     $softDeletedRecord = Customer::onlyTrashed()
                         ->where('customer_name', $value)
                         ->first();
-        
                     if ($softDeletedRecord) {
                         //restore the softdeleted data if it exists before
                         $softDeletedRecord->restore();
@@ -40,6 +40,7 @@ class CustomerController extends Controller
         //save data
         $customer = new Customer();
         $customer->customer_name = $request->customer_name;
+        $customer->address = $request->address;
         $customer->customer_contact_no = $request->customer_contact_no;
         $customer->save();
         
@@ -57,9 +58,10 @@ class CustomerController extends Controller
     public function show($id){
         $customer = Customer::findOrFail($id);
         $customer_id = $customer->id;
+        $customer_address = $customer->address;
         $customer_name = $customer->customer_name;
         $customer_contact_no = $customer->customer_contact_no;
-        return view('pages/customers/edit', compact('customer_id' , 'customer_name', 'customer_contact_no'));
+        return view('pages/customers/edit', compact('customer_id' , 'customer_name', 'customer_contact_no','customer_address'));
     }
     //update customer info
     public function update($id, Request $request){
@@ -71,11 +73,14 @@ class CustomerController extends Controller
         ]);
         $customer = Customer::findOrFail($id);
         $customer_name = DB::table('customers')->where('customer_name', $request->customer_name)->value('customer_name');
-        if($customer_name == $request->customer_name){
+        $customer_contact_no = DB::table('customers')->where('customer_name', $request->customer_name)->value('customer_contact_no');
+        $customer_address = DB::table('customers')->where('customer_name', $request->customer_name)->value('address');
+        if($customer_name == $request->customer_name && $customer_contact_no == $request->customer_contact_no && $customer_address == $request->customer_address){
             return redirect('customers/index');
         }else{
             $customer->customer_name = $request->customer_name;
             $customer->customer_contact_no = $request->customer_contact_no;
+            $customer->address = $request->customer_address;
             $customer->save();
             return redirect('customers/index')->with('success', 'Customer details have been updated');
         }
@@ -138,5 +143,19 @@ class CustomerController extends Controller
         }
         
         
+    }
+    //signature form view
+    public function signatureForm(){
+        return view('signature');
+    }
+    //submit signature and output the signature through a PDF
+    public function storeImage(request $request){
+        //get data from hidden input
+        $image = $request->base64string;
+        //output the png image of the signature (via base64) to a PDF
+        $dompdf = App::make('dompdf.wrapper');
+            $dompdf->set_paper('A4');
+            $pdf = $dompdf->loadView('pages.quotations.pdf.pdftest',compact('image')); 
+            return $dompdf->stream('Signature'.'.pdf');
     }
 }

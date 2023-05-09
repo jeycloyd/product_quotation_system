@@ -3,8 +3,9 @@
 @section('content')
 <div class="table-wrapper">
     <div>
-        <h4>Customer Name: {{ $customer_name }}</h4>
+        <h4>Customer Name: {{ $customer_name}} </h4>
     </div>
+    <a href="{{route('view.billings',$customer_id)}}" class="btn btn-primary">Generate Billing</a>
       <form action="{{route('search.customerQuotations', $customer_id)}}" method="GET">
           <div class="input-group mb-3">
               @csrf

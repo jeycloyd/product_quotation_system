@@ -15,12 +15,13 @@ return new class extends Migration
         Schema::create('quotations', function (Blueprint $table) {
             $table->string('id',15)->primary();
             $table->unsignedBigInteger('customer_id');
-            $table->date('quotation_date');
-            $table->timestamps();
             $table->foreign('customer_id')
             ->references('id')
             ->on('customers')
             ->onDelete('cascade');
+            $table->date('quotation_date');
+            $table->string('quotation_type')->default('Retail');
+            $table->timestamps();
         });
     }
 

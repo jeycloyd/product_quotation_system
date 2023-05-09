@@ -71,7 +71,7 @@ class QuotationController extends Controller
         // combine the info from customers and quotations table via join
         $quotations = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
-            ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status')
+            ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status','quotations.quotation_type')
             ->whereNull('quotations.deleted_at')
             ->orderByDesc('quotations.created_at')
             ->paginate(5);
@@ -285,27 +285,49 @@ class QuotationController extends Controller
     public function search(Request $request){
         $search = $request->search;
         $search_approval_status = $request->approval_status;
-        if(is_null($search_approval_status)){
-            //retrieve all quotations
-            $quotations = DB::table('customers')
+        $search_quotation_type = $request->quotation_type;
+        // if(is_null($search_approval_status) && is_null($search_quotation_type)){
+        //     //retrieve all quotations
+        //     $quotations = DB::table('customers')
+        //     ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
+        //     ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status','quotations.quotation_type')
+        //     ->whereNull('quotations.deleted_at')
+        //     ->where('customer_name', 'LIKE' , '%' . $search . '%')
+        //     ->orderByDesc('quotations.created_at')
+        //     ->paginate(5);
+        //     return view('pages.quotations.view', compact('quotations'));
+        // }else{
+        //     $quotations = DB::table('customers')
+        //     ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
+        //     ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status','quotations.quotation_type')
+        //     ->whereNull('quotations.deleted_at')
+        //     ->where('customer_name', 'LIKE' , '%' . $search . '%')
+        //     ->where('approval_status',$search_approval_status)
+        //     ->where('quotation_type',$search_quotation_type)
+        //     ->orderByDesc('quotations.created_at')
+        //     ->paginate(5);
+        //     return view('pages.quotations.view', compact('quotations'));
+        // }
+        $quotations = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
-            ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status')
+            ->select('customers.*', 'quotations.id', 'quotations.created_at', 'quotations.approval_status', 'quotations.quotation_type')
             ->whereNull('quotations.deleted_at')
-            ->where('customer_name', 'LIKE' , '%' . $search . '%')
-            ->orderByDesc('quotations.created_at')
-            ->paginate(5);
-            return view('pages.quotations.view', compact('quotations'));
-        }else{
-            $quotations = DB::table('customers')
-            ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
-            ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status')
-            ->whereNull('quotations.deleted_at')
-            ->where('customer_name', 'LIKE' , '%' . $search . '%')
-            ->where('approval_status',$search_approval_status)
-            ->orderByDesc('quotations.created_at')
-            ->paginate(5);
-            return view('pages.quotations.view', compact('quotations'));
+            ->where('customer_name', 'LIKE', '%' . $search . '%');
+
+        if (!is_null($search_approval_status)) {
+            $quotations->where('approval_status', $search_approval_status);
         }
+        if (!is_null($search_quotation_type)) {
+            $quotations->where('quotation_type', $search_quotation_type);
+        }
+        $quotations = $quotations->orderByDesc('quotations.created_at')
+            ->paginate(5);
+        // return view('pages.quotations.view', compact('quotations'));
+        return view('pages.quotations.view', [
+            'quotations' => $quotations,
+            'oldApprovalStatus' => $search_approval_status,
+            'oldQuotationType' => $search_quotation_type,
+        ]);
     }
     //approve quotations
     public function approveQuotations(Request $request){
@@ -314,5 +336,33 @@ class QuotationController extends Controller
             $quotations->approval_status = 'Approved';
             $quotations->save();
             return redirect()->back()->with('success','Quotation has been approved successfully!');
+    }
+    //view billing pdf
+    public function previewPDFBilling($id){
+        $billing = $id;
+        //get the customer's name for this quotation
+        $customer_name = DB::table('customers')
+            ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
+            ->select('customers.customer_name')
+            ->where('quotations.id',$billing)
+            ->value('customer_name');
+        //get the customer's address for this quotation
+        $customer_address = DB::table('customers')
+        ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
+        ->select('customers.address')
+        ->where('quotations.id',$billing)
+        ->value('address');
+        //get the total of the quotation
+        $grand_total = DB::table('product_quotation')->where('quotation_id', $id)->sum('sub_total');
+        //get items purchased and group them by product name based on the quotation id
+        $product_quotations = DB::table('product_quotation')
+                            ->select('product_name', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(sub_total) as total_price'))
+                            ->where('quotation_id','=',$id)
+                            ->groupBy('product_name')
+                            ->get();
+        $dompdf = App::make('dompdf.wrapper');
+        $dompdf->set_paper('A4');
+        $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_billing',compact('billing','product_quotations','grand_total','customer_name','customer_address')); 
+        return $dompdf->stream('Billing_for_'.$billing.'.pdf');
     }
 }
