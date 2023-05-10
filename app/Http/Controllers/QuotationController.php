@@ -371,4 +371,12 @@ class QuotationController extends Controller
         $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_billing',compact('billing','product_quotations','grand_total','customer_name','customer_address')); 
         return $dompdf->stream('Billing_for_'.$billing.'.pdf');
     }
+
+    /*--------------------------- AJAX FUNCTION FOR APPROVE FOR BILLING BUTTON ---------------------*/
+    public function showTotalOfQuotation($id) {
+        $total = DB::table('product_quotation')
+                     ->where('quotation_id', $id)
+                     ->sum('sub_total');
+        return response()->json(['total' => $total]);
+    }
 }

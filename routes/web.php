@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/quotations/view', [QuotationController::class, 'viewQuotations'])->name('view.quotations');
     Route::get('/quotations/view/{id}', [QuotationController::class, 'show'])->name('show.quotations');
     Route::get('quotations/search/',[QuotationController::class, 'search'])->name('search.quotations');
+    //total of each quotation using ajax
+    Route::get('/view/total/{id}', [QuotationController::class, 'showTotalOfQuotation'])->name('total.quotations');
     
     //PDF for Quotation
     Route::get('quotations/download/{id}',[QuotationController::class, 'downloadPDF'])->name('downloadPDF.quotations');

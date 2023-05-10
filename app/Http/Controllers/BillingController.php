@@ -51,7 +51,9 @@ class BillingController extends Controller
         //get inputs
         $quotation_id = $request->id;
         $customer_id = $request->customer_id;
-        
+        $total = $request->total;
+
+        dd($request->all());
         
     }
     //mark as paid for the billing

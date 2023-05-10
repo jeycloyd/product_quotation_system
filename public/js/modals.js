@@ -27,8 +27,20 @@ $(document).ready(function(){
         var modal = $(this);
         modal.find('#input_for_image_receipt').val(quotation_id);
         modal.find('#input_customer_id').val(customer_id);
-    })
-
+       
+        //call ajax
+        $.ajax({
+            type: "GET",
+            url: "/view/total/" + quotation_id,
+            dataType: "json",
+            success: function (response) {
+                //get the total from the object 
+                $total = parseFloat(response.total);
+                //put this to the input value
+                $('#input_total').val($total);
+            }
+        });
+    })  
 })
 
 
