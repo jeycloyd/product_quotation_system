@@ -74,7 +74,7 @@ class QuotationController extends Controller
         // combine the info from customers and quotations table via join
         $quotations = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
-            ->select('customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status','quotations.quotation_type','billing_approval_status')
+            ->select(DB::raw('customers.id AS customer_id'),'customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status','quotations.quotation_type','billing_approval_status')
             ->whereNull('quotations.deleted_at')
             ->orderByDesc('quotations.created_at')
             ->paginate(5);

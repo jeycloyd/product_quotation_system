@@ -41,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('quotations/billing/{id}',[QuotationController::class, 'previewPDFBilling'])->name('previewPDFBilling.quotations');
     //Billing for period-due-balance ui for a specific customer
     Route::get('customers/billings/{id}', [BillingController::class, 'viewBilling'])->name('view.billings');
+    //approve billing of a specific quotation
+    Route::post('quotations/approve-billing', [BillingController::class, 'approveBilling'])->name('approve.billings');
 
     //Customers
     Route::get('/customers/index', [CustomerController::class, 'index'])->name('index.customers');

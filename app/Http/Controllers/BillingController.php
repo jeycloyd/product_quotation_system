@@ -46,4 +46,23 @@ class BillingController extends Controller
         $months = array('January','February','March','April','May','June','July','August','September','October','November','December');   
         return view('pages.billings.billing',compact('billings','months','total_balance'));
     }
+    //approve a billing from the list of quotations
+    public function approveBilling(Request $request){
+        //get inputs
+        $quotation_id = $request->id;
+        $customer_id = $request->customer_id;
+        
+        
+    }
+    //mark as paid for the billing
+    public function markAsPaid(Request $request){
+        //get the receipt image from the file input
+        if ($request->hasFile('receipt_image')) {
+            $image = $request->file('receipt_image');
+            $imageContents = file_get_contents($image->getRealPath());
+            $base64Image = base64_encode($imageContents);
+            //add webp extension to the base64
+            $final_base64Image = 'data:image/webp;base64,'.$base64Image;
+        }
+    }
 }

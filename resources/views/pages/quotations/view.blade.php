@@ -63,7 +63,7 @@
                                 @if ($quotation->billing_approval_status != 'Approved' && $quotation->approval_status == 'For Approval')
                                   <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation->id}}">Approve</button>
                                 @else
-                                  <button class="btn btn-outline-warning" data-toggle="modal" data-target="#billingApprovalModal" {{($quotation->billing_approval_status == 'Approved') ? 'disabled' : ''}}>Approve For Billing</button>
+                                  <button class="btn btn-outline-warning" data-toggle="modal" data-target="#billingApprovalModal" data-billing="{{$quotation->id}}" data-customer_id="{{$quotation->customer_id}}" {{($quotation->billing_approval_status == 'Approved') ? 'disabled' : ''}}>Approve For Billing</button>
                                 @endif
                               @endif
                           </td>
@@ -90,7 +90,7 @@
         Are you sure you want to remove this quotation detail?
         <form id="delete_form" action="{{route('destroy.quotations')}}" method="GET">
           @csrf
-          <input  type="text" hidden name="id" class="form-control" id="id">
+          <input  type="text"  name="id" class="form-control">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="submit" form="delete_form" class="btn btn-danger">Yes, Delete it</button>
@@ -115,7 +115,7 @@
         Approve this quotation?
         <form id="approve_form" action="{{route('approve.quotations')}}" method="PUT">
           @csrf
-          <input type="text" hidden name="id" class="form-control" id="id">
+          <input type="text" hidden name="id" class="form-control">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="submit" form="approve_form" class="btn btn-success">Yes, Approve it</button>
@@ -131,17 +131,17 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="approveModalLabel">Confirm Billing Approval?</h5>
+        <h5 class="modal-title" id="approveModalLabel">Confirm Billing Approval</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Insert picture of the receipt
-        <form id="approve_billing_form" action="#" enctype="multipart/form-data">
+        Confirm for Billing Approval?
+        <form id="approve_billing_form" action="{{route('approve.billings')}}" method="POST">
           @csrf
-          <input type="text" hidden name="id" class="form-control" id="id">
-          <input type="file" name="receipt" class="form-control" id="receipt" required>
+          <input type="text" id="input_for_image_receipt" hidden name="id" class="form-control">
+          <input type="text" id="input_customer_id" hidden name="customer_id" class="form-control">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="submit" form="approve_billing_form" class="btn btn-success">Yes, Approve it</button>
