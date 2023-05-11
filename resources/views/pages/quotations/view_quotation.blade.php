@@ -4,6 +4,7 @@
 <div class="table-wrapper" style="width: 900px; margin-left: -390px; margin-top: -170px">
     <div style="margin-top: 50px">
         <h4>Quotation ID: {{ $quotation_id }}</h4>
+        <h4>Quotation Type: {{ $quotation_type }}</h4>
         <h4>Quoted At: {{ $quotation_date }}</h4>
         <h4>Customer Name: {{ $customer_name }}</h4>
     </div>
@@ -88,7 +89,11 @@
   @else
     <div class="btn-group" style="margin-left:62%">
       <div>
-        <a href="{{ route('previewPDFBilling.quotations', $quotation_id) }}" class="btn btn-secondary" target="_blank">View Billing PDF</a>
+        @if ($quotation_type != 'Rental')
+          <a href="{{ route('previewPDFBilling.quotations', $quotation_id) }}" class="btn btn-secondary" target="_blank">Create Billing</a>
+        @else
+          <a href="{{ route('view.billings', $quotation_id, $grand_total) }}" class="btn btn-secondary">Billing</a>
+        @endif
       </div>
       <div>
         <a href="{{ route('downloadPDF.quotations', $quotation_id) }}" target="_blank" class="btn btn-primary mx-1" style="margin-left:768px">View Quotation PDF</a>

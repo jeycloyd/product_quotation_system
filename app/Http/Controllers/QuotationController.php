@@ -236,6 +236,12 @@ class QuotationController extends Controller
             ->select('customers.customer_name')
             ->where('quotations.id',$quotation_id)
             ->value('customer_name');
+        //get the type of quotation
+        $quotation_type = DB::table('customers')
+            ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
+            ->select('quotations.quotation_type')
+            ->where('quotations.id',$quotation_id)
+            ->value('quotation_type');
         //get the total of the quotation
         $grand_total = DB::table('product_quotation')->where('quotation_id', $quotation_id)->sum('sub_total');
         //get approval status
@@ -249,7 +255,14 @@ class QuotationController extends Controller
                             ->where('quotation_id','=',$id)
                             ->groupBy('product_name')
                             ->paginate(5);
-        return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status'));
+
+        // if($quotation_type != 'Rental'){
+        //     //redirect to the viewquotation page
+            return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status','quotation_type'));
+        // }else{
+        //     //redirect to the rental billing page
+        //     return view('pages.billings.billing',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status','quotation_type'));
+        // }
     }
     //delete a quotation record from the list
     public function destroy(Request $request){

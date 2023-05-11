@@ -140,9 +140,9 @@
         Confirm for Billing Approval?
         <form id="approve_billing_form" action="{{route('approve.billings')}}" method="POST">
           @csrf
-          <input type="text" id="input_for_image_receipt" hidden name="id" class="form-control">
-          <input type="text" id="input_customer_id" hidden name="customer_id" class="form-control">
-          <input type="number" id="input_total" hidden name="total" class="form-control">
+          <input type="text" hidden id="input_for_image_receipt"  name="id" class="form-control">
+          <input type="text" hidden id="input_customer_id"  name="customer_id" class="form-control">
+          <input type="number" hidden id="input_total"  name="total" class="form-control">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="submit" form="approve_billing_form" class="btn btn-success">Yes, Approve it</button>

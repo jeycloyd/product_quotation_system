@@ -3,49 +3,29 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Billing;
+use App\Models\Quotation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BillingController extends Controller
 {
-    //show billing page
+    //show billing page based on the selected quotation
     public function viewBilling($id){
-        // //get the current month
-        // $current_month = Carbon::now()->format('M');
-        // //set container for the months
-        // $period = array();
-        // //set an array with all the months
-        
-        // foreach($months as $month){
-        //     if($month == $current_month){
-        //         break;
-        //     }
-        //     array_push($period,$month);
-        // }
-        
-        //fetch all transactions of the specific customer and group them by month
-        // $billings = DB::table('product_quotation')
-        //         ->join('quotations','product_quotation.quotation_id','=','quotations.id')
-        //         ->select(DB::raw('MONTHNAME(product_quotation.created_at) AS PERIOD, SUM(sub_total) AS DUE'),'quotations.customer_id')
-        //         ->where('quotations.customer_id',$id)
-        //         ->groupBy(DB::raw('MONTHNAME(created_at)'),'quotations.customer_id')
-        //         ->get();
-        
-        //fetch all transactions and months of the specific customer and group them by month
-        $billings = DB::table('product_quotation')
-                    ->join('quotations','product_quotation.quotation_id','=','quotations.id')
-                    ->select(DB::raw('MONTHNAME(product_quotation.created_at) AS PERIOD, SUM(sub_total) AS DUE'),'quotations.customer_id')
-                    ->where('quotations.customer_id',$id)
-                    ->groupBy(DB::raw('MONTHNAME(created_at)'),'quotations.customer_id')
-                    ->orderBy('product_quotation.created_at','ASC')
-                    ->get();
-        $total_balance = floatval(DB::table('product_quotation')
-                    ->select(DB::raw('SUM(sub_total) AS total_balance'))
-                    ->where('quotation_id', 1202305082)
-                    ->first()->total_balance);
-        $months = array('January','February','March','April','May','June','July','August','September','October','November','December');   
-        return view('pages.billings.billing',compact('billings','months','total_balance'));
+        //extract id from url
+        $quotation_id = $id;
+        //total of the quotation
+        $total = DB::table('product_quotation')->where('quotation_id', $quotation_id)->sum('sub_total');
+
+        //fetch data from billings table
+        return view('pages.billings.billing',compact('quotation_id','total'));
     }
+
+    //create a billing for a specific quotation
+    public function createBilling(){
+
+    }
+    
     //approve a billing from the list of quotations
     public function approveBilling(Request $request){
         //get inputs
@@ -53,11 +33,26 @@ class BillingController extends Controller
         $customer_id = $request->customer_id;
         $total = $request->total;
 
-        dd($request->all());
-        
+        //save to billing table
+        $billings = new Billing();
+        $billings->customer_id = $customer_id;
+        $billings->quotation_id = $quotation_id;
+        $billings->due = $total;
+        $billings->quotation_id = $quotation_id;
+        $billings->save();
+
+        //update quotation and make it approved
+        $quotations = Quotation::find($quotation_id);
+        $quotations->billing_approval_status = 'Approved';
+        $quotations->save();
+
+        //return response
+        return redirect()->back()->with('success','Billing approved');
+
     }
+
     //mark as paid for the billing
-    public function markAsPaid(Request $request){
+    public function markAsPaidBilling(Request $request){
         //get the receipt image from the file input
         if ($request->hasFile('receipt_image')) {
             $image = $request->file('receipt_image');
@@ -66,5 +61,14 @@ class BillingController extends Controller
             //add webp extension to the base64
             $final_base64Image = 'data:image/webp;base64,'.$base64Image;
         }
+
+        //update payment status of billing to paid
+        $billing_id = $request->billing_id;
+        $billings = Billing::findOrFail($billing_id);
+        $billings->payment_status = 'paid';
+        $billings->receipt_image = $final_base64Image;
+        $billings->save();
+
+        return redirect()->back()->with('success','Marked as paid');
     }
 }

@@ -108,7 +108,7 @@ class CustomerController extends Controller
         $customer_id = $id;
         $customer_quotations = DB::table('quotations')
                      ->join('customers' , 'customers.id' , '=' , 'quotations.customer_id')
-                     ->select('quotations.id as quotation_id', 'quotations.created_at', 'customers.id as customer_id','quotations.approval_status')
+                     ->select('quotations.id as quotation_id', 'quotations.created_at', 'customers.id as customer_id','quotations.approval_status','quotations.quotation_type','quotations.billing_approval_status')
                      ->where('customers.id',$id)
                      ->whereNull('quotations.deleted_at')
                      ->paginate(5);
@@ -118,23 +118,24 @@ class CustomerController extends Controller
     public function searchCustomerQuotations($id, Request $request){
         $search = $request->search;
         $approval_status = $request->approval_status;
+        $search_quotation_type = $request->quotation_type;
         $customer_id = $id;
         $customer_name = Customer::where('id',$id)->value('customer_name');
-        if(!is_null($approval_status)){
+        if(!is_null($search_quotation_type)){
             //show list of all quotations by the customer
             $customer_quotations = DB::table('quotations')
                      ->join('customers' , 'customers.id' , '=' , 'quotations.customer_id')
-                     ->select('quotations.id as quotation_id', 'quotations.created_at', 'customers.id as customer_id','quotations.approval_status')
+                     ->select('quotations.id as quotation_id', 'quotations.created_at', 'customers.id as customer_id','quotations.approval_status','quotations.quotation_type','quotations.billing_approval_status')
                      ->where('customers.id',$id)
                      ->where('quotations.id', 'LIKE' , '%' . $search . '%')
-                     ->where('quotations.approval_status',$approval_status)
+                     ->where('quotations.quotation_type', $search_quotation_type)
                      ->whereNull('quotations.deleted_at')
                      ->paginate(5);
             return view('pages.customers.view_customer',compact('customer_quotations','customer_name','customer_id'));
         }else{
             $customer_quotations = DB::table('quotations')
                      ->join('customers' , 'customers.id' , '=' , 'quotations.customer_id')
-                     ->select('quotations.id as quotation_id', 'quotations.created_at', 'customers.id as customer_id','quotations.approval_status')
+                     ->select('quotations.id as quotation_id', 'quotations.created_at', 'customers.id as customer_id','quotations.approval_status','quotations.quotation_type','quotations.billing_approval_status')
                      ->where('customers.id',$id)
                      ->where('quotations.id', 'LIKE' , '%' . $search . '%')
                      ->whereNull('quotations.deleted_at')

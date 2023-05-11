@@ -45,6 +45,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('customers/billings/{id}', [BillingController::class, 'viewBilling'])->name('view.billings');
     //approve billing of a specific quotation
     Route::post('quotations/approve-billing', [BillingController::class, 'approveBilling'])->name('approve.billings');
+    //mark as paid billing of specific transaction
+    Route::post('quotations/paid-billing', [BillingController::class, 'markAsPaidBilling'])->name('markAsPaid.billings');
 
     //Customers
     Route::get('/customers/index', [CustomerController::class, 'index'])->name('index.customers');

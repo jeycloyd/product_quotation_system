@@ -33,14 +33,23 @@ $(document).ready(function(){
             type: "GET",
             url: "/view/total/" + quotation_id,
             dataType: "json",
-            success: function (response) {
+            success: function (response) { 
                 //get the total from the object 
                 $total = parseFloat(response.total);
                 //put this to the input value
                 $('#input_total').val($total);
             }
         });
-    })  
+    }) 
+    
+    //confirm delete script
+    $('#markAsPaidModal').on('show.bs.modal', function (e) {
+        var button = $(e.relatedTarget); // Button that triggered the modal
+        var billing_id = button.data('id'); // Extract info from data-* attributes
+        // Update the modal's content. (JQuery method)
+        var modal = $(this);
+        modal.find('#input_billing_id').val(billing_id);
+    })
 })
 
 
