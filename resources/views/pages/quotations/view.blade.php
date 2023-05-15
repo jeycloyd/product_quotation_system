@@ -47,8 +47,8 @@
                           <td>{{$quotation->quotation_type}}</td>
                           <td>{{$quotation->customer_name}}</td>
                           <td>{{$quotation->created_at}}</td>
-                          <td>{{$quotation->approval_status}}</td>
-                          <td>{{$quotation->billing_approval_status}}</td>
+                          <td {{$quotation->approval_status == 'Approved' ? 'style=color:green' : 'style=color:red'}}>{{$quotation->approval_status}}</td>
+                          <td {{$quotation->billing_approval_status == 'Approved' ? 'style=color:green' : 'style=color:red'}}>{{$quotation->billing_approval_status}}</td>
                           <td>
                               
                               <a href="{{route('show.quotations', $quotation->id)}}" class="btn btn-outline-primary">View</a>

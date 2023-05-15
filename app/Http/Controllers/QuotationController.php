@@ -78,6 +78,16 @@ class QuotationController extends Controller
             ->whereNull('quotations.deleted_at')
             ->orderByDesc('quotations.created_at')
             ->paginate(5);
+
+        // // SELECT quotations.id, SUM(due) AS 'balance' FROM billings JOIN quotations ON quotations.id = billings.quotation_id 
+        // // WHERE billings.payment_status = 'unpaid' AND billings.quotation_id = '1202305111';
+        // $quotation_balance = DB::table('quotations')
+        //                         ->select('quotations.id',DB::raw('SUM(due) AS balance'))
+        //                         ->join('billings','quotations.id','=','billings.quotation_id')
+        //                         // ->where('billings.quotation_id')
+        //                         ->where('billings.payment_status','unpaid')
+        //                         ->value('balance');
+
         return view('pages.quotations.view',compact('quotations'));
     }
     //helper function to generate the quotation id
@@ -246,6 +256,8 @@ class QuotationController extends Controller
         $grand_total = DB::table('product_quotation')->where('quotation_id', $quotation_id)->sum('sub_total');
         //get approval status
         $approval_status = DB::table('quotations')->where('id',$id)->value('approval_status');
+        //get the billing_approval_status
+        $billing_approval_status = DB::table('quotations')->where('id',$id)->value('billing_approval_status');
         //get the date of the quotation
         $quotation_date = DB::table('quotations')->where('id', $quotation_id)->value('created_at');
         $quotation_date = Carbon::parse($quotation_date)->format('Y-m-d');
@@ -257,8 +269,8 @@ class QuotationController extends Controller
                             ->paginate(5);
 
         // if($quotation_type != 'Rental'){
-        //     //redirect to the viewquotation page
-            return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status','quotation_type'));
+        //      //redirect to the viewquotation page
+        return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status','quotation_type','billing_approval_status'));
         // }else{
         //     //redirect to the rental billing page
         //     return view('pages.billings.billing',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status','quotation_type'));
@@ -329,7 +341,7 @@ class QuotationController extends Controller
         // }
         $quotations = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
-            ->select('customers.*', 'quotations.id', 'quotations.created_at', 'quotations.approval_status', 'quotations.quotation_type','quotations.billing_approval_status')
+            ->select(DB::raw('customers.id AS customer_id'),'customers.customer_name', 'quotations.id', 'quotations.created_at', 'quotations.approval_status', 'quotations.quotation_type','quotations.billing_approval_status')
             ->whereNull('quotations.deleted_at')
             ->where('customer_name', 'LIKE', '%' . $search . '%');
 

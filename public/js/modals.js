@@ -42,13 +42,22 @@ $(document).ready(function(){
         });
     }) 
     
-    //confirm delete script
+    //mark as paid script
     $('#markAsPaidModal').on('show.bs.modal', function (e) {
         var button = $(e.relatedTarget); // Button that triggered the modal
         var billing_id = button.data('id'); // Extract info from data-* attributes
         // Update the modal's content. (JQuery method)
         var modal = $(this);
         modal.find('#input_billing_id').val(billing_id);
+    })
+
+    //view receipt script
+    $('#viewReceiptModal').on('show.bs.modal', function (e) {
+        var button = $(e.relatedTarget); // Button that triggered the modal
+        var billing_image = button.data('image'); // Extract info from data-* attributes
+        // Update the modal's content. (JQuery method)
+        var modal = $(this);
+        $('#image_receipt').attr('src', billing_image);
     })
 })
 

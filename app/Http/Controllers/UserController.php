@@ -21,7 +21,7 @@ class UserController extends Controller
         $userName = DB::table('users')->where('id',$request->id)->value('name'); 
         //check first if the selected user is currently the authenticated user
         if(auth()->user()->name == $userName){
-            return redirect()->back()->with('success',"Cannot change the logged in user's roles");
+            return redirect()->back()->with('error',"Cannot change the logged in user's roles");
         }
         //check if user is either admin or viewer
         if($userRole == 'admin'){

@@ -9,6 +9,11 @@
               {!! \Session::get('success') !!}
         </div>
     @endif
+    @if (\Session::has('error'))
+        <div class="alert alert-danger">
+              {!! \Session::get('error') !!}
+        </div>
+    @endif
       {{-- <form action="{{route('search.products')}}" method="GET">
         <div class="input-group mb-3">
             @csrf
@@ -51,7 +56,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete?</h5>
+        <h5 class="modal-title" id="deleteModalLabel">Change role?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

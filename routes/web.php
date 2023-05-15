@@ -41,12 +41,16 @@ Route::middleware(['auth'])->group(function () {
 
     //PDF for Billing
     Route::get('quotations/billing/{id}',[QuotationController::class, 'previewPDFBilling'])->name('previewPDFBilling.quotations');
+    //create billing for a specific rental quotation
+    Route::post('customers/billings/{id}/create-billing', [BillingController::class, 'createBilling'])->name('create.billings');
     //Billing for period-due-balance ui for a specific customer
     Route::get('customers/billings/{id}', [BillingController::class, 'viewBilling'])->name('view.billings');
     //approve billing of a specific quotation
     Route::post('quotations/approve-billing', [BillingController::class, 'approveBilling'])->name('approve.billings');
     //mark as paid billing of specific transaction
     Route::post('quotations/paid-billing', [BillingController::class, 'markAsPaidBilling'])->name('markAsPaid.billings');
+    //search for months/years within the list of billings on a specific quotation
+    Route::get('customers/billings/{id}/search', [BillingController::class, 'search'])->name('search.billings');
 
     //Customers
     Route::get('/customers/index', [CustomerController::class, 'index'])->name('index.customers');

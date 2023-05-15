@@ -50,8 +50,8 @@
                       <td>{{$customer_quotation->quotation_id}}</td>
                       <td>{{$customer_quotation->quotation_type}}</td>
                       <td>{{$customer_quotation->created_at}}</td>
-                      <td>{{$customer_quotation->approval_status}}</td>
-                      <td>{{$customer_quotation->billing_approval_status}}</td>
+                      <td {{$customer_quotation->approval_status == 'Approved' ? 'style=color:green' : 'style=color:red'}}>{{$customer_quotation->approval_status}}</td>
+                      <td {{$customer_quotation->billing_approval_status == 'Approved' ? 'style=color:green' : 'style=color:red'}}>{{$customer_quotation->billing_approval_status}}</td>
                       <td>
                             <a href="{{route('show.quotations', $customer_quotation->quotation_id)}}" class="btn btn-outline-primary">View</a>
                             @if (auth()->user()->role == 'admin')
@@ -109,9 +109,9 @@
         Confirm for Billing Approval?
         <form id="approve_billing_form" action="{{route('approve.billings')}}" method="POST">
           @csrf
-          <input type="text"  id="input_for_image_receipt"  name="id" class="form-control">
-          <input type="text"  id="input_customer_id"  name="customer_id" class="form-control">
-          <input type="number"  id="input_total"  name="total" class="form-control">
+          <input type="text" hidden  id="input_for_image_receipt"  name="id" class="form-control">
+          <input type="text" hidden id="input_customer_id"  name="customer_id" class="form-control">
+          <input type="number" hidden id="input_total"  name="total" class="form-control">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="submit" form="approve_billing_form" class="btn btn-success">Yes, Approve it</button>

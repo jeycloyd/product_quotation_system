@@ -26,6 +26,8 @@ return new class extends Migration
             $table->decimal('due');
             $table->string('payment_status')->default('unpaid');
             $table->longText('receipt_image')->nullable();
+            $table->string('month');
+            $table->string('year');
             $table->timestamps();
         });
     }

@@ -90,9 +90,9 @@
     <div class="btn-group" style="margin-left:62%">
       <div>
         @if ($quotation_type != 'Rental')
-          <a href="{{ route('previewPDFBilling.quotations', $quotation_id) }}" class="btn btn-secondary" target="_blank">Create Billing</a>
+          <a href="{{ route('previewPDFBilling.quotations', $quotation_id) }}" {{$billing_approval_status != 'Approved' ? 'hidden' : ''}} class="btn btn-secondary" target="_blank">Create Billing</a>
         @else
-          <a href="{{ route('view.billings', $quotation_id, $grand_total) }}" class="btn btn-secondary">Billing</a>
+          <a href="{{ route('view.billings', $quotation_id, $grand_total) }}" {{$billing_approval_status != 'Approved' ? 'hidden' : ''}} class="btn btn-secondary">Billing</a>
         @endif
       </div>
       <div>
