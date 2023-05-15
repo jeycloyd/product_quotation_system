@@ -27,7 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     
     //Pages
-    Route::get('/quotations/select-customer', [PagesController::class, 'selectCustomer'])->name('select_customers');
+    Route::get('/quotations/select-customer/{id}', [PagesController::class, 'selectCustomer'])->name('select_customers');
     
     //quotations
     Route::get('/quotations/view', [QuotationController::class, 'viewQuotations'])->name('view.quotations');
@@ -71,7 +71,7 @@ Route::middleware(['auth'])->group(function () {
         
         
         //Quotations
-        Route::get('/quotations/select-customer', [QuotationController::class, 'showSelectCustomer'])->name('select.customers');
+        Route::get('/quotations/select-customer/{id}', [QuotationController::class, 'showSelectCustomer'])->name('select.customers');
         Route::get('/quotations/create', [QuotationController::class, 'create'])->name('create.quotations');
         Route::get('/quotations/success', [QuotationController::class, 'success'])->name('success.quotations');
         Route::post('/quotations/create/add', [QuotationController::class, 'addProducts'])->name('add.products');

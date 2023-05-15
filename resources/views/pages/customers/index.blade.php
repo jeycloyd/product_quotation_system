@@ -34,6 +34,7 @@
                       <td>{{$customer->address}}</td>
                       <td>{{$customer->customer_contact_no}}</td>
                       <td>
+                          <a href="{{route('select.customers',$customer->id)}}" class="btn btn-outline-secondary">Quotation</a>
                           <a href="{{route('view.customers',$customer->id)}}" class="btn btn-outline-primary">View</a>
                           @if (auth()->user()->role == 'admin')
                             <a href="{{route('show.customers',$customer->id)}}" class="btn btn-outline-warning">Edit</a>

@@ -17,6 +17,7 @@ class ProductController extends Controller
     
     //store data to products table
     public function store(Request $request){
+        
         $product = Product::where('product_name', $request->product_name)
                     ->where('status','Inactive')
                     ->first();
@@ -41,6 +42,15 @@ class ProductController extends Controller
             $product->product_description = $request->product_description;
             $product->product_price = $request->product_price;
             $product->status = 'Active';
+            //get the product image from the file input
+            if ($request->hasFile('product_image')) {
+                $image = $request->file('product_image');
+                $imageContents = file_get_contents($image->getRealPath());
+                $base64Image = base64_encode($imageContents);
+                //add webp extension to the base64
+                $final_base64Image = 'data:image/webp;base64,'.$base64Image;
+                $product->product_image = $final_base64Image;
+            }
             $product->save();
             //return response
             return redirect('/products/index')->with('success','Product added successfully');
@@ -102,14 +112,23 @@ class ProductController extends Controller
         ]);
 
         $product_name = DB::table('products')->where('product_name', $request->product_name)->value('product_name');
+        $product_image = DB::table('products')->where('product_name', $request->product_name)->value('product_image');
         $product_description = DB::table('products')->where('product_description', $request->product_description)->value('product_description');
-        if($product_name == $request->product_name && $product_description == $request->product_description){
+        if($product_name == $request->product_name && $product_description == $request->product_description && ($request->product_image == $product_image || is_null($request->product_image))){
             return redirect()->back();
         }else{
             //update data
             $products->product_name = $request->product_name;
             $products->product_description = $request->product_description;
             $products->product_price = $request->product_price;
+            if ($request->hasFile('product_image')) {
+                $image = $request->file('product_image');
+                $imageContents = file_get_contents($image->getRealPath());
+                $base64Image = base64_encode($imageContents);
+                //add webp extension to the base64
+                $final_base64Image = 'data:image/webp;base64,'.$base64Image;
+                $products->product_image = $final_base64Image;
+            }
             $products->save();
             return redirect('/products/index')->with('success','Product details have been updated');
         }

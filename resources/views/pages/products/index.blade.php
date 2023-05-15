@@ -22,6 +22,7 @@
             <tr>
               <th scope="col">Product ID</th>
               <th scope="col">Product Name</th>
+              <th scope="col">Product Image</th>
               <th scope="col">Description</th>
               <th scope="col">Price</th>
               <th scope="col">Actions</th>
@@ -32,6 +33,7 @@
                   <tr>
                       <td>{{$product->id}}</td>
                       <td>{{$product->product_name}}</td>
+                      <td> <img style="width:120px; height:90px" src="{{is_null($product->  product_image) ? asset('../images/no_image.png') : $product->product_image}}"></td>
                       <td>{{$product->product_description}}</td>
                       <td>PHP {{number_format($product->product_price,2)}}</td>
                       <td>

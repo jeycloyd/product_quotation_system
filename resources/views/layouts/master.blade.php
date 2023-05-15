@@ -161,7 +161,7 @@
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="#">Quotations</a></li>
-          <li><a href="/quotations/select-customer">Create Quotation</a></li>
+          <li><a href="/customers/index">Create Quotation</a></li>
           <li><a href="/quotations/view">View Quotation</a></li>
         </ul>
       </li>

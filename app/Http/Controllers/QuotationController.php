@@ -14,16 +14,20 @@ use Illuminate\Support\Facades\App;
 class QuotationController extends Controller
 {   
     //show select customer first
-    public function showSelectCustomer(){
+    public function showSelectCustomer($id){
         $customers = DB::table('customers')->whereNull('deleted_at')->get();
+        $customer_id = $id;
+        $customer_name = DB::table('customers')->where('id',$id)->value('customer_name');
         if($customers->isEmpty()){
             return redirect('/customers/create');
         }else{
-            return view('pages.quotations.select_customer',compact('customers'));
+            return view('pages.quotations.select_customer',compact('customers','customer_name','customer_id'));
         } 
     }
     //show create form for quotations
     public function create(Request $request){
+        //get quotation title
+        $quotation_title = $request->quotation_title;
         $products = Product::all();
         $products_isEmpty = DB::table('products')->count();
         //redirect the user if there are no products added yet
@@ -33,7 +37,7 @@ class QuotationController extends Controller
         if(!isset($customers, $products, $selected_customer, $count_no_of_transactions, $select_customer, $customer_name, $generated_id)){
             $customers = Customer::all();
             //extract value of customer_name via id
-            $selected_customer = $request->customer_name;
+            $selected_customer = $request->customer_id;
 
             //extract value of quotation_type via id
             $quotation_type = $request->quotation_type;
@@ -47,7 +51,7 @@ class QuotationController extends Controller
             $select_customer = DB::table('customers')->where('id', $selected_customer)->get()->pluck('customer_name');
 
             //to get the data from the object as it was being outputted as an object
-            $customer_name = $select_customer[0];
+            $customer_name = $request->customer_name;
 
             //call a function to generate quotation id
             $generated_id = $this->generateQuotationId($selected_customer,$count_no_of_transactions);
@@ -63,7 +67,7 @@ class QuotationController extends Controller
             //show grand total
             $grand_total = DB::table('temp_tables')->where('quotation_id', '=' , $generated_id)->sum('total_price');
         }
-        return view('pages.quotations.create', compact('customers','products','customer_name','generated_id','selected_customer','temp_tables','grand_total','temp_tables_count','quotation_type'));
+        return view('pages.quotations.create', compact('customers','products','customer_name','generated_id','selected_customer','temp_tables','grand_total','temp_tables_count','quotation_type','quotation_title'));
     }
     //show a success page when quotation has been made and saved successfully
     public function success(){

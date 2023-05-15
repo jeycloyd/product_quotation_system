@@ -16,16 +16,20 @@
             @endif
             <div>
                 <!--  REGISTRATION FORM (Start)-->
-                <h1 class="h1_CustomerRegistration" ><center>Customer and Quotation Type</center> </h1>
+                <h1 class="h1_CustomerRegistration" ><center>Choose Quotation Type</center> </h1>
                 <form action="{{route('create.quotations')}}" method="GET" class="fillupform">
                     @csrf
                     <div>
-                        <select name="customer_name" class="form-select" aria-label="Default select example" id="customer_name" style="width: 300px" required>
+                        {{-- <select name="customer_name" class="form-select" aria-label="Default select example" id="customer_name" style="width: 300px" required>
                             <option value="" disabled selected>------------Select Customer------------</option>
                             @foreach ($customers as $customer)
                                 <option value="{{$customer->id}}">{{$customer->customer_name}}</option>
                             @endforeach
-                        </select>
+                        </select> --}}
+                        <input type="text" name="customer_name" readonly value="{{$customer_name}}" class="form-control">
+                        <br>
+                        <input type="text" name="customer_id" value="{{$customer_id}}" hidden>
+                        <input type="text" required name="quotation_title" class="form-control" placeholder="Input Quotation title...">
                         <br>
                         <select name="quotation_type" class="form-select" aria-label="Default select example" id="quotation_type" style="width: 300px" required>
                             <option value="" disabled selected>------------Quotation Type------------</option>
