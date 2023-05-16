@@ -54,7 +54,7 @@
     <title>Quotation ID: {{$quotation_id}}</title>
 </head>
 <body>
-    <div style="text-align: center; margin-top:50%; margin-bottom:50%; font-size: 30px;">Equipment Quotation</div>
+    <div style="text-align: center; margin-top:50%; margin-bottom:50%; font-size: 30px;">{{is_null($quotation_title) ? 'No Title Available' : $quotation_title }}</div>
     <footer style="position: absolute; bottom: 10px; width: 100%;">
         <div class="row" style="margin-bottom: 30px;">
             <div style="float: left; margin-left: 20px;">

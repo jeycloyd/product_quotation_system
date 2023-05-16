@@ -179,6 +179,7 @@ class QuotationController extends Controller
             $quotation->quotation_date =$request->date;
             $quotation->customer_id = $request->customer_id;
             $quotation->quotation_type = $request->quotation_type;
+            $quotation->quotation_title = $request->quotation_title;
             $grand_total = $request->grand_total;
             //approval status
             $approval_status = 'For Approval';
@@ -212,11 +213,12 @@ class QuotationController extends Controller
                                 ->get();
             $customer_name = DB::table('customers')->where('id',$request->customer_id)->value('customer_name');
             $final_quotation_date = DB::table('quotations')->where('id',$quotation_id)->value('created_at');
+            $quotation_title = DB::table('quotations')->where('id',$quotation_id)->value('quotation_title');
             $grand_total = DB::table('product_quotation')->select(DB::raw('SUM(sub_total) as total_price'))->where('quotation_id',$quotation_id)->value('total_price');
             //download and export as pdf
             $dompdf = App::make('dompdf.wrapper');
             $dompdf->set_paper('A4');
-            $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date','approval_status')); 
+            $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date','approval_status','quotation_title')); 
             $pdf = $dompdf->render();
             return $dompdf->download('Quotation_'.$quotation_id .'.pdf');
         }else{
@@ -229,6 +231,7 @@ class QuotationController extends Controller
                                 ->groupBy('product_name')
                                 ->get();
             $customer_name = DB::table('customers')->where('id',$request->customer_id)->value('customer_name');
+            $quotation_title = DB::table('quotations')->where('id',$quotation_id)->value('quotation_title');
             $final_quotation_date = DB::table('quotations')->where('id',$quotation_id)->value('created_at');
             $grand_total = DB::table('product_quotation')->select(DB::raw('SUM(sub_total) as total_price'))->where('quotation_id',$quotation_id)->value('total_price');
             //approval status
@@ -236,7 +239,7 @@ class QuotationController extends Controller
             //download and export as pdf
             $dompdf = App::make('dompdf.wrapper');
             $dompdf->set_paper('A4');
-            $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date','approval_status')); 
+            $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date','approval_status','quotation_title')); 
             $pdf = $dompdf->render();
             return $dompdf->download('Quotation_'.$quotation_id .'.pdf');
         } 
@@ -288,6 +291,9 @@ class QuotationController extends Controller
     }
     public function downloadPDF($id){
         $quotation_id = $id;
+        //get quotation title
+        $quotation_title = DB::table('quotations')->where('id',$quotation_id)->value('quotation_title');
+        
         //approval status
         $approval_status = DB::table('quotations')->where('id',$quotation_id)->value('approval_status');
         //get the customer's name for this quotation
@@ -313,7 +319,7 @@ class QuotationController extends Controller
         //download and export as pdf
         $dompdf = App::make('dompdf.wrapper');
         $dompdf->set_paper('A4');
-        $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date','approval_status')); 
+        $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'final_quotation_date','approval_status','quotation_title')); 
         return $dompdf->stream('Quotation_'.$id .'.pdf');
     }
     //search details from the quotation list

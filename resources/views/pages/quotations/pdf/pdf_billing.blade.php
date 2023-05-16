@@ -173,7 +173,7 @@
                 </td>
                 <td>
                     <div class="labels2" >
-                        <h1 class="invoice">  INVOICE  # {{$billing}}</h1>
+                        <h1 class="invoice">  INVOICE  i{{$billing}}</h1>
                         {{-- (invoice number MM-YY-PO num)<br>
                         Example: 04-23-001 --}}
                     </div>

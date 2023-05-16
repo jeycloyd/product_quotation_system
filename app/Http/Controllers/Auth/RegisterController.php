@@ -32,7 +32,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-
+    
     protected function failedRegisterResponse(Request $request){
         return redirect()->back()
             ->withInput($request->only('name', 'email'))
