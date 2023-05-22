@@ -28,7 +28,7 @@ class QuotationController extends Controller
     public function create(Request $request){
         //get quotation title
         $quotation_title = $request->quotation_title;
-        $products = Product::all();
+        $products = DB::table('products')->where('status','Active')->get();
         $products_isEmpty = DB::table('products')->count();
         //redirect the user if there are no products added yet
         if($products_isEmpty == 0){
@@ -247,6 +247,8 @@ class QuotationController extends Controller
     //Show the details of a selected quotation
     public function show($id){
         $quotation_id = $id;
+        //get all products listed (for editing quotation purposes)
+        $products = DB::table('products')->where('status','active')->get();
         //get the customer's name for this quotation
         $customer_name = DB::table('customers')
             ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
@@ -277,7 +279,7 @@ class QuotationController extends Controller
 
         // if($quotation_type != 'Rental'){
         //      //redirect to the viewquotation page
-        return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status','quotation_type','billing_approval_status'));
+        return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status','quotation_type','billing_approval_status','products'));
         // }else{
         //     //redirect to the rental billing page
         //     return view('pages.billings.billing',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status','quotation_type'));

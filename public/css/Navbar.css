@@ -334,10 +334,13 @@ height:35px;
 
 .home-section{
   position: relative;
-  background: #E4E9F7;
+  /* background: #E4E9F7; */
   height: 100vh;
+  max-height: 100%;
   left: 260px;
-  width: calc(100% - 260px);
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
   transition: all 0.5s ease;
 }
 
@@ -350,9 +353,12 @@ height:35px;
 
 
 .home-section .home-content{
-  height: 60px;
-  display: flex;
+  height: 12%;
+  width: 100%;
+  max-width: 100%;
+  margin: 0% 0% 0% 0%;
   align-items: center;
+  padding: 0;
 }
 
 

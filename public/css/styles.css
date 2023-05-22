@@ -1,44 +1,164 @@
 *{
   list-style: none;
   text-decoration: none;
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
   transition: all 0.5 ease;
 }
 
-body {
-  /* background-image: linear-gradient(rgba(255,255,255,0.1),rgba(255,255,255,0.1)), url(../images/global_images/background.png);
-  background-size: cover; */
+
+
+html, body {
+  height: 100%;
+}
+
+.home-section, html, body {
+  background: #E4E9F7;
+}
+
+
+.h1_header {
+  /* display: inline-block; */
+  margin: 0% 0% 0% 2%;
+  background: linear-gradient(90deg,#2ec2a3,#0f5bab); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 0% 0% 0% 0%;
 }
 
 /*  ----------------------------- HOME PAGE (Start) -----------------------------  */
+.homelabel {
+  font-family: 'Ubuntu', sans-serif;
+  
+  min-height: 2vh;
+  
+  margin: 0% 74% 0% 0%;
+  padding: 0% 0% 3% 0%;
 
-
-  
-  .homewallpaper {
-    margin-top: -7.2%;
-    margin-left: -23%;
-    height: 620px; /* Set the desired height of the container */
-    width: 1300px;
-  }
-  
-  
-  .h1_HomeLabel  {
-  position: relative;
-  min-height: 3vh;
-  font-size: 71px;
-  
-  background: linear-gradient(70deg,#014082,#0dd0df); 
+  background: linear-gradient(90deg,#2ec2a3,#0f5bab); 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  
+
+}
+
+
+.homewrapper {
+  margin: 0% 0% 0% 0%;
+  max-width: 100%;
+  padding: 4% 7%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  height: 95%;
+
+    background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+@media (max-width: 768px) {
+  .homewrapper {
+    padding: 0 10px;
   }
+}
+
+@media (max-width: 576px) {
+  .homewrapper {
+    padding: 0 5px;
+  }
+}
+
+
+
+/*---  BOX CONTAINERS  ---*/
+.box-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.box-container2 {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
   
-  
+  margin-top: 2%;
+  width: 100%;
+  max-width: 100%;
+}
+
+.box {
+  height: 150px;
+  width: 300px;
+  border-radius: 20px;
+  box-shadow: 3px 3px 10px rgba(0, 30, 87, 0.751);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.box1 {
+background-color: #17afb5;
+}
+
+.box2 {
+background-color: #128098;
+}
+
+.box3 {
+background-color: #0a5f71;
+}
+
+.box4 {
+background-color: #2166a6;
+}
+
+.box5 {
+background-color: #143860;
+}
+
+.box6 {
+ background-color: #141846;
+}
+
+
+.box:hover {
+  transform: scale(1.1);
+  cursor: default;
+}
+ 
+ 
+.box img {
+  height: 50px;
+}
+.box .text {
+  color: white;
+}
+
+.topic {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #fff;
+}
+ 
+.topic-heading {
+  font-size: 30px;
+  letter-spacing: 3px;
+  color: #fff;
+
+}
   
 /*  ----------------------------- HOME PAGE (End) -----------------------------  */
-
 
 /*  ----------------NAVIGATION BAR (Start)----------------  */
 
@@ -87,40 +207,87 @@ background: #5bd485;
 /*  ----------------TABLE WRAPPER FOR THE VIEW TABLES----------------  */
 
 .table-wrapper {
- margin-left: -400px;
- margin-top: -100px;
- width: 65em;
+ overflow-x: auto;
+ margin: 0% 0% 0% 0%;
+ padding: 2% 0% 0% 3%;
+ width: 100%;
+ height: 100%;
+ max-width: 100%;
+ max-height: 100%;
+ overflow: hidden;
+
 }
+
+@media (max-width: 768px) {
+  /* Adjust the max-width value according to your needs */
+  #myDiv {
+    width: 100%; /* Div width for smaller screens */
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  table-wrapper {
+    border: 0; /* Remove borders for smaller screens */
+  }
+  
+  th, td {
+    display: block;
+    width: 100%;
+  }
+  
+  th {
+    text-align: left;
+  }
+}
+
 
 /*  ----------------------------- ADD CUSTOMER FORM (Start) -----------------------------  */
 
 .wrapper2 {
-  background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
+  /* background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
+  margin: 160% 0% 0% 130%;
+  width: 160%;
+  padding: 7% 4% 1% 4%;
+  border-radius: 7px; */
+
+  background-image: linear-gradient(rgba(196,192,226,0.3), rgba(196,192,226,0.3));
   position: absolute;
-  margin-left: -180px;
-  margin-top: -100px;
-  width: 35em;
-  padding-top: 10px;
-  padding-bottom: 100px;
+  top: 39%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  padding: 2% 0% 0% 0%;
   border-radius: 7px;
 } 
+
+@media only screen and (min-width: 768px) {
+  .wrapper2 {
+    max-width: 768px;
+  }
+}
 
 .h1_CustomerRegistration{
   font-family: 'Ubuntu', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 6vh;
+  min-height: 1vh;
+  margin: auto;
+
   background: linear-gradient(90deg,#2ec2a3,#0f5bab); 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .p {
   font-family: 'Ubuntu', sans-serif;
   justify-content: center;
-  align-items: center;
+  padding: 5% 0% 5% 0%;  
 }
+
 .fillupform {
+  max-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,76 +298,13 @@ background: #5bd485;
 }
 
 
-.inputbox {
-  position: relative;
-  width: 370px;
-}
-  
-.inputbox input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid rgba(130,140,147,0.9);
-  background: 1d2b3a;
-  border-radius: 9px;
-  outline: none;
-  font-size: 1em;  
-}
-  
-.inputbox span {
-  position: absolute;
-  left: 0;
-  padding: 10px;
-  pointer-events: none;
-  font-size: 0.8em;
-  color: rgba(0,0,0,0.5);
-  text-transform: uppercase;
-}
-  
-.inputbox input:valid ~ span,
-.inputbox input:focus ~ span  { 
-  color: #828c93;
-  tranform: translateX(10px) translateY(-7px);
-  font-size: 0.01em;
-  padding: 5px;
-  margin-left: 10px;
-  margin-bottom: 20%;
-  background-image: linear-gradient(rgba(196,192,226,0.1),rgba(196,192,226,0.1));
-}
-  
-.inputbox input:valid,
-.inputbox input:focus  {
-  border: 1px solid #828c93;
+.searchform {
+  width: 40%;
 }
 
-.btn-confirm {
-  position: fixed; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
-  justify-content: center;
-  margin-right: 10px;
-  margin-top: 230px;
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 14px;
-  background: #1ac8cd;
-  width: 220px;
-  padding: 15px;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.btn-confirm:hover, 
-.btn-confirm:active {
-  background: #5bd485;
-} 
 
 
 /*  -------------- ADD PRODUCT (Start) --------------  */
-
-
-
 
 .h1_ProductRegistration{
   display: flex;
@@ -211,8 +315,6 @@ min-height: 6vh;
 background: linear-gradient(90deg,#2ec2a3,#0f5bab); 
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
-  /*  align-items: center;
-  justify-content: center;  */
 }
 
 
@@ -231,17 +333,20 @@ flex-direction: column;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 10vh;
+  min-height: 20vh;
   flex-direction: column;
-  gap: 10px;
+  gap: 25px;
   background-image: linear-gradient(rgba(255,255,255,0.0),rgba(255,255,255,0.0));
 }
+
+
+
 
 /*  -------------- ADD PRODUCT (End) --------------  */
 
 .inputbox {
   position: relative;
-  width: 370px;
+  width: 70%;
 }
   
   .inputbox input {
@@ -265,43 +370,39 @@ flex-direction: column;
   }
   
   .inputbox input:valid ~ span,
-  .inputbox input:focus ~ span  {
-  
+  .inputbox input:focus ~ span  { 
   color: #828c93;
   tranform: translateX(10px) translateY(-7px);
   font-size: 0.01em;
   padding: 5px;
   margin-left: 10px;
   margin-bottom: 20%;
-  background-image: linear-gradient(rgba(196,192,226,0.1),rgba(196,192,226,0.1));
-  
+  background-image: linear-gradient(rgba(196,192,226,0.1),rgba(196,192,226,0.1)); 
   }
   
   .inputbox input:valid,
   .inputbox input:focus  {
-  
   border: 1px solid #828c93;
-  
   }
   
   
   
 .btn-confirm {
-  position: absolute; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
-  justify-content: center;
-  margin-right: 10px;
-  margin-top: 280px;
+  display: block;
+  width: 100%;
+  max-width:220px;
+  margin: 5% auto;
+  text-align: center;
+  cursor: pointer;
+
   font-family: 'Ubuntu', sans-serif;
   font-size: 14px;
   background: #1ac8cd;
-  width: 220px;
   padding: 15px;
-  text-align: center;
   text-decoration: none;
   text-transform: uppercase;
   color: #fff;
   border-radius: 5px;
-  cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
@@ -309,6 +410,14 @@ flex-direction: column;
 .btn-confirm:active {
   background: #5bd485;
 } 
+
+
+@media only screen and (min-width: 768px) {
+.btn-confirm {
+  max-width: 220px;
+ }
+}
+
 /*  ----------------------------- FORM (End) -----------------------------  */
 
 /* .container {
@@ -322,15 +431,15 @@ flex-direction: column;
 /* --------------MAKE QUOTATION NEXT PROCESS WRAPPER------------- */
 .wrapper4 { 
   background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
-  position: relative;
   width: 100%;
-  height: 168px;
+  max-width: 100%;
+  height: 60%;
 }
 
 .float_quotationcontainer {
 }
 
-.h1_AddQuotation{
+.h1_AddQuotation {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -341,6 +450,8 @@ flex-direction: column;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+
 
 .p {
   font-family: 'Ubuntu', sans-serif;
@@ -527,7 +638,7 @@ border: 1px solid #828c93;
     height: 640px;
     border-radius: 5px;
   }
-  h1  {
+  .wrappersuccess h1  {
     font-weight: bold;
     padding-left: 40px;
     padding-top: 18px;
@@ -591,44 +702,41 @@ border: 1px solid #828c93;
   }
   
   
-  .login_mediaonelogo {    /* LOGO */
+  .login_mediaonelogo {    
   border-radius: 7px;
-  margin-top: 5px;
-  margin-left: 190px;
-  width:100px;
-  height:100px;
+  margin: 2% 0% 0% 40%;
+  width: 20%;
+  max-width:100%;
+  height: auto;
+
+
+
   }
+
   
-  .login_QuotationFormSystem {
-  width: 300px;
-  height: 145px;
-  margin-left: 95px;
-  margin-bottom: -40px;
+  .login_QuotationFormSystem { 
+    border-radius: 7px;
+    margin: 0% 0% 0% 28%;
+    width: 45%;
+    max-width:100%;
+    height: 15%;
+  
   }
-  
-  
-  
-  .p_login {
-    font-family: 'Ubuntu', sans-serif;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 90px;
-  }
-  
   
   
   .loginbox  {
     position: relative;
-    width: 370px;
-    margin-top:7px;
-    padding:3px;
+    width: 70%;
+    max-width: 100%;
+    padding: 2px;
+    margin-bottom: 1px;
   }
   
   
   
   .loginbox input {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid rgba(130,140,147,0.9);
     background: 1d2b3a;
     border-radius: 9px;
@@ -650,11 +758,10 @@ border: 1px solid #828c93;
   .loginbox input:focus ~ span  {
   
   color: #828c93;
-  tranform: translateX(10px) translateY(-7px);
+  transform: translateX(10px) translateY(-7px);
   font-size: 0.01em;
   padding: 5px;
-  margin-left: 10px;
-  margin-bottom: 20%;
+  margin: 0% 0% 2% 7%;
   background-image: linear-gradient(rgba(196,192,226,0.1),rgba(196,192,226,0.1));
   
   }
@@ -668,24 +775,34 @@ border: 1px solid #828c93;
   
   
   .btn-login {
-   position: absolute; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
-    justify-content: center;
-    margin-right: -5px;
-    margin-top: 210px;
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 14px;
-  background: #1ac8cd;
-  width: 220px;
-  padding: 15px;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  
-  }
+    position: absolute; 
+     justify-content: center;
+     margin: 50% 0% 10% 0%;  
+     width: 35%;
+     max-width: 100%; 
+     height: 10%;
+     padding: 3%;
+
+   font-family: 'Ubuntu', sans-serif;
+   font-size: 14px;
+   background: #1ac8cd;
+   text-align: center;
+   text-decoration: none;
+   text-transform: uppercase;
+   color: #fff;
+   border-radius: 5px;
+   cursor: pointer;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   
+   }
+   
+   @media only screen and (min-width: 768px) { 
+     
+     .btn-confirm {
+       max-width: 220px; 
+     }
+   }
+   
   
  
   /*-----------------------FOR INPUT GLOW LIKE BOOTSTRAP--------------------------*/
@@ -704,35 +821,32 @@ select:focus, select:hover {
 .registerwrapper {
   background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
     position: absolute;
-    margin-top: 1%;
-    margin-left: 29%;
-    width: 45%;
-    height: 65%;
-    padding-top: 15px;
-    padding-bottom: 100px;
+    margin: 1% 0% 0% 23%;
+    width: 55%;
+    height: 77%;
+   padding: 2% 2% 2% 2%;
     border-radius: 7px;
   }
+  
   
   .register_mediaonelogo {    /* LOGO */
     position:absolute;
     border-radius: 7px;
-    margin-top: 1px;
-    margin-left: 15px;
-    width:50px;
-    height:50px;
+   margin: 1% 0% 0% 0%;
+    width:6%;
+    max-width: 100%;
+    height: 11%;
     }
     
     .register_QuotationFormSystem {
-    width: 220px;
+    width: 35%;
+    height: 30%;
+    max-width: 100%;
     height: 100px;
-    margin-left: 195px;
-    margin-bottom: -2px;
+    margin: 0% 0% 0% 32%;
     
-  
     }
     
-  
-  
   
     .h1_Register{
       display: flex;
@@ -766,8 +880,11 @@ select:focus, select:hover {
   
   .registerbox  {
   
-  position: relative;
-  width: 470px;
+    position: relative;
+    width: 70%;
+    max-width: 100%;
+    padding: 2px;
+    margin-bottom: 1px;
   }
   
   
@@ -798,8 +915,7 @@ select:focus, select:hover {
   tranform: translateX(10px) translateY(-7px);
   font-size: 0.01em;
   padding: 5px;
-  margin-left: 10px;
-  margin-bottom: 20%;
+  margin: 0% 0% 2% 7%;
   background-image: linear-gradient(rgba(196,192,226,0.1),rgba(196,192,226,0.1));
   
   }
@@ -813,24 +929,34 @@ select:focus, select:hover {
   
   
   .btn-register {
-    position: absolute; /* UNMOVABLE WHEN CHANGING WINDOW SIZE */
-     justify-content: center;
-     margin-right: 12px;
-     margin-top: 290px;
-   font-family: 'Ubuntu', sans-serif;
-   font-size: 14px;
-   background: #1ac8cd;
-   width: 220px;
-   padding: 15px;
-   text-align: center;
-   text-decoration: none;
-   text-transform: uppercase;
-   color: #fff;
-   border-radius: 5px;
-   cursor: pointer;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute; 
+    justify-content: center;
+    margin: 56% 0% 10% 0%;  
+    width: 30%;
+    max-width: 100%; 
+    height: 10%;
+
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px;
+  background: #1ac8cd;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+  }
+  
+  @media only screen and (min-width: 768px) { 
+    
+    .btn-confirm {
+      max-width: 220px; 
+    }
+  }
    
-   }
+   
   
   
   

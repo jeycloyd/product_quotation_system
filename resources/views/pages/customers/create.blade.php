@@ -6,6 +6,7 @@
             <div>
                 <!--  REGISTRATION FORM (Start)-->
                 <h1 class="h1_CustomerRegistration"> ADD CUSTOMER </h1>
+                
                 <form class="fillupform" action="{{route('store.customers')}}" method="POST">
                     @csrf
                     <div class="inputbox">  
@@ -21,9 +22,9 @@
                         @enderror
                     </div>
                     <div class="inputbox">
-                        <input maxlength="11" type="text" id="input_contact_no" required name="customer_contact_no" placeholder="Enter contact number...">
+                        <input maxlength="11" minlength="11" type="text" id="input_contact_no" required name="customer_contact_no" placeholder="Enter contact number...">
                     </div>
-                    <button type="submit" class="btn-confirm border-0" style="margin-left: 15px" >ADD CUSTOMER</button>
+                    <button type="submit" class="btn-confirm border-0" >ADD CUSTOMER</button>
                 </form>
         </div>
     </div>

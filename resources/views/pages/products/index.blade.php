@@ -10,14 +10,18 @@
         </div>
     @endif
     <a href="/products/create" class="btn btn-success" style="margin-bottom: 15px"><i class='bx bxs-package' style='color:#ffffff'  ></i>Add New Product</a>
-      <form action="{{route('search.products')}}" method="GET">
+      
+    <div class="searchform">
+    <form action="{{route('search.products')}}" method="GET">
         <div class="input-group mb-3">
             @csrf
             <input type="text" class="form-control" placeholder="Search..." name="search">
             <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i></button>
         </div>
       </form>  
-      <table class="table table-hover text-center">
+    </div>
+
+      <table class="table table-hover">
           <thead>
             <tr>
               <th scope="col">Product ID</th>
@@ -33,7 +37,7 @@
                   <tr>
                       <td>{{$product->id}}</td>
                       <td>{{$product->product_name}}</td>
-                      <td> <img style="width:120px; height:90px" src="{{is_null($product->  product_image) ? asset('../images/no_image.png') : $product->product_image}}"></td>
+                      <td> <img style="width:100px; height:70px" src="{{is_null($product->  product_image) ? asset('../images/no_image.png') : $product->product_image}}"></td>
                       <td>{{$product->product_description}}</td>
                       <td>PHP {{number_format($product->product_price,2)}}</td>
                       <td>

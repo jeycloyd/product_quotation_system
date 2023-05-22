@@ -65,6 +65,11 @@ class ProductController extends Controller
     }
     //subtract one quantity from the temp tables products list
     public function subtractOne($product_name, $id){
+        //prevent inserting into temp tables if the quotation id is already existing in the database
+        $quotation_id_check = DB::table('quotations')->where('id',$id)->value('id');
+        if(($quotation_id_check == $id)){
+            return redirect()->back();
+        }
         $quotations = DB::table('temp_tables')
                 ->select('product_name', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(total_price) as total_price'))
                 ->where('product_name', '=', $product_name)
@@ -114,7 +119,8 @@ class ProductController extends Controller
         $product_name = DB::table('products')->where('product_name', $request->product_name)->value('product_name');
         $product_image = DB::table('products')->where('product_name', $request->product_name)->value('product_image');
         $product_description = DB::table('products')->where('product_description', $request->product_description)->value('product_description');
-        if($product_name == $request->product_name && $product_description == $request->product_description && ($request->product_image == $product_image || is_null($request->product_image))){
+        $product_price = DB::table('products')->where('product_name', $request->product_name)->value('product_price');
+        if( ($product_name == $request->product_name && $product_description == $request->product_description && $product_price == $request->product_price) && ($request->product_image == $product_image || is_null($request->product_image))){
             return redirect()->back();
         }else{
             //update data
@@ -133,12 +139,13 @@ class ProductController extends Controller
             return redirect('/products/index')->with('success','Product details have been updated');
         }
     }
-    //search details from the customer list
+    //search details from the products list
     public function search(Request $request){
         $search = $request->search;
         $products =  DB::table('products')
                       ->select('*')
                       ->where('product_name', 'LIKE' , '%' . $search . '%')
+                      ->where('status','Active')
                       ->paginate(5);
         return view('pages.products.index', compact('products'));
     }

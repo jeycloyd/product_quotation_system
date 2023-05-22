@@ -7,7 +7,7 @@
         <div>
             <!--  PRODUCT FORM (Start)-->
             <h1 class="h1_ProductRegistration"> ADD PRODUCT </h1>
-            <form class="productform" action="{{route('store.products')}}" method="POST" enctype="multipart/form-data">
+            <form class="fillupform" action="{{route('store.products')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="inputbox">  
                     <input type="text" required class="form-control @error('product_name') is-invalid @enderror mb-0" name="product_name" placeholder="Enter product name...">
@@ -26,12 +26,12 @@
                     <input type="text" required name="product_description" placeholder="Enter product description...">
                 </div>
                 <div class="inputbox">
-                    <input type="number" required name="product_price" min="1" step=".01" value="1">
+                    <input type="number" required name="product_price" min="1" step=".01" placeholder="Enter price...">
                 </div>
                 <div class="inputbox">
                     <input type="file" name="product_image">
                 </div>
-                <button type="submit" class="btn-confirm border-0" style="margin-top: 52%; margin-left: 20px" >ADD PRODUCT </button> 
+                <button type="submit" class="btn-confirm border-0">ADD PRODUCT </button> 
             </form>
         </div>
     </div>  

@@ -2,21 +2,23 @@
 @section('title', 'View Customers')
 @section('content')
 @section('header','View Customers')
-  <div class="table-wrapper" style="width:70em">
+  <div class="table-wrapper">
     @if (\Session::has('success'))
         <div class="alert alert-success">
               {!! \Session::get('success') !!}
         </div>
     @endif
     <a href="/customers/create" class="btn btn-success" style="margin-bottom: 15px"><i class='bx bxs-user-plus' style='color:#ffffff' ></i>Add New Customer</a>
-      <form action="{{route('search.customers')}}" method="GET">
+     <div class="searchform">
+    <form action="{{route('search.customers')}}" method="GET">
           <div class="input-group mb-3">
               @csrf
-              <input type="text" class="form-control" placeholder="Search..." name="search">
+              <input type="text" class="form-control" placeholder="Search..." name="search" >
               <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i></button>
           </div>
-      </form>  
-      <table class="table table-hover text-center">
+      </form>
+    </div>  
+      <table class="table table-hover">
           <thead>
             <tr>
               <th scope="col">Customer ID</th>

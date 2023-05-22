@@ -31,7 +31,7 @@
                         <input type="text" name="customer_id" value="{{$customer_id}}" hidden>
                         <input type="text" required name="quotation_title" class="form-control" placeholder="Input Quotation title...">
                         <br>
-                        <select name="quotation_type" class="form-select" aria-label="Default select example" id="quotation_type" style="width: 300px" required>
+                        <select name="quotation_type" class="form-select" aria-label="Default select example" id="quotation_type" required>
                             <option value="" disabled selected>------------Quotation Type------------</option>
                             <option value="Retail">Retail</option>
                             <option value="Services">Services</option>
@@ -39,7 +39,7 @@
                         </select>
                         <br>
                     </div>
-                        <button type="submit" class="btn-confirm border-0" style="margin-top: 35%; margin-left: 18px" >NEXT</button> 
+                        <button type="submit" class="btn-confirm border-0">NEXT</button> 
                 </form>
             </div>
         </div>

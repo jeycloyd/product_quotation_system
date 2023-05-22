@@ -67,11 +67,11 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{-- <li class="nav-item dropdown">
+                                <a id="navbarDropdown" href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
-
+                                
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -83,7 +83,15 @@
                                         @csrf
                                     </form>
                                 </div>
-                            </li>
+                            </li> --}}
+                            <div class="dropdown">
+                              {{ Auth::user()->name }} 
+                              <form action="{{route('logout')}}" method="POST" style="display:inline; margin-left: 10px;">
+                                @csrf
+                                <button class="btn btn-outline-secondary" style="width: auto;" type="submit">LOGOUT</button>
+                              </form>
+                            </div>
+                            
                         @endguest
                     </ul>
                 </div>
@@ -108,7 +116,6 @@
     </div>
     
     <ul class="nav-links">
-      @if(auth()->user()->role == 'admin')
       <li>
         <a href="/">
           <i class='bx bxs-home' style='color:#ffffff'  ></i>
@@ -118,8 +125,6 @@
           <li><a class="link_name" href="#">Category</a></li>
         </ul>
       </li>
-
-      @endif
       <li>
         <div class="iocn-link">
           <a href="/customers/index">
@@ -190,8 +195,9 @@
         <div class="home-content">
             {{-- <i class='bx bx-menu' ></i> --}}
             <span class="text"></span>
-            <h1 style="position:absolute; margin-left: 5%">@yield('header')</h1>
-                <div style="position:absolute; top: 30%; left: 45%;">
+            <h1 class="h1_header">
+              @yield('header')</h1>
+                <div>
                     <main >
                         @yield('content')
                     </main>

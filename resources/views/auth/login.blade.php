@@ -68,7 +68,7 @@
     <div class="fillup_container">
         <div class="loginlogo">
         <img class="login_mediaonelogo" src="{{asset('images/global_images/media_one_logo.png')}}">  
-        <img class="login_QuotationFormSystem" src= "{{asset('images/global_images/quotation_form_system.png')}}">  
+        <img class="login_QuotationFormSystem" src= "{{asset('images/global_images/quotation_form_system2.png')}}">  
         </div>  
         <!--  PRODUCT FORM (Start)-->
         <div class="card-body">

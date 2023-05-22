@@ -32,4 +32,21 @@ class UserController extends Controller
             return redirect()->back()->with('success','User has been changed into admin');
         }
     }
+
+    //approve user registration
+    public function approveUser(Request $request){
+        $user = User::findOrFail($request->user_id);
+        $user->approval_status = 'Approved';
+        $user->role = $request->user_role;
+        $user->save();
+
+        return redirect()->back()->with('success','User registration has been approved');
+    }
+    //disapprove user registration
+    public function disapproveUser(Request $request){
+        $user = User::findOrFail($request->user_id);
+        $user->delete();
+
+        return redirect()->back()->with('success','User registration has been disapproved');
+    }
 }

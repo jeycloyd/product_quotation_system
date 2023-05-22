@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Make Quotation')
 @section('content')
-<div class="table-wrapper" style="width: 1250px; margin-left: -560px; margin-top:-188px; height: -100px">
+<div>
     <!--  FILL UP FORM (Start)-->
     <div class="wrapper4">
         <div class="fillup_container">
@@ -11,21 +11,26 @@
                     <form action="{{route('add.products')}}" method="POST">
                         @csrf
                         {{-- <label for="products">Product Name</label> --}}
-                        <select class="form-select" name="product_name" aria-label="Default select example" style=
-                        "margin-left:38px;
-                        margin-top:15px;
-                        width:680px;
-                        padding:6px;">
-                            @foreach ($products as $product)
-                                <option value="{{$product->id . '|' . $product->product_price . '|' . $product->product_name. '|' . $product->product_description}}">{{$product->product_name . ' - ' . 'PHP '.number_format($product->product_price,2)}}</option>
-                            @endforeach
-                        </select>
-                        {{-- <label for="products">Quantity</label> --}}
-                        <div class="qtyquotation" style="top:-43px; left: -50px">
-                            
-                            <input type="number" required="required" name="quantity" min="1" value="1">
-                        </div>
-                        <div>
+                        <div class="form-group row" style=
+    "margin-left: 1.5%;
+    width: 100%;
+    max-width: 100%;
+    ">
+    <div class="col-lg-6">
+        <select class="form-select" name="product_name" aria-label="Default select example" style="padding-right: 5%;">
+            @foreach ($products as $product)
+            <option value="{{$product->id . '|' . $product->product_price . '|' . $product->product_name. '|' . $product->product_description}}">{{$product->product_name . ' - ' . 'PHP '.number_format($product->product_price,2)}}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-lg-3 text-end" style="margin: 0% 0% 0% 13%;">
+        <input type="number" class="form-control" required="required" name="quantity" min="1" value="1">
+    </div> 
+</div>
+
+                    
+                       
+                        <div style="padding-bottom: 1%;">
                             <button type="submit" name="action" class="btn-add border-0" value="add">Add</button>
                             <button type="submit" name="action" class="btn-clear border-0" value="clear">Clear</button>
                         </div>
@@ -59,39 +64,41 @@
         <input type="text" hidden name="total_price" value="{{$grand_total}}">
         <input type="text" hidden name="quotation_type" value="{{$quotation_type}}">
         <input type="text" hidden name="quotation_title" value="{{$quotation_title}}">
-        <div class="scrollable" style="overflow: scroll; height: 270px; max-height:270px; width: 100%; max-width: 200em;">
-            <table class="table table-hover">
-                <thead>
-                  <tr style="text-align: center">
-                    <th scope="col">Item</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Sub Total</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    @foreach ($temp_tables as $temp_table)
-                        <tr style="text-align: center">
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$temp_table->product_name}}</td>
-                            <td>{{$temp_table->product_description}}</td>
-                            <td>{{$temp_table->quantity}}</td>
-                            <td>PHP{{number_format($temp_table->unit_price,2)}}</td>
-                            <td>PHP{{number_format($temp_table->total_price,2)}}</td>
-                            <td>
-                                <a href="{{route('destroy.quotationsProducts', ['product_name' => $temp_table->product_name, 'quotation_id' => $generated_id])}}" class="btn btn-danger">Remove</a>
-                                <a href="{{route('subtractOne.quotationsProducts', ['product_name' => $temp_table->product_name, 'quotation_id' => $generated_id])}}" class="btn btn-danger">-</a>  
-                            </td>
-                        </tr>    
-                    @endforeach
-                </tbody>
-              </table>
+        <div class="scrollable" >
+            <div class="table-responsive" style="height: 200%; max-height:100%; overflow-y:scroll">
+                <table class="table table-hover" >
+                    <thead>
+                      <tr style="text-align: center">
+                        <th scope="col">Item</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Sub Total</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($temp_tables as $temp_table)
+                            <tr style="text-align: center">
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{$temp_table->product_name}}</td>
+                                <td>{{$temp_table->product_description}}</td>
+                                <td>{{$temp_table->quantity}}</td>
+                                <td>PHP{{number_format($temp_table->unit_price,2)}}</td>
+                                <td>PHP{{number_format($temp_table->total_price,2)}}</td>
+                                <td>
+                                    <a href="{{route('destroy.quotationsProducts', ['product_name' => $temp_table->product_name, 'quotation_id' => $generated_id])}}" class="btn btn-danger">Remove</a>
+                                    <a href="{{route('subtractOne.quotationsProducts', ['product_name' => $temp_table->product_name, 'quotation_id' => $generated_id])}}" class="btn btn-danger">-</a>  
+                                </td>
+                            </tr>    
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="wrapper5">
-            <h4 class="h4_GrandTotalName">GRAND TOTAL: {{ 'PHP ' . number_format($grand_total,2)}}</h4> 
+            <h3 class="h4_GrandTotalName" style="padding: 1.3% 18% 0% 0%; float:right">GRAND TOTAL: {{ 'PHP ' . number_format($grand_total,2)}}</h3> 
         </div>
         <div>
             <button type="submit" {{ $temp_tables_count === 0 ? 'disabled' : ''}} class="btn-makequotation border-0">Create Quotation</button>

@@ -35,10 +35,10 @@ class HomeController extends Controller
         $count_new_customer = DB::table('customers')->whereMonth('created_at',$currentMonth)->whereNull('deleted_at')->count();
         $count_customer_last_month = DB::table('customers')->whereMonth('created_at',$previousMonth)->whereNull('deleted_at')->count();
         $count_product = DB::table('products')->where('status','Active')->count();
-        $count_user = DB::table('users')->count();
+        $count_user = DB::table('users')->where('approval_status','Approved')->count();
 
         //get customer growth rate
-        $customer_growth_rate = number_format(( $count_new_customer / $count_customer ) * 100,2);
+        $customer_growth_rate = number_format(( ($count_new_customer - $count_customer_last_month) / $count_customer_last_month ) * 100,2);
 
         return view('home', compact('count_customer','count_quotation','count_new_customer','count_product','count_user','customer_growth_rate'));
     }

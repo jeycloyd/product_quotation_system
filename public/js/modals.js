@@ -59,6 +59,24 @@ $(document).ready(function(){
         var modal = $(this);
         $('#image_receipt').attr('src', billing_image);
     })
+
+    //approve registration of user modal
+    $('#approveRegistrationModal').on('show.bs.modal', function (e) {
+        var button = $(e.relatedTarget); // Button that triggered the modal
+        var user_id = button.data('id'); // Extract info from data-* attributes
+        // Update the modal's content. (JQuery method)
+        var modal = $(this);
+        modal.find('#input_user_id').val(user_id);
+    })
+
+    //disapprove registration of user modal
+    $('#disapproveRegistrationModal').on('show.bs.modal', function (e) {
+        var button = $(e.relatedTarget); // Button that triggered the modal
+        var user_id = button.data('id'); // Extract info from data-* attributes
+        // Update the modal's content. (JQuery method)
+        var modal = $(this);
+        modal.find('#input_disapprove_user_id').val(user_id);
+    })
 })
 
 

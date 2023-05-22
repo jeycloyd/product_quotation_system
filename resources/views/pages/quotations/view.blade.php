@@ -2,7 +2,8 @@
 @section('title', 'View Quotations')
 @section('content')
 @section('header','View Quotations')
-  <div  class="table-wrapper" style="width: 1200px; margin-left: -530px;">
+  <div  class="table-wrapper">
+    <div class="searchform" style="width: 60%;">
         <form action="{{route('search.quotations')}}" method="GET">
               <div class="input-group mb-3">
                   @csrf
@@ -26,8 +27,9 @@
                   <input type="text" class="form-control" placeholder="Search..." name="search">
                   <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i></button>
               </div>
-        </form>  
-        <table class="table table-hover text-center">
+        </form> 
+      </div> 
+        <table class="table table-hover">
           <thead>
             <tr>
               <th scope="col">Quotation ID</th>

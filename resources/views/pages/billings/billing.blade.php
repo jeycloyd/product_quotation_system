@@ -1,8 +1,10 @@
 @extends('layouts.master')
 @section('title', 'Billing')
 @section('content')
-    <div  class="table-wrapper" style="margin-left:-550px; margin-top:-165px; width:1250px">
-      <h1 style="margin-left:-41px; margin-top:-190px; ">Billing for Quotation: {{$quotation_id}}</h1>
+@section('header')
+    Billing for Quotation: {{$quotation_id}}
+@endsection
+    <div  class="table-wrapper">
       @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -16,6 +18,8 @@
       <button class="btn btn-primary" data-toggle="modal" data-target="#createBillingModal">Create Billing</button>
       <br>
       <br>
+
+      <div style="width: 50%;">
         <form action="{{route('search.billings',$quotation_id)}}" method="GET">
           <div class="input-group mb-3">
               @csrf
@@ -39,7 +43,9 @@
               {{-- <input type="text" class="form-control" placeholder="Search..." name="search"> --}}
               <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i></button>
           </div>
-        </form>  
+        </form>
+      </div>
+
         <table class="table table-hover text-center">
         <thead>
           <tr>
@@ -69,7 +75,7 @@
       <div class="d-flex justify-content-center">
         {{ $billings->withQueryString()->links() }}
       </div>
-      <h2 style="float:right">Remaining Balance: 
+      <h2 style="float:right; padding-right:5%">Remaining Balance: 
           @if ( $total_balance == 0)
             <strong> PHP {{number_format($total_balance,2)}}</strong>
           @else
