@@ -93,7 +93,9 @@ class CustomerController extends Controller
                       ->select('*')
                       ->where('customer_name', 'LIKE' , '%' . $search . '%')
                       ->paginate(5);
-        return view('pages.customers.index', compact('customers'));
+
+        $count_customers = $customers->total();
+        return view('pages.customers.index', compact('customers','count_customers'));
     }
     // //delete customers 
     public function destroy(Request $request){

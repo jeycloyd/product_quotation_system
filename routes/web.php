@@ -34,6 +34,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/quotations/view', [QuotationController::class, 'viewQuotations'])->name('view.quotations');
         Route::get('/quotations/view/{id}', [QuotationController::class, 'show'])->name('show.quotations');
         Route::get('quotations/search/',[QuotationController::class, 'search'])->name('search.quotations');
+        Route::get('/quotations/select-customer/{id}', [QuotationController::class, 'showSelectCustomer'])->name('select.customers');
+        Route::get('/quotations/create', [QuotationController::class, 'create'])->name('create.quotations');
+        Route::get('/quotations/success', [QuotationController::class, 'success'])->name('success.quotations');
+        Route::post('/quotations/create/add', [QuotationController::class, 'addProducts'])->name('add.products');
+        Route::post('/quotations/store', [QuotationController::class, 'store'])->name('store.quotations');
+        
         //total of each quotation using ajax
         Route::get('/view/total/{id}', [QuotationController::class, 'showTotalOfQuotation'])->name('total.quotations');
         
@@ -72,11 +78,7 @@ Route::middleware(['auth'])->group(function () {
             
             
             //Quotations
-            Route::get('/quotations/select-customer/{id}', [QuotationController::class, 'showSelectCustomer'])->name('select.customers');
-            Route::get('/quotations/create', [QuotationController::class, 'create'])->name('create.quotations');
-            Route::get('/quotations/success', [QuotationController::class, 'success'])->name('success.quotations');
-            Route::post('/quotations/create/add', [QuotationController::class, 'addProducts'])->name('add.products');
-            Route::post('/quotations/store', [QuotationController::class, 'store'])->name('store.quotations');
+            Route::post('/quotations/update/', [QuotationController::class, 'update'])->name('update.quotations');
             Route::get('quotations/delete',[QuotationController::class, 'destroy'])->name('destroy.quotations');
             Route::get('quotations/approve',[QuotationController::class, 'approveQuotations'])->name('approve.quotations');
             

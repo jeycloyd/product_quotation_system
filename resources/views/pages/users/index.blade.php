@@ -45,7 +45,9 @@
                       <td>
                         <button class="btn btn-success" {{$user->approval_status == 'Approved' ? 'style=display:none' : ''}} data-id="{{$user->id}}" data-target="#approveRegistrationModal" data-toggle="modal">Approve</button>
                         <button class="btn btn-danger" {{$user->approval_status == 'Approved' ? 'style=display:none' : ''}} data-id="{{$user->id}}" data-target="#disapproveRegistrationModal" data-toggle="modal">Disapprove</button>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal" data-id="{{$user->id}}">Change Role</button>
+                        @if ($user->approval_status != 'For Approval')
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal" data-id="{{$user->id}}">Change Role</button>
+                        @endif
                       </td>
                   </tr>    
               @endforeach

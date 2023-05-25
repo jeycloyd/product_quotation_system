@@ -5,7 +5,7 @@
     <div>
         <h4>Customer Name: {{ $customer_name}} </h4>
     </div>
-      <form action="{{route('search.customerQuotations', $customer_id)}}" method="GET">
+      <form action="{{route('search.customerQuotations', $customer_id)}}" method="GET" style="width:50%">
           <div class="input-group mb-3">
               @csrf
               {{-- <input type="text" name="customer_name" value="{{$customer_name}}">
@@ -31,7 +31,7 @@
               <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i></button>
           </div>
       </form>  
-      <table class="table table-hover">
+      <table class="table table-hover" >
           <thead>
             <tr>
               <th scope="col">No.</th>

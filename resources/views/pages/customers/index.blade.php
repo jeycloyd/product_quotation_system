@@ -29,6 +29,13 @@
             </tr>
           </thead>
           <tbody>
+              @if(isset($count_customers))
+                @if ($count_customers == 0)
+                <tr>
+                  <th colspan="5" style="text-align: center" >No Results Found!</th>
+                </tr>
+                @endif
+              @endif 
               @foreach ($customers as $customer)
                   <tr>
                       <td>{{$customer->id}}</td>

@@ -4,7 +4,18 @@
         {{-- <img class="homewallpaper" src= "{{asset('../images/home/homewallpaper.png')}}" alt="product quotation system title image">    
          --}}
          @if (auth()->user()->role != 'admin')
-             <h1>Welcome, {{auth()->user()->name}}</h1>
+         <img class="homeguestlogo" src="{{asset('images/global_images/media_one_logo.png')}}">
+
+
+         <div class="homewrapper_guest">
+            
+      
+          <div class="labelcontainer">
+          <h1 class="firstlabel"> M E D I A O N E </h1>
+          <br>
+          <h2 class="secondlabel"> Q U O T A T I O N  F O R M  S Y S T E M </h2>
+          </div>
+          <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
          @else
          <div class="homewrapper">
           <div class="homelabel">
@@ -26,7 +37,7 @@
                                       <h2 class="topic">New Customers</h2>
                                     </div>
       
-                                    <img src="">
+                                    <img src="{{asset('images/dashboard_images/new_customers.png')}}">
                              </div>
       
                              <div class="box box3">
@@ -56,7 +67,7 @@
                           </div>
                           <div class="box box6">
                                  <div class="text">
-                                   <h2 class="topic-heading" style="color:#66ff33">+{{$customer_growth_rate}}%</h2>
+                                   <h2 class="topic-heading" style="color:#66ff33">{{$customer_growth_rate}}%</h2>
                                    <h2 class="topic">Customer Growth Rate</h2>
                                  </div>
                                  <img src="{{asset('images/dashboard_images/growth_rate.png')}}">

@@ -147,7 +147,8 @@ class ProductController extends Controller
                       ->where('product_name', 'LIKE' , '%' . $search . '%')
                       ->where('status','Active')
                       ->paginate(5);
-        return view('pages.products.index', compact('products'));
+        $count_products = $products->total();
+        return view('pages.products.index', compact('products','count_products'));
     }
     //delete selected product from list
     public function destroy(Request $request){

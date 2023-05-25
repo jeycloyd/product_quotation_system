@@ -81,7 +81,7 @@ class QuotationController extends Controller
             ->select(DB::raw('customers.id AS customer_id'),'customers.*', 'quotations.id' , 'quotations.created_at','quotations.approval_status','quotations.quotation_type','billing_approval_status')
             ->whereNull('quotations.deleted_at')
             ->orderByDesc('quotations.created_at')
-            ->paginate(5);
+            ->paginate(20);
 
         // // SELECT quotations.id, SUM(due) AS 'balance' FROM billings JOIN quotations ON quotations.id = billings.quotation_id 
         // // WHERE billings.payment_status = 'unpaid' AND billings.quotation_id = '1202305111';
@@ -247,6 +247,8 @@ class QuotationController extends Controller
     //Show the details of a selected quotation
     public function show($id){
         $quotation_id = $id;
+        //check if the id exists or not. If not, throw a 404 error
+        Quotation::findOrFail($id);
         //get all products listed (for editing quotation purposes)
         $products = DB::table('products')->where('status','active')->get();
         //get the customer's name for this quotation
@@ -272,14 +274,17 @@ class QuotationController extends Controller
         $quotation_date = Carbon::parse($quotation_date)->format('Y-m-d');
         //get items purchased and group them by product name based on the quotation id
         $product_quotations = DB::table('product_quotation')
-                            ->select('product_name', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(sub_total) as total_price'))
+                            ->select('product_description','product_id','product_name', DB::raw('ROUND(AVG(unit_price),2) as unit_price'), DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(sub_total) as total_price'))
                             ->where('quotation_id','=',$id)
-                            ->groupBy('product_name')
+                            ->groupBy('product_name','product_id','product_description')
                             ->paginate(5);
-
+        //count items based on the quotation id
+        $count_product_quotations = DB::table('product_quotation')
+                            ->where('quotation_id','=',$id)
+                            ->count();
         // if($quotation_type != 'Rental'){
         //      //redirect to the viewquotation page
-        return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status','quotation_type','billing_approval_status','products'));
+        return view('pages.quotations.view_quotation',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status','quotation_type','billing_approval_status','products','count_product_quotations'));
         // }else{
         //     //redirect to the rental billing page
         //     return view('pages.billings.billing',compact('quotation_id','product_quotations', 'grand_total', 'customer_name', 'quotation_date','approval_status','quotation_type'));
@@ -352,24 +357,34 @@ class QuotationController extends Controller
         //     return view('pages.quotations.view', compact('quotations'));
         // }
         $quotations = DB::table('customers')
-            ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
-            ->select(DB::raw('customers.id AS customer_id'),'customers.customer_name', 'quotations.id', 'quotations.created_at', 'quotations.approval_status', 'quotations.quotation_type','quotations.billing_approval_status')
-            ->whereNull('quotations.deleted_at')
-            ->where('customer_name', 'LIKE', '%' . $search . '%');
+    ->join('quotations', 'customers.id', '=', 'quotations.customer_id')
+    ->select(DB::raw('customers.id AS customer_id'),'customers.customer_name', 'quotations.id', 'quotations.created_at', 'quotations.approval_status', 'quotations.quotation_type','quotations.billing_approval_status')
+    ->whereNull('quotations.deleted_at');
 
-        if (!is_null($search_approval_status)) {
-            $quotations->where('approval_status', $search_approval_status);
-        }
-        if (!is_null($search_quotation_type)) {
-            $quotations->where('quotation_type', $search_quotation_type);
-        }
-        $quotations = $quotations->orderByDesc('quotations.created_at')
-            ->paginate(5);
+if (!is_null($search_approval_status)) {
+    $quotations->where('approval_status', $search_approval_status);
+}
+if (!is_null($search_quotation_type)) {
+    $quotations->where('quotation_type', $search_quotation_type);
+}
+if (!is_null($search)) {
+    $quotations->where(function ($query) use ($search) {
+        $query->where('customer_name', 'LIKE', '%' . $search . '%')
+              ->orWhere('quotations.id', 'LIKE', '%' . $search . '%');
+    });
+}
+
+$quotations = $quotations->orderByDesc('quotations.created_at')
+    ->paginate(20);
+
+
+        $count_quotation = $quotations->total();
         // return view('pages.quotations.view', compact('quotations'));
         return view('pages.quotations.view', [
             'quotations' => $quotations,
             'oldApprovalStatus' => $search_approval_status,
             'oldQuotationType' => $search_quotation_type,
+            'count_quotation' =>$count_quotation,
         ]);
     }
     //approve quotations
@@ -407,6 +422,37 @@ class QuotationController extends Controller
         $dompdf->set_paper('A4');
         $pdf = $dompdf->loadView('pages.quotations.pdf.pdf_billing',compact('billing','product_quotations','grand_total','customer_name','customer_address')); 
         return $dompdf->stream('Billing_for_'.$billing.'.pdf');
+    }
+    //function to update quotation 
+    public function update(Request $request){
+        //loop length
+        $loop_length = $request->count_iteration;
+
+        //destroy the records inside the product quotation with the same quotation id
+        DB::table('product_quotation')
+            ->where('quotation_id',$request->quotation_id)
+            ->delete();
+
+        //store the edited items to the product quotations table
+        for ($i = 0; $i <= $loop_length; $i++) {
+            //check if product_id.$i has value
+            if(is_null($request->input('product_id'.$i))){
+                continue;
+            }else{
+                DB::table('product_quotation')->insert([
+                    'product_id' => $request->input('product_id'.$i),
+                    'quotation_id' => $request->quotation_id,
+                    'quantity' => $request->input('product_qty'.$i),
+                    'product_name' => $request->input('product_name'.$i),
+                    'product_description' => $request->input('product_description'.$i),
+                    'unit_price' => $request->input('product_price'.$i),
+                    'sub_total' => $request->input('product_subtotal'.$i),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }  
+        }
+        return redirect()->back()->with('success','Quotation succesfully updated');   
     }
 
     /*--------------------------- AJAX FUNCTION FOR APPROVE FOR BILLING BUTTON ---------------------*/

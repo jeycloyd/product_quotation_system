@@ -42,6 +42,13 @@
             </tr>
           </thead>
           <tbody>
+              @if(isset($count_quotation))
+                @if ($count_quotation == 0)
+                  <tr>
+                    <th colspan="7" style="text-align: center" >No Results Found!</th>
+                  </tr>
+                @endif
+              @endif
               <tr>
                   @foreach ($quotations as $quotation)
                       <tr>
@@ -53,7 +60,7 @@
                           <td {{$quotation->billing_approval_status == 'Approved' ? 'style=color:green' : 'style=color:red'}}>{{$quotation->billing_approval_status}}</td>
                           <td>
                               
-                              <a href="{{route('show.quotations', $quotation->id)}}" class="btn btn-outline-primary">View</a>
+                              <a href="{{route('show.quotations', $quotation->id)}}" class="btn btn-outline-info">View</a>
                               {{-- @if (auth()->user()->role == 'admin')
                                 <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation->id}}" {{($quotation->approval_status == 'Approved') ? 'disabled' : ''}} >Approve</button>
                               @endif  
@@ -65,7 +72,7 @@
                                 @if ($quotation->billing_approval_status != 'Approved' && $quotation->approval_status == 'For Approval')
                                   <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#approveModal" data-id="{{$quotation->id}}">Approve</button>
                                 @else
-                                  <button class="btn btn-outline-warning" data-toggle="modal" data-target="#billingApprovalModal" data-billing="{{$quotation->id}}" data-customer_id="{{$quotation->customer_id}}" {{($quotation->billing_approval_status == 'Approved') ? 'disabled' : ''}}>Approve For Billing</button>
+                                  <button class="btn btn-primary" data-toggle="modal" data-target="#billingApprovalModal" data-billing="{{$quotation->id}}" data-customer_id="{{$quotation->customer_id}}" {{($quotation->billing_approval_status == 'Approved') ? 'disabled' : ''}}>Approve For Billing</button>
                                 @endif
                               @endif
                           </td>

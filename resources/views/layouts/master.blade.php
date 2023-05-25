@@ -215,7 +215,6 @@
         }
         let sidebar = document.querySelector(".sidebar");
         let sidebarBtn = document.querySelector(".bx-menu");
-        console.log(sidebarBtn);
         sidebar.addEventListener("mouseenter", ()=>{
             sidebar.classList.toggle("close");
         });

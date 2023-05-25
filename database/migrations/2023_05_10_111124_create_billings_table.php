@@ -23,7 +23,7 @@ return new class extends Migration
                   ->references('id')
                   ->on('quotations')
                   ->onDelete('cascade');
-            $table->decimal('due');
+            $table->double('due');
             $table->string('payment_status')->default('unpaid');
             $table->longText('receipt_image')->nullable();
             $table->string('month');
