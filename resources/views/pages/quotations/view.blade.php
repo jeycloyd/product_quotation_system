@@ -1,7 +1,8 @@
 @extends('layouts.master')
 @section('title', 'View Quotations')
 @section('content')
-@section('header','View Quotations')
+{{-- @section('header','View Quotations') --}}
+<h1 class="h1_header_test">View Quotations</h1>
   <div  class="table-wrapper">
     <div class="searchform" style="width: 60%;">
         <form action="{{route('search.quotations')}}" method="GET">
@@ -29,7 +30,7 @@
               </div>
         </form> 
       </div> 
-        <table class="table table-hover">
+        <table class="table table-hover" style=" max-height: 10%;">
           <thead>
             <tr>
               <th scope="col">Quotation ID</th>

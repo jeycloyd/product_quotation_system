@@ -4,6 +4,7 @@
    <head>
       <meta charset="utf-8">
       <title>404 Error Page | Mediaone </title>
+      <link rel="icon" type="image/x-icon" href="{{asset('images/global_images/media_one_logo.jpg')}}">
       <link rel="stylesheet" href="style.css">
       <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');

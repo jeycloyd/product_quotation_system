@@ -1,14 +1,17 @@
 @extends('layouts.master')
 @section('title', 'View Customers')
 @section('content')
-@section('header','View Customers')
+{{-- @section('header','View Customers') --}}
+<h1 class="h1_header_test">View Customers</h1>
   <div class="table-wrapper">
     @if (\Session::has('success'))
         <div class="alert alert-success">
               {!! \Session::get('success') !!}
         </div>
     @endif
-    <a href="/customers/create" class="btn btn-success" style="margin-bottom: 15px"><i class='bx bxs-user-plus' style='color:#ffffff' ></i>Add New Customer</a>
+    @if (auth()->user()->role == 'admin')
+      <a href="/customers/create" class="btn btn-success" style="margin-bottom: 15px"><i class='bx bxs-user-plus' style='color:#ffffff' ></i>Add New Customer</a>
+    @endif
      <div class="searchform">
     <form action="{{route('search.customers')}}" method="GET">
           <div class="input-group mb-3">

@@ -13,6 +13,15 @@
                     Please wait patiently while we review your information and complete the registration process. 
                     We appreciate your understanding and thank you for your patience.
                 </p>
+                <button class="btn btn-primary" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                </button>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </div>
         </div>
     </div>

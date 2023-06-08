@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -48,5 +49,28 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->back()->with('success','User registration has been disapproved');
+    }
+    //search a specific user
+    public function search(Request $request){
+        $user_role = $request->user_role;
+        $search = $request->search;
+        
+        $users = DB::table('users')->where('name','LIKE', '%'. $search . '%' )->paginate(5);
+        $count_users = $users->total();
+        return view('pages.users.index',compact('users','count_users'));
+    }
+    //change password of user
+    public function changePassword(Request $request){
+        //extract inputs and check if they are the same
+        if($request->user_password != $request->confirm_user_password){
+            //return password do not match
+            return redirect()->back()->with('error','Passwords do not match');
+        }
+        //update password
+        $users = User::findOrFail($request->user_id);
+        $users->password = Hash::make($request->user_password);
+        $users->save();
+
+        return redirect()->back()->with('success','User password successfully changed');
     }
 }

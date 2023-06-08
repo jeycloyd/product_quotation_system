@@ -55,13 +55,6 @@
 <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 {{-- <link href="{{ asset('css/Navbar.css') }}" rel="stylesheet"> --}}
 
-{{-----------------------------------JQuery UI Signature-----------------------------------------------}}
-<link type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/south-street/jquery-ui.css" rel="stylesheet"> 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
- 
-<link type="text/css" href="{{ asset('css/jquery.signature.css') }}" rel="stylesheet"> 
-<script type="text/javascript" src="{{ asset('js/jquery.signature.js') }}"></script>
-
 <!--  LOGIN WALLPAPER (Start)-->
 
 <div class="loginwrapper">
@@ -85,7 +78,12 @@
                 <div class="loginbox">  
                     <input type="password" required name="password" placeholder="Enter Password...">
                 </div>
+                <div class="loginbox">
                 <button type="submit" class="btn-login border-0">{{ __('Login') }}</button>
+                </div>
+                <div class="loginbox">
+                    <center>Don't have an account? <a href="/register">Sign up</a></center>
+                </div>
                 {{-- <div class="col-md-6">
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                     @error('email')

@@ -4,6 +4,7 @@
    <head>
       <meta charset="utf-8">
       <title>404 Error Page | Mediaone</title>
+      <link rel="icon" type="image/x-icon" href="{{asset('images/global_images/media_one_logo.jpg')}}">
       <link rel="stylesheet" href="style.css">
       <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
@@ -151,8 +152,8 @@ body{
             <h2 class="header" data-text="404">
                 404
             </h2>
-            <h4 data-text="Opps! Page not found">
-                Opps! Page not found
+            <h4 data-text="Oops! Page not found">
+                Oops! Page not found
             </h4>
             <p>
               Sorry, the page that you are looking for does not exist. 

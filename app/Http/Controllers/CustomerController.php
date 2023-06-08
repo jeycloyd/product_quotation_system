@@ -114,6 +114,7 @@ class CustomerController extends Controller
                      ->where('customers.id',$id)
                      ->whereNull('quotations.deleted_at')
                      ->paginate(5);
+        
         return view('pages.customers.view_customer',compact('customer_quotations','customer_name','customer_id'));
     }
     //search a quotation from the list of quotations of a specific user
@@ -133,7 +134,8 @@ class CustomerController extends Controller
                      ->where('quotations.quotation_type', $search_quotation_type)
                      ->whereNull('quotations.deleted_at')
                      ->paginate(5);
-            return view('pages.customers.view_customer',compact('customer_quotations','customer_name','customer_id'));
+            $count_customer_quotations = $customer_quotations->total();
+            return view('pages.customers.view_customer',compact('customer_quotations','customer_name','customer_id','count_customer_quotations'));
         }else{
             $customer_quotations = DB::table('quotations')
                      ->join('customers' , 'customers.id' , '=' , 'quotations.customer_id')

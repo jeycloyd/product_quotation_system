@@ -37,8 +37,12 @@ class HomeController extends Controller
         $count_product = DB::table('products')->where('status','Active')->count();
         $count_user = DB::table('users')->where('approval_status','Approved')->count();
 
-        //get customer growth rate
-        $customer_growth_rate = number_format(( ($count_new_customer - $count_customer_last_month) / $count_customer_last_month ) * 100,2);
+        //customer growth rate
+        if ($count_new_customer != 0 && $count_customer_last_month != 0) {
+            $customer_growth_rate = number_format((($count_new_customer) / $count_customer) * 100, 2).'%';
+        } else {
+            $customer_growth_rate = "N/A"; // or any other value you want to assign when there is no growth rate
+        }
 
         return view('home', compact('count_customer','count_quotation','count_new_customer','count_product','count_user','customer_growth_rate'));
     }

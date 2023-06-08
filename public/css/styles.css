@@ -9,10 +9,11 @@
 
 html, body {
   height: 100%;
+  overflow-x: hidden;
 }
 
 .home-section, html, body {
-  background: #E4E9F7;
+  /* background: #E4E9F7; */
 }
 
 
@@ -24,6 +25,20 @@ html, body {
   -webkit-text-fill-color: transparent;
   padding: 0% 0% 0% 0%;
 }
+.h1_header_test {
+  /* display: inline-block; */
+  margin: 0% 0% 0% 2%;
+  background: linear-gradient(90deg,#2ec2a3,#0f5bab); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 2% 0% 0% 0%;
+}
+/*  ----------------------------- Modal Close -----------------------------  */
+
+.modal-header .close {
+  background-color: transparent;
+  border: none;
+}
 
 /*  ----------------------------- HOME PAGE (Start) -----------------------------  */
 .homelabel {
@@ -31,10 +46,10 @@ html, body {
   
   min-height: 2vh;
   
-  margin: 0% 74% 0% 0%;
+  margin: 0% 4% 0% 3%;
   padding: 0% 0% 3% 0%;
 
-  background: linear-gradient(90deg,#2ec2a3,#0f5bab); 
+  background: linear-gradient(1deg,#2ec2a3,#0f5bab); 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
@@ -43,13 +58,12 @@ html, body {
 
 .homewrapper {
   margin: 0% 0% 0% 0%;
-  max-width: 100%;
-  padding: 4% 7%;
+  max-width: 100%;  
+  padding: 2% 7%;
   margin: 0 auto;
   box-sizing: border-box;
-  height: 95%;
+  height: 100%;
 
-    background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -73,20 +87,19 @@ html, body {
 
 
 .homewrapper_guest {
-      margin: 0;
+      margin: 0% 0% 0% 0%;
       width: 100%;
       max-width: 100%;
       padding: 0;
-      height: 100%;
+      height: 100vh;
       max-height: 100%;
-     
-    
-      background-image: linear-gradient(rgba(36,47,73,0.2),
-      rgba(36,47,73,0.2)), url('../images/home/HomeGuestWallpaper.png');        
+      position: relative;
+      background-color: #5493f1;
+      background-image: linear-gradient(rgba(36,47,73,0.5),
+      rgba(36,47,73,0.5)), url('../images/home/HomeGuestWallpaper.png');        
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-    
     }
     
     @media (max-width: 768px) {
@@ -108,8 +121,10 @@ html, body {
       padding: 0% 0% 1% 0%;
       margin: 0 auto;
       box-sizing: border-box;
-      height: 10%;
+      height: 100%;
       max-height: 100%;
+      display: flex;
+      flex-direction: column;
 
     }
   
@@ -120,63 +135,78 @@ html, body {
     font-size: 60px;
     width: 100%;
     max-width: 100%;
-    height:50%;
+    height:10%;
     margin: 22% 0% 0% 7%;
   }
 
   @media (max-width: 768px) {
     .firstlabel {
-      font-size: 60px; /* Adjust font size for smaller screens */
+      font-size: 45px; /* Adjust font size for smaller screens */
     }
   }
   
   /* Media query for even smaller screens */
   @media (max-width: 480px) {
     .firstlabel {
-      font-size: 60px; /* Further adjust font size for even smaller screens */
+      font-size: 25px; /* Further adjust font size for even smaller screens */
     }
   }
 
-
-
   .secondlabel {
     font-family: montserrat;
+    letter-spacing: 3.9px;
     font-size: 17px;
-    color: #143860;
-    font-weight: 100;
+    color: #c0e8f8;
+    font-weight: 600;
     width: 100%;
     max-width: 100%;
     height:50%;
-    margin: 4% 0% 0% 16.5%;
+    margin: 0% 0% 0% 7.3%;
   }
 
   @media (max-width: 768px) {
     .secondlabel {
-      font-size: 17px; /* Adjust font size for smaller screens */
+      font-size: 10.7px; /* Adjust font size for smaller screens */
     }
   }
   
   /* Media query for even smaller screens */
   @media (max-width: 480px) {
     .secondlabel {
-      font-size: 17px; /* Further adjust font size for even smaller screens */
+      font-size: 8px; /* Further adjust font size for even smaller screens */
     }
   }
 
-
 .homeguestlogo {
   position: absolute;
-  width:5%;
+  width:6.5%;
+  height: 14%;
   max-width: 100%;
-  height:9%;
+  max-height: 100%;
   opacity: 0.8;
-  margin: 0% 0% 0% 50%;
+  margin: 1.1% 0% 1% 1.4%;
+}
 
+@media (max-width: 768px) {
+  .homeguestlogo {
+    width: 9%;
+    height: 20%;
+    min-width: 11.5%;
+  min-height: 5%; /* Adjust font size for smaller screens */
+  }
+}
+
+/* Media query for even smaller screens */
+@media (max-width: 480px) {
+  .homeguestlogo {
+    width: 9%;
+    height: 20%;
+    min-width: 11.5%;
+  min-height: 5%; /* Adjust font size for smaller screens */
+  }
 }
   
-
      /* ----- GUEST HOME PAGE ----- */
-
 
 
 /*---  BOX CONTAINERS  ---*/
@@ -185,11 +215,11 @@ html, body {
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 1px;
   width: 100%;
   max-width: 100%;
-  height: 30%;
-  padding: 0% 10% 0% 10%;
+  height: 100%;
+  padding: 0% 0% 0% 0%;
   
 }
 
@@ -197,23 +227,24 @@ html, body {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  gap: 10px;
+  gap: 1px;
   margin-top: 2%;
   width: 100%;
   
   max-width: 100%;
-  height: 30%;
-  padding: 0% 10% 0% 10%;
+  height: 100%;
+  padding: 1% 0% 0% 0%;
 
 }
 
 .box {
-  height: 90%;
-  width: 30%;
+  height: 178px;
+  width: 29.5%;
   max-width: 100%;
+  max-height: 100%;
   border-radius: 20px;
   box-shadow: 3px 3px 10px rgba(0, 30, 87, 0.751);
-  padding: 20px;
+  padding: 15px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -253,7 +284,7 @@ background-color: #143860;
  
  
 .box img {
-  height: 40%;
+  height: 32%;
   width: 17%;
   max-width: 100%;
 }
@@ -262,14 +293,14 @@ background-color: #143860;
 }
 
 .topic {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 400;
   letter-spacing: 1px;
   color: #fff;
 }
  
 .topic-heading {
-  font-size: 30px;
+  font-size: 32px;
   letter-spacing: 3px;
   color: #fff;
 
@@ -345,7 +376,8 @@ background: #5bd485;
 
 @media screen and (max-width: 600px) {
   table-wrapper {
-    border: 0; /* Remove borders for smaller screens */
+    border: 0;
+    font-size: 3px; /* Remove borders for smaller screens */
   }
   
   th, td {
@@ -369,9 +401,7 @@ background: #5bd485;
   border-radius: 7px; */
 
   background-image: linear-gradient(rgba(196,192,226,0.3), rgba(196,192,226,0.3));
-  position: absolute;
-  top: 39%;
-  left: 50%;
+  margin: 19% 0% 0% 50%;
   transform: translate(-50%, -50%);
   width: 70%;
   padding: 2% 0% 0% 0%;
@@ -380,7 +410,7 @@ background: #5bd485;
 
 @media only screen and (min-width: 768px) {
   .wrapper2 {
-    max-width: 768px;
+    max-width: 100%;
   }
 }
 
@@ -506,9 +536,9 @@ flex-direction: column;
   
 .btn-confirm {
   display: block;
-  width: 100%;
-  max-width:220px;
-  margin: 5% auto;
+  width: 30%;
+  max-width:100%;
+  margin: 5% 0% 0% 0%;
   text-align: center;
   cursor: pointer;
 
@@ -815,19 +845,18 @@ border: 1px solid #828c93;
 .loginwrapper {
   background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
     position: absolute;
-    margin-top: 1%;
-    margin-left: 32%;
+    margin: 1% 0% 0% 32%;
     width: 35%;
-    height: 70%;
-    padding-top: 15px;
-    padding-bottom: 100px;
+    max-width: 100%;
+    height: 72%;
+    padding: 0% 0% 0% 0%;
     border-radius: 7px;
   }
   
   
   .login_mediaonelogo {    
   border-radius: 7px;
-  margin: 2% 0% 0% 40%;
+  margin: 1% 0% 0% 40%;
   width: 20%;
   max-width:100%;
   height: auto;
@@ -859,7 +888,8 @@ border: 1px solid #828c93;
   
   .loginbox input {
     width: 100%;
-    padding: 8px;
+    max-width: 100%;
+    padding: 7px;
     border: 1px solid rgba(130,140,147,0.9);
     background: 1d2b3a;
     border-radius: 9px;
@@ -898,14 +928,15 @@ border: 1px solid #828c93;
   
   
   .btn-login {
-    position: absolute; 
      justify-content: center;
-     margin: 50% 0% 10% 0%;  
-     width: 35%;
-     max-width: 100%; 
+   
+     margin: 0% 0% 0% 25%;
+     width: 50%;
+     max-width: 100%;
      height: 10%;
-     padding: 3%;
-
+      padding: 6px;
+     
+   /* DESIGN */
    font-family: 'Ubuntu', sans-serif;
    font-size: 14px;
    background: #1ac8cd;
@@ -919,13 +950,54 @@ border: 1px solid #828c93;
    
    }
    
+   
    @media only screen and (min-width: 768px) { 
      
      .btn-confirm {
-       max-width: 220px; 
+       max-width: 100%; 
      }
    }
    
+   
+   
+   .btn-confirm { /* ALL "CONFIRM" BUTTONS */
+   
+    display: block;
+     width: 100%;
+   
+   
+     max-width: 220px;
+   
+   
+     margin: 4% auto;
+     text-align: center;
+     cursor: pointer;
+   
+     
+     /* DESIGN */
+     font-family: 'Ubuntu', sans-serif;
+     font-size: 14px;
+     background: #1ac8cd;
+     padding: 15px;
+     text-decoration: none;
+     text-transform: uppercase;
+     color: #fff;
+     border-radius: 5px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   
+     }
+   
+   .btn-confirm:hover, 
+   .btn-confirm:active {
+     background: #5bd485;
+   } 
+   
+   @media only screen and (min-width: 768px) { 
+     /* Add your desired breakpoint value */
+     .btn-confirm {
+       max-width: 220px; /* Add your desired max-width value */
+     }
+   }
   
  
   /*-----------------------FOR INPUT GLOW LIKE BOOTSTRAP--------------------------*/
@@ -933,8 +1005,8 @@ border: 1px solid #828c93;
 input:focus, input:hover, 
 textarea:focus, textarea:hover,
 select:focus, select:hover {
-
-  border-color: #80bdff;
+  
+  border-color: #80bdff;  
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 
 }
@@ -943,22 +1015,26 @@ select:focus, select:hover {
 
 .registerwrapper {
   background-image: linear-gradient(rgba(196,192,226,0.3),rgba(196,192,226,0.3));
-    position: absolute;
     margin: 1% 0% 0% 23%;
     width: 55%;
-    height: 77%;
+    height: 75%;
    padding: 2% 2% 2% 2%;
     border-radius: 7px;
   }
+
+  @media only screen and (min-width: 768px) {
+    .registerwrapper {
+      max-width: 768px;
+    }
+  }
   
-  
-  .register_mediaonelogo {    /* LOGO */
-    position:absolute;
+   
+  .register_mediaonelogo {    
     border-radius: 7px;
    margin: 1% 0% 0% 0%;
-    width:6%;
+    width:7.5%;
     max-width: 100%;
-    height: 11%;
+    height: 8%;
     }
     
     .register_QuotationFormSystem {
@@ -966,7 +1042,7 @@ select:focus, select:hover {
     height: 30%;
     max-width: 100%;
     height: 100px;
-    margin: 0% 0% 0% 32%;
+    margin: 0% 0% 0% 31%;
     
     }
     
@@ -1013,7 +1089,7 @@ select:focus, select:hover {
   
   .registerbox input {
   width: 100%;
-  padding: 10px;
+  padding: 7px;
   border: 1px solid rgba(130,140,147,0.9);
   background: 1d2b3a;
   border-radius: 9px;
@@ -1052,12 +1128,12 @@ select:focus, select:hover {
   
   
   .btn-register {
-    position: absolute; 
     justify-content: center;
-    margin: 56% 0% 10% 0%;  
-    width: 30%;
+    margin: 1% 0% 10% 30%;  
+    width: 38%;
     max-width: 100%; 
-    height: 10%;
+    height: 18%;
+    padding: 8px;
 
   font-family: 'Ubuntu', sans-serif;
   font-size: 14px;
@@ -1074,8 +1150,8 @@ select:focus, select:hover {
   
   @media only screen and (min-width: 768px) { 
     
-    .btn-confirm {
-      max-width: 220px; 
+    .btn-register {
+      max-width: 100%; 
     }
   }
    

@@ -335,12 +335,12 @@ height:35px;
 .home-section{
   position: relative;
   /* background: #E4E9F7; */
-  height: 100vh;
+  height: 100%;
   max-height: 100%;
   left: 260px;
   width: 100%;
   max-width: 100%;
-  padding: 0;
+  padding: 0%;
   transition: all 0.5s ease;
 }
 

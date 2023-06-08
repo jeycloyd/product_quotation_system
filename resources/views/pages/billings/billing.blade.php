@@ -1,9 +1,10 @@
 @extends('layouts.master')
 @section('title', 'Billing')
 @section('content')
-@section('header')
+{{-- @section('header')
     Billing for Quotation: {{$quotation_id}}
-@endsection
+@endsection --}}
+<h1 class="h1_header_test">Billing for Quotation: {{$quotation_id}}</h1>
     <div  class="table-wrapper">
       @if (session('success'))
         <div class="alert alert-success">

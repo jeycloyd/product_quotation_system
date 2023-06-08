@@ -44,6 +44,13 @@
             </tr>
           </thead>
           <tbody>
+              @if(isset($count_customer_quotations))
+                @if ($count_customer_quotations == 0)
+                <tr>
+                  <th colspan="7" style="text-align: center" >No Results Found!</th>
+                </tr>
+                @endif
+              @endif 
               @foreach ($customer_quotations as $customer_quotation)
                   <tr>
                       <td>{{$loop->iteration}}</td>

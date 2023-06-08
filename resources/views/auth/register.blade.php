@@ -94,7 +94,7 @@
     <div class="registerwrapper">
         <div class="fillup_container">
             <div class="registerlogo">
-                <img class="register_mediaonelogo" src="{{asset('images/global_images/media_one_logo.png')}}">  
+                {{-- <img class="register_mediaonelogo" src="{{asset('images/global_images/media_one_logo.png')}}">   --}}
                 <img class="register_QuotationFormSystem" src="{{asset('images/global_images/registration_form.png')}}">  
             </div>
             <form class="productform" method="POST" action="{{ route('register') }}">
@@ -111,7 +111,12 @@
                 <div class="registerbox">  
                     <input type="password" required="required" name="password_confirmation" placeholder="Confirm password...">
                 </div>
+                <div class="registerbox">
                 <button href="#" class="btn-register border-0   " type="submit">{{ __('Register') }}    </button>
+                </div>
+                <div class="registerbox">
+                    <center>Already have an account? <a href="/login">Login</a></center> 
+                </div>
             </form>
         </div>
     </div>

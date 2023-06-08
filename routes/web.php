@@ -99,6 +99,8 @@ Route::middleware(['auth'])->group(function () {
             //Users
             Route::get('/users/index', [UserController::class, 'index'])->name('index.users');
             Route::get('/users/update', [UserController::class, 'update'])->name('update.users');
+            Route::post('/users/changePassword', [UserController::class, 'changePassword'])->name('changePassword.users');
+            Route::get('/users/search/', [UserController::class, 'search'])->name('search.users');
             Route::get('/users/approve', [UserController::class, 'approveUser'])->name('approve.users');
             Route::get('/users/disapprove', [UserController::class, 'disapproveUser'])->name('disapprove.users');
 

@@ -2,7 +2,8 @@
 @section('title', 'View Products')
 @section('scripts')
 @section('content')
-@section('header','View Products')
+{{-- @section('header','View Products') --}}
+<h1 class="h1_header_test">View Products</h1>
   <div class="table-wrapper">
     @if (\Session::has('success'))
         <div class="alert alert-success">
@@ -10,7 +11,6 @@
         </div>
     @endif
     <a href="/products/create" class="btn btn-success" style="margin-bottom: 15px"><i class='bx bxs-package' style='color:#ffffff'  ></i>Add New Product</a>
-      
     <div class="searchform">
     <form action="{{route('search.products')}}" method="GET">
         <div class="input-group mb-3">

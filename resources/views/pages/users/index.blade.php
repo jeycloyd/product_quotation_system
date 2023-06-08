@@ -2,7 +2,9 @@
 @section('title', 'View Users')
 @section('scripts')
 @section('content')
-@section('header','View Users')
+{{-- @section('header','View Users') --}}
+<h1 class="h1_header_test">View Users</h1>
+ 
   <div class="table-wrapper">
     @if (\Session::has('success'))
         <div class="alert alert-success">
@@ -14,6 +16,19 @@
               {!! \Session::get('error') !!}
         </div>
     @endif
+    <form action="{{route('search.users')}}" method="GET" style="width:40%">
+      <div class="input-group mb-3">
+          @csrf
+          <div class="col-xs-2">
+            <select name="user_role" class="form-select">
+              <option value="admin">Admin</option>
+              <option value="viewer">Viewer</option>
+            </select>
+          </div>
+          <input type="text" class="form-control" placeholder="Search users..." name="search">
+          <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i></button>
+      </div>
+    </form> 
       {{-- <form action="{{route('search.products')}}" method="GET">
         <div class="input-group mb-3">
             @csrf
@@ -25,7 +40,7 @@
           <thead>
             <tr>
                 <th scope="col">User ID</th>
-              <th scope="col">Username</th>
+              <th scope="col">Name</th>
               <th scope="col">Email</th>
               <th scope="col">Created At</th>
               <th scope="col">Role</th>
@@ -34,6 +49,13 @@
             </tr>
           </thead>
           <tbody>
+              @if(isset($count_users))
+                @if ($count_users == 0)
+                <tr>
+                  <th colspan="7" style="text-align: center" >No Results Found!</th>
+                </tr>
+                @endif
+              @endif 
               @foreach ($users as $user)
                   <tr>
                       <td>{{$user->id}}</td>
@@ -47,6 +69,15 @@
                         <button class="btn btn-danger" {{$user->approval_status == 'Approved' ? 'style=display:none' : ''}} data-id="{{$user->id}}" data-target="#disapproveRegistrationModal" data-toggle="modal">Disapprove</button>
                         @if ($user->approval_status != 'For Approval')
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal" data-id="{{$user->id}}">Change Role</button>
+                        @endif
+                        @if ($user->approval_status != 'For Approval' && auth()->user()->role == 'admin')
+                          <button class="btn btn-change-password btn-warning" 
+                          data-toggle="modal"
+                          data-target="#changePasswordModal"
+                          data-id="{{$user->id}}"
+                          >
+                            Change Password
+                          </button>
                         @endif
                       </td>
                   </tr>    
@@ -136,5 +167,48 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal for Changing Password for User -->
+ <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change User Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route('changePassword.users')}}" method="POST" id="form_change_password">
+          @csrf
+          <div class="form-group">
+            <label for="change_password_input_user_id">New Password:</label>
+            <input type="text" hidden name="user_id" id="change_password_input_user_id" >
+            <input class="form-control" type="password" name="user_password" required>
+            <label for="change_password_input_user_id">Confirm Password:</label>
+            <input class="form-control" type="password" name="confirm_user_password" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" form="form_change_password" class="btn btn-primary">Change Password</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="{{ asset('js/modals.js') }}"></script>
+
+<script>
+  $(document).ready(function () {
+    $('.btn-change-password').click(function (e) { 
+      //extract the data id
+      let user_id = $(this).data('id');
+
+      //populate input
+      $('#change_password_input_user_id').val(user_id)
+      
+    });
+  });
+</script>
 @endsection
